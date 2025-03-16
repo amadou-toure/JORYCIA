@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Midnight Rose",
+    "description": "A seductive blend of Bulgarian rose and midnight jasmine",
+    "price": 85,
+    "image": "../../dist/assets/GENTLEMAN.png"
+  },
+  {
+    "name": "Ocean Mist",
+    "description": "Fresh marine accord with hints of citrus and amber",
+    "price": 65,
+    "image": "../../dist/assets/YSL.png"
+  },
+  {
+    "name": "Golden Oud",
+    "description": "Rich blend of rare oud wood and golden amber",
+    "price": 45,
+    "image": "../../dist/assets/BOSS.png"
+  },
+  {
+    "name": "Golden Oud",
+    "description": "Rich blend of rare oud wood and golden amber",
+    "price": 45,
+    "image": "../../dist/assets/BOSS.png"
+  }
+]

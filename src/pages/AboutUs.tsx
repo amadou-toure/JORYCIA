@@ -1,12 +1,13 @@
-import React from 'react';
-import { Star } from 'lucide-react';
+import { Star } from "lucide-react";
+import about_us_hero from "../../dist/assets/about_us_hero.jpg";
 
 const AboutUs = () => {
   return (
-    <div className="pt-20">
+    <div>
       <div className="relative h-[60vh] mb-20">
-        <img 
-          src="https://images.unsplash.com/photo-1583445013874-d597973a3636?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+        <img
+          // https://media.istockphoto.com/id/1402604850/photo/the-word-about-us-on-wooden-cubes-business-communication-and-information.jpg?s=612x612&w=0&k=20&c=Oc2HZUPVJRXFsjTwKVgWY_ddWrKeQUG0KCyKUGef-ig=
+          src={about_us_hero}
           alt="About Us hero"
           className="w-full h-full object-cover"
         />
@@ -18,21 +19,25 @@ const AboutUs = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-20">
           <div>
-            <h2 className="text-4xl font-serif mb-6">Crafting Memories Since 1995</h2>
+            <h2 className="text-4xl font-serif mb-6">
+              Crafting Memories Since 1995
+            </h2>
             <p className="text-gray-600 mb-6">
-              Founded in 1995, Jorycia has been at the forefront of luxury perfumery, 
-              creating exceptional fragrances that capture the essence of sophistication 
-              and elegance. Our journey began with a simple vision: to craft scents that 
-              tell stories and create lasting memories.
+              Founded in 1995, Jorycia has been at the forefront of luxury
+              perfumery, creating exceptional fragrances that capture the
+              essence of sophistication and elegance. Our journey began with a
+              simple vision: to craft scents that tell stories and create
+              lasting memories.
             </p>
             <p className="text-gray-600">
-              Today, we continue to source the finest ingredients from around the world, 
-              working with master perfumers to create unique compositions that reflect 
-              our commitment to excellence and artistry.
+              Today, we continue to source the finest ingredients from around
+              the world, working with master perfumers to create unique
+              compositions that reflect our commitment to excellence and
+              artistry.
             </p>
           </div>
           <div>
-            <img 
+            <img
               src="https://images.unsplash.com/photo-1583445095876-b4d8a012a1ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80"
               alt="Perfume crafting"
               className="w-full rounded-lg shadow-lg"
@@ -46,13 +51,15 @@ const AboutUs = () => {
             <div>
               <h4 className="text-xl font-serif mb-4">Artistry</h4>
               <p className="text-gray-600">
-                Every fragrance is a work of art, carefully composed to create a unique olfactory experience.
+                Every fragrance is a work of art, carefully composed to create a
+                unique olfactory experience.
               </p>
             </div>
             <div>
               <h4 className="text-xl font-serif mb-4">Sustainability</h4>
               <p className="text-gray-600">
-                We are committed to sustainable practices in sourcing and production.
+                We are committed to sustainable practices in sourcing and
+                production.
               </p>
             </div>
             <div>
