@@ -1,4 +1,4 @@
-import { Droplets, Heart, Sparkles } from 'lucide-react';
+import { Droplets, Heart, Sparkles } from "lucide-react";
 
 const AboutSection = () => {
   return (
@@ -7,8 +7,9 @@ const AboutSection = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-serif mb-6">The Jorycia Experience</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Each fragrance is meticulously crafted using the world's finest ingredients, 
-            creating an unforgettable sensory journey that captures the essence of luxury.
+            Each fragrance is meticulously crafted using the world's finest
+            ingredients, creating an unforgettabl sensory journey that captures
+            the essence of luxury.
           </p>
         </div>
 
@@ -19,7 +20,8 @@ const AboutSection = () => {
             </div>
             <h3 className="text-xl font-serif mb-4">Pure Ingredients</h3>
             <p className="text-gray-600">
-              Sourced from the world's finest suppliers, ensuring unparalleled quality in every bottle.
+              Sourced from the world's finest suppliers, ensuring unparalleled
+              quality in every bottle.
             </p>
           </div>
 
@@ -29,7 +31,8 @@ const AboutSection = () => {
             </div>
             <h3 className="text-xl font-serif mb-4">Crafted with Love</h3>
             <p className="text-gray-600">
-              Each fragrance is carefully composed by master perfumers with decades of experience.
+              Each fragrance is carefully composed by master perfumers with
+              decades of experience.
             </p>
           </div>
 
@@ -39,13 +42,14 @@ const AboutSection = () => {
             </div>
             <h3 className="text-xl font-serif mb-4">Lasting Impression</h3>
             <p className="text-gray-600">
-              Our unique formulations ensure your signature scent stays with you throughout the day.
+              Our unique formulations ensure your signature scent stays with you
+              throughout the day.
             </p>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default AboutSection;
