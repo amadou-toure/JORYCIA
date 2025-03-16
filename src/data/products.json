@@ -16,11 +16,5 @@
     "description": "Rich blend of rare oud wood and golden amber",
     "price": 45,
     "image": "../../public/assets/BOSS.png"
-  },
-  {
-    "name": "Golden Oud",
-    "description": "Rich blend of rare oud wood and golden amber",
-    "price": 45,
-    "image": "../../public/assets/BOSS.png"
   }
 ]
