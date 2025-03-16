@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import about_us_hero from "../../dist/assets/about_us_hero-90hTxhgG.jpg";
+import about_us_hero from "../../public/assets/about_us_hero-90hTxhgG-90hTxhgG.jpg";
 
 const AboutUs = () => {
   return (
