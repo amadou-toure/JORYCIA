@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Hero_video from "../../dist/assets/videoplayback.mp4";
+import Hero_video from "../../dist/assets/videoplayback-B9lSEthG.mp4";
 
 const Hero = () => {
   const [offset, setOffset] = useState(0);
