@@ -20,7 +20,7 @@ export function Product_card({ product }: { product: Product }) {
     <Card className="w-96 h-[500px] bg-[#f8f5f1] flex flex-col"> {/* Set fixed height and ensure column layout */}
       <CardHeader shadow={false} floated={false} className="h-64 bg-transparent flex items-center justify-center"> {/* Center the image */}
         <img
-          src={product.image}
+          src={`data:image/jpeg;base64,${product.image}`}
           alt={product.name}
           className="h-full w-[20] object-cover pt-5 pb-5"
         />

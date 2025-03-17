@@ -6,7 +6,7 @@ import { Product_card } from "./Card.tsx";
 
 const BestCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+//    "../../public/assets/BOSS.png",
   const nextItem = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
   };
