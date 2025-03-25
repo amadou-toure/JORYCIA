@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import products from "../data/products.json";
 import { Product_card } from "./Card.tsx";
 
+
+
 const BestCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 //    "../../public/assets/BOSS.png",
@@ -17,10 +19,11 @@ const BestCollections = () => {
     );
   };
 
+
   return (
-    <div className="py-20 bg-white">
-      {/* Desktop and Tablet View */}
-      <div className="max-w-7xl mx-auto hidden md:block lg:px-8">
+    <div className="py-20 bg-white" >
+      {/* Normal Desktop and Tablet View */}
+      <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">
           <div>
             <h2 className="text-4xl font-serif mb-3">Our selection</h2>
@@ -38,26 +41,16 @@ const BestCollections = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {products.map((product, index) => (
+          {products.sort((a,b) => b.rating - a.rating).slice(0,3).map((product, index) => (
             <Product_card key={index} product={product} />
           ))}
-        </div>
-
-        <div className="mt-10 text-center md:block">
-          <Link
-            to="/collections"
-            className="inline-flex items-center text-gray-800 hover:text-gray-600 transition-colors"
-          >
-            <span className="mr-2">View All Collections</span>
-            <ArrowRight className="w-5 h-5" />
-          </Link>
         </div>
       </div>
 
       {/* Mobile View - Carousel */}
       <div className="md:hidden">
         <div className="bg-white p-8 rounded-lg relative">
-          <Product_card product={products[currentIndex]} />
+          <Product_card MobileView={true} product={products[currentIndex]}    />
         </div>
 
         <div className="flex justify-center mt-8 space-x-4">
@@ -84,6 +77,13 @@ const BestCollections = () => {
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
+        <Link
+            to="/collections"
+            className="items-center text-gray-800 hover:text-gray-600 transition-colors"
+        >
+          <span className="mr-0">View All </span>
+          <ArrowRight className="w-5 h-5" />
+        </Link>
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ const Hero = () => {
             Luxurious fragrances crafted with the finest ingredients
           </p>
           <button className="bg-white text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-            Shop Collection
+            Shop
           </button>
         </div>
       </div>
