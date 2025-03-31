@@ -9,14 +9,10 @@ import {
 
 import { useState } from "react";
 import {CartDrawer} from "./CartDrawer.tsx";
+import {useCart} from "../data/contexts/cart.context.tsx";
+import {Product} from "../data/contexts/cart.context.tsx"
 
-interface Product {
-  name: string;
-  price: number;
-  image: string;
-  bg?: string;
-  description: string;
-}
+
 
 
 const MouseOverCard = ({ product,onClick }: { onClick?:()=>void,product: Product }) => {
@@ -134,6 +130,12 @@ const MobileViewCard = ({ product,onClick }: { product: Product,onClick?:()=>voi
 export function Product_card({ product, MobileView = false }: { product: Product; MobileView?: boolean }) {
   const [open, setOpen] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const {addToCart,cart}= useCart();
+ const addProductToCart = () => {
+   setOpen(false);
+   addToCart(product);
+ }
+  console.log(cart)
 
   return (
     <div
@@ -144,8 +146,8 @@ export function Product_card({ product, MobileView = false }: { product: Product
       <CartDrawer Open={open} onclick={() => setOpen(false)} />
 
       {MobileView ? (
-          <MobileViewCard product={product} onClick={() => setOpen(true)} />) :isHovered ? (
-          <MouseOverCard product={product} onClick={() => setOpen(true)} />
+          <MobileViewCard product={product} onClick={addProductToCart} />) :isHovered ? (
+          <MouseOverCard product={product} onClick={addProductToCart} />
       ) : (
           <MouseOutCard product={product} />
       ) }
