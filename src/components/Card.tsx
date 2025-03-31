@@ -8,6 +8,7 @@ import {
 } from "@material-tailwind/react";
 
 import { useState } from "react";
+import {CartDrawer} from "./CartDrawer.tsx";
 
 interface Product {
   name: string;
@@ -18,9 +19,11 @@ interface Product {
 }
 
 
-const MouseOverCard = ({ product }: { product: Product }) => {
+const MouseOverCard = ({ product,onClick }: { onClick?:()=>void,product: Product }) => {
+
   return (
     <Card
+
       className={`w-96 h-[500px] flex flex-col`}
       style={{
         backgroundImage: `url('data:image/webp;base64,${product.bg}')`,
@@ -29,6 +32,7 @@ const MouseOverCard = ({ product }: { product: Product }) => {
         backgroundPosition: 'center'
       }}
     >
+
       <CardHeader shadow={false} floated={false} className="h-[80%] bg-transparent flex items-center justify-center">
        <img
           src={`data:image/webp;base64,${product.image}`}
@@ -38,6 +42,7 @@ const MouseOverCard = ({ product }: { product: Product }) => {
       </CardHeader>
       <CardFooter className="pb-0 mb-2">
         <Button
+            onClick={onClick}
             color="black"
             ripple={false}
             fullWidth={true}
@@ -85,7 +90,7 @@ const MouseOutCard = ({ product }: { product: Product }) => {
   );
 };
 
-const MobileViewCard = ({ product }: { product: Product })=>{
+const MobileViewCard = ({ product,onClick }: { product: Product,onClick?:()=>void })=>{
   return (
       <Card className="w-96 h-[500px] bg-[#f8f5f1] flex flex-col"> {/* Set fixed height and ensure column layout */}
     <CardHeader shadow={false} floated={false} className="h-64 bg-transparent flex items-center justify-center"> {/* Center the image */}
@@ -114,6 +119,7 @@ const MobileViewCard = ({ product }: { product: Product })=>{
     </CardBody>
     <CardFooter className="pt-0">
       <Button
+          onClick={onClick}
           color="black"
           ripple={false}
           fullWidth={true}
@@ -126,16 +132,20 @@ const MobileViewCard = ({ product }: { product: Product })=>{
 }
 
 export function Product_card({ product, MobileView = false }: { product: Product; MobileView?: boolean }) {
-
+  const [open, setOpen] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div
+
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {MobileView ? (<MobileViewCard product={product} />) :isHovered ? (
-          <MouseOverCard product={product} />
+      <CartDrawer Open={open} onclick={() => setOpen(false)} />
+
+      {MobileView ? (
+          <MobileViewCard product={product} onClick={() => setOpen(true)} />) :isHovered ? (
+          <MouseOverCard product={product} onClick={() => setOpen(true)} />
       ) : (
           <MouseOutCard product={product} />
       ) }

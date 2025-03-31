@@ -3,11 +3,14 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import products from "../data/products.json";
 import { Product_card } from "./Card.tsx";
+//import {CartDrawer} from "./CartDrawer.tsx";
+
 
 
 
 const BestCollections = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+ // const [open, setOpen] = useState(true);
 //    "../../public/assets/BOSS.png",
   const nextItem = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
@@ -21,7 +24,8 @@ const BestCollections = () => {
 
 
   return (
-    <div className="py-20 bg-white" >
+    <div className="py-20 relative bg-white" >
+
       {/* Normal Desktop and Tablet View */}
       <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">
@@ -42,7 +46,7 @@ const BestCollections = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {products.sort((a,b) => b.rating - a.rating).slice(0,3).map((product, index) => (
-            <Product_card key={index} product={product} />
+            <Product_card key={index} product={product}  />
           ))}
         </div>
       </div>
