@@ -1,136 +1,30 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Filter, ChevronDown } from "lucide-react";
+import {useProduct} from "../data/contexts/Product.context.tsx";
+import {Product_card} from "../components/Card.tsx";
+//import {Product_card} from "../components/Card.tsx";
 
-interface Collection {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  category: string;
-}
+
 
 const Collections = () => {
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
-  const collections: Collection[] = [
-    {
-      id: 1,
-      name: "Signature Collection",
-      description: "Our flagship collection of timeless fragrances",
-      image:
-        "https://images.unsplash.com/photo-1616949755610-8c9bbc08f138?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "signature",
-    },
-    {
-      id: 2,
-      name: "Oud Collection",
-      description: "Luxurious fragrances featuring precious oud wood",
-      image:
-        "https://images.unsplash.com/photo-1547887538-047f814bfb64?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "oud",
-    },
-    {
-      id: 3,
-      name: "Floral Collection",
-      description: "Delicate bouquets of the world's finest flowers",
-      image:
-        "https://images.unsplash.com/photo-1596536247632-5f4b34a9fd26?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "floral",
-    },
-    {
-      id: 4,
-      name: "Summer Essentials",
-      description: "Light, refreshing fragrances for warm days",
-      image:
-        "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "seasonal",
-    },
-    {
-      id: 5,
-      name: "Noir Collection",
-      description: "Mysterious and seductive scents for the evening",
-      image:
-        "https://images.unsplash.com/photo-1563170351-be82bc888aa4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "noir",
-    },
-    {
-      id: 6,
-      name: "Botanical Garden",
-      description: "Nature-inspired fragrances with floral notes",
-      image:
-        "https://images.unsplash.com/photo-1567446537708-ac4aa75c9c28?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "floral",
-    },
-    {
-      id: 7,
-      name: "Exclusive Limited Editions",
-      description: "Rare and unique compositions for the connoisseur",
-      image:
-        "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "limited",
-    },
-    {
-      id: 8,
-      name: "Citrus Awakening",
-      description: "Vibrant, energizing scents with zesty citrus notes",
-      image:
-        "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "citrus",
-    },
-    {
-      id: 9,
-      name: "Oriental Treasures",
-      description: "Rich, spicy fragrances inspired by the exotic East",
-      image:
-        "https://images.unsplash.com/photo-1599733594230-6b823276abcc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "oriental",
-    },
-    {
-      id: 10,
-      name: "Aquatic Depths",
-      description: "Fresh, marine-inspired scents evoking the ocean",
-      image:
-        "https://images.unsplash.com/photo-1520690214124-2405c5217036?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "aquatic",
-    },
-    {
-      id: 11,
-      name: "Woody Elegance",
-      description: "Sophisticated fragrances with cedarwood and sandalwood",
-      image:
-        "https://images.unsplash.com/photo-1598532213005-76f745254959?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "woody",
-    },
-    {
-      id: 12,
-      name: "Winter Warmth",
-      description: "Cozy, comforting scents for the colder months",
-      image:
-        "https://images.unsplash.com/photo-1605265036253-e1e43a1c183a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80",
-      category: "seasonal",
-    },
-  ];
+  const {Products} = useProduct();
 
-  const categories = [
-    { id: "all", name: "All Collections" },
-    { id: "signature", name: "Signature" },
-    { id: "oud", name: "Oud" },
-    { id: "floral", name: "Floral" },
-    { id: "seasonal", name: "Seasonal" },
-    { id: "noir", name: "Noir" },
-    { id: "limited", name: "Limited Edition" },
-    { id: "citrus", name: "Citrus" },
-    { id: "oriental", name: "Oriental" },
-    { id: "aquatic", name: "Aquatic" },
-    { id: "woody", name: "Woody" },
+   const Notes = [
+    { id: "1", name: "Fleur d'orange"},
+    { id: "2", name: "Jasmin sambac"},
+    { id: "3", name: "Iris Vanille"},
+    { id: "4", name: "Musc"},
+    { id: "5", name: "Bois de santal"},
+    { id: "6", name: "Ambre"}
   ];
-
-  const filteredCollections =
+ const filteredProductss =
     activeFilter === "all"
-      ? collections
-      : collections.filter(
-          (collection) => collection.category === activeFilter
+      ? Products
+      : Products.filter(
+          (item) => item.Notes.includes(activeFilter)
         );
 
   return (
@@ -167,17 +61,17 @@ const Collections = () => {
 
           {/* Desktop Filters */}
           <div className="hidden md:flex space-x-4 overflow-x-auto pb-2">
-            {categories.map((category) => (
+            {Notes.map((item) => (
               <button
-                key={category.id}
+                key={item.id}
                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                  activeFilter === category.id
+                  activeFilter === item.id
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveFilter(category.id)}
+                onClick={() => setActiveFilter(item.id)}
               >
-                {category.name}
+                {item.name}
               </button>
             ))}
           </div>
@@ -189,7 +83,7 @@ const Collections = () => {
             }`}
           >
             <div className="grid grid-cols-2 gap-2">
-              {categories.map((category) => (
+              {Notes.map((category) => (
                 <button
                   key={category.id}
                   className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
@@ -211,28 +105,13 @@ const Collections = () => {
 
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredCollections.map((collection) => (
-            <div key={collection.id} className="group cursor-pointer">
-              <div className="relative overflow-hidden mb-6">
-                <img
-                  src={collection.image}
-                  alt={collection.name}
-                  className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button className="bg-white text-gray-900 px-6 py-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    Explore Collection
-                  </button>
-                </div>
-              </div>
-              <h2 className="text-2xl font-serif mb-2">{collection.name}</h2>
-              <p className="text-gray-600">{collection.description}</p>
-            </div>
+          {filteredProductss.map((collection) => (
+            <Product_card product={collection} key={collection.Id} />
           ))}
         </div>
 
         {/* No Results Message */}
-        {filteredCollections.length === 0 && (
+        {filteredProductss.length === 0 && (
           <div className="text-center py-16">
             <h3 className="text-xl font-serif mb-4">No collections found</h3>
             <p className="text-gray-600">Try selecting a different category</p>

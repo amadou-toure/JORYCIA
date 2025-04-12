@@ -1,31 +1,23 @@
 import { useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import products from "../data/products.json";
 import { Product_card } from "./Card.tsx";
-//import {CartDrawer} from "./CartDrawer.tsx";
-
-
-
+import {useProduct} from "../data/contexts/Product.context.tsx";
 
 const BestCollections = () => {
+  const {Products} = useProduct();
   const [currentIndex, setCurrentIndex] = useState(0);
- // const [open, setOpen] = useState(true);
-//    "../../public/assets/BOSS.png",
+
   const nextItem = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % Products.length);
   };
 
   const prevItem = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + products.length) % products.length
-    );
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + Products.length) % Products.length);
   };
 
-
   return (
-    <div className="py-20 relative bg-white" >
-
+    <div className="py-20 relative bg-white">
       {/* Normal Desktop and Tablet View */}
       <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">
@@ -45,8 +37,8 @@ const BestCollections = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {products.sort((a,b) => b.rating - a.rating).slice(0,3).map((product, index) => (
-            <Product_card key={index} product={product}  />
+          {Products.slice(0, 4).map((product, index) => (
+            <Product_card key={index} product={product} />
           ))}
         </div>
       </div>
@@ -54,7 +46,9 @@ const BestCollections = () => {
       {/* Mobile View - Carousel */}
       <div className="md:hidden">
         <div className="bg-white p-8 rounded-lg relative">
-          <Product_card MobileView={true} product={products[currentIndex]}    />
+          {Products.length > 0 && (
+            <Product_card MobileView={true} product={Products[currentIndex]} />
+          )}
         </div>
 
         <div className="flex justify-center mt-8 space-x-4">
@@ -65,7 +59,7 @@ const BestCollections = () => {
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex space-x-2 items-center">
-            {products.map((_, index) => (
+            {Products.map((_, index) => (
               <span
                 key={index}
                 className={`block w-2 h-2 rounded-full ${
@@ -82,8 +76,8 @@ const BestCollections = () => {
           </button>
         </div>
         <Link
-            to="/collections"
-            className="items-center text-gray-800 hover:text-gray-600 transition-colors"
+          to="/collections"
+          className="items-center text-gray-800 hover:text-gray-600 transition-colors"
         >
           <span className="mr-0">View All </span>
           <ArrowRight className="w-5 h-5" />
