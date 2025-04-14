@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Typography, Button } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import {Link} from "react-router-dom";
 
 export function SignUp(): JSX.Element {
     const [passwordShown, setPasswordShown] = useState(false);
@@ -102,9 +103,9 @@ export function SignUp(): JSX.Element {
                         className="!mt-4 text-center font-normal"
                     >
                         Not registered?{" "}
-                        <a href="#" className="font-medium text-gray-900">
+                        <Link to="/LogIn" className="font-medium text-gray-900">
                             Create account
-                        </a>
+                        </Link>
                     </Typography>
                 </form>
             </div>

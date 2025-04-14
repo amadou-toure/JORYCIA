@@ -1,17 +1,20 @@
 
 import {
-    Card,
-    CardBody,
-    CardHeader,
     Input,
     Button,
     Typography,
 } from "@material-tailwind/react";
 import Product_hero from"../../public/assets/Product_page_Hero.png"
-import { Github } from "lucide-react";
+
 import { Link } from "react-router-dom";
+import {EyeIcon, EyeSlashIcon} from "@heroicons/react/24/solid";
+import {useState} from "react";
+
 
 export default function LoginPage() {
+    const [passwordShown, setPasswordShown] = useState(false);
+    const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+
     return (
         <div className="flex min-h-screen">
             {/* Left side */}
@@ -25,11 +28,31 @@ export default function LoginPage() {
                     </Typography>
 
                     <div className="flex flex-col gap-4">
-                        <Button variant="outlined" className="flex items-center gap-3 justify-center">
-                            <Github className="w-5 h-5" /> Sign in with Github
+                        <Button
+                            variant="outlined"
+                            size="lg"
+                            className="mt-6 flex h-12 items-center justify-center gap-2"
+                            fullWidth
+                        >
+                            <img
+                                src={`https://www.material-tailwind.com/logos/logo-google.png`}
+                                alt="google"
+                                className="h-6 w-6"
+                            />{" "}
+                            sign in with google
                         </Button>
-                        <Button variant="outlined" className="flex items-center gap-3 justify-center">
-                            <Github className="w-5 h-5" /> Sign in with Google
+                        <Button
+                            variant="outlined"
+                            size="lg"
+                            className="flex h-12 items-center justify-center gap-2"
+                            fullWidth
+                        >
+                            <img
+                                src={`https://www.material-tailwind.com/logos/logo-facebook.png`}
+                                alt="facebook"
+                                className="h-6 w-6"
+                            />{" "}
+                            sign in with facebook
                         </Button>
                     </div>
 
@@ -41,11 +64,28 @@ export default function LoginPage() {
 
                     <form className="flex flex-col gap-4">
                         <Input label="Email Address" crossOrigin={"anonymous"} type="email" size="lg" required />
+                        <Input
+                            required
+                            size="lg"
+                            label="Password"
+                            className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
+                            type={passwordShown ? "text" : "password"}
+                            crossOrigin={""}
+                            icon={
+                                <i onClick={togglePasswordVisiblity}>
+                                    {passwordShown ? (
+                                        <EyeIcon className="h-5 w-5" />
+                                    ) : (
+                                        <EyeSlashIcon className="h-5 w-5" />
+                                    )}
+                                </i>
+                            }
+                        />
                         <Button fullWidth>SIGN IN/UP</Button>
                     </form>
 
                     <Typography className="mt-4 text-sm text-center text-gray-600">
-                        Vous n'avez pas de compte ? <Link to="/register" className="text-blue-500 hover:underline">Créer un compte</Link>
+                        Vous n'avez pas de compte ? <Link to="/SignUp" className="text-blue-500 hover:underline">Créer un compte</Link>
                     </Typography>
                 </div>
             </div>

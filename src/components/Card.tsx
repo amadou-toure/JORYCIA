@@ -11,6 +11,9 @@ import { useState } from "react";
 import { CartDrawer } from "./CartDrawer.tsx";
 import { useCart } from "../data/contexts/cart.context.tsx";
 import { Product } from "../models/Product.model";
+import {CustomRating} from "../components/Rating.tsx";
+import {useNavigate} from "react-router-dom";
+
 
 const MouseOverCard = ({
   product,
@@ -18,9 +21,11 @@ const MouseOverCard = ({
   size,
 }: {
   onClick?: () => void;
+  onCardClick?: () => void;
   product: Product;
   size: "l" | "m" | "s";
 }) => {
+  const navigate = useNavigate();
   const containerClasses = {
     l: "w-96 h-[540px]",
     m: "w-80 h-[440px]",
@@ -29,6 +34,7 @@ const MouseOverCard = ({
 
   return (
       <div
+
           className={`${containerClasses[size]} rounded-2xl shadow-md bg-[#fcf9f7] p-4 hover:shadow-lg transition`}
           style={{
             backgroundImage: `url(http://localhost:8080${product.Image[1]})`, // Corrected URL
@@ -37,8 +43,11 @@ const MouseOverCard = ({
             backgroundPosition: "center",
           }}
       >
+        <div onClick={() => (navigate(`/product/${product.ID}`))} className=" w-full h-[80%] mt-0 mb-4">
 
-        <div className="flex justify-end mt-4">
+        </div>
+
+        <div className="flex flex-col justify-end mt-4 mb-0">
           <Button
               onClick={onClick}
               color="black"
@@ -51,18 +60,6 @@ const MouseOverCard = ({
               <p>{product.Price} CA$</p>
             </div>
           </Button>
-        </div>
-        <div className="flex items-center gap-1 mt-2">
-          {[...Array(5)].map((_, i) => (
-            <svg
-              key={i}
-              className={`w-4 h-4 ${i < Math.round(product.Rating) ? 'text-yellow-400' : 'text-gray-300'} fill-current`}
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 .587l3.668 7.431L24 9.75l-6 5.848L19.336 24 12 19.897 4.664 24 6 15.598 0 9.75l8.332-1.732z"/>
-            </svg>
-          ))}
-          <span className="text-sm text-white ml-2">(24 avis)</span>
         </div>
       </div>
 
@@ -98,7 +95,8 @@ const MouseOutCard = ({
       <p className="text-sm text-gray-600 mt-1">
         ❀ {product.Notes.join(' • ')}
       </p>
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-between ml-0 mr-4 ">
+        <CustomRating RatingValue={product.Rating} />
         <span
           className="bg-[#f7cfc5] text-gray-800 px-3 py-1 rounded-full shadow-sm text-sm font-medium"
         >
@@ -119,6 +117,7 @@ const MobileViewCard = ({
   onClick?: () => void;
   size: "l" | "m" | "s";
 }) => {
+  const navigate = useNavigate();
   const cardSizeClasses = {
     l: "w-96 h-[500px]",
     m: "w-80 h-[400px]",
@@ -126,7 +125,7 @@ const MobileViewCard = ({
   };
 
   return (
-      <Card className={`${cardSizeClasses[size]} bg-[#f8f5f1] flex flex-col`}>
+      <Card className={`${cardSizeClasses[size]} bg-[#f8f5f1] flex flex-col`} onClick={() => (navigate(`/product/${product.ID}`))}>
         <CardHeader
             shadow={false}
             floated={false}
@@ -183,78 +182,29 @@ export function Product_card({
 }) {
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const { addToCart, cart } = useCart();
+  const {addToCart, cart} = useCart();
+
   const addProductToCart = () => {
-    console.log("Product to add:", product.Id, typeof product.Id);
-    cart.forEach(item => console.log("In cart:", item.Id, typeof item.Id));
+    console.log("Product to add:", product.ID);
+    cart.forEach(item => console.log("In cart:", item.ID, typeof item.ID));
     setOpen(true);
-    addToCart({...product, Id: product.Id});
+    addToCart({...product, ID: product.ID});
   };
 
- return (
-  <div
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
-  >
-    <CartDrawer Open={open} onclick={() => setOpen(!open)} />
-
-    {MobileView ? (
-      <MobileViewCard product={product} onClick={addProductToCart} size={size} />
-    ) : isHovered ? (
-      <MouseOverCard product={product} onClick={addProductToCart} size={size} />
-    ) : (
-      <MouseOutCard product={product} size={size} />
-    )}
-  </div>
-);
-
-}
-
-const LimitedEditionSection = () => {
   return (
-    <section className="bg-[#fff5f5] py-12 px-6 text-center rounded-2xl mt-10">
-      <h2 className="text-2xl font-bold uppercase mb-4">Édition Limitée</h2>
-      <p className="text-gray-700 max-w-xl mx-auto mb-6">
-        Découvrez notre nouvelle huile de parfum en édition limitée, infusée de safran rare et de bois précieux. Disponible jusqu’à épuisement des stocks.
-      </p>
-      <Button color="black" ripple={false} className="px-6 py-3 text-white rounded-full hover:scale-105 transition">
-        Explorer l’édition
-      </Button>
-    </section>
-  );
-};
+      <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+      >
+        <CartDrawer Open={open} onclick={() => setOpen(!open)}/>
 
-const Footer = () => {
-  return (
-    <footer className="bg-black text-white py-10 px-6 mt-12">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-        <div>
-          <h3 className="font-semibold mb-2">La Maison</h3>
-          <ul>
-            <li>Notre histoire</li>
-            <li>Engagements</li>
-            <li>Ingrédients</li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Support</h3>
-          <ul>
-            <li>Contact</li>
-            <li>Livraison</li>
-            <li>FAQ</li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Suivez-nous</h3>
-          <div className="flex gap-4">
-            <a href="#"><img src="/icons/instagram.svg" alt="Instagram" className="h-5 w-5" /></a>
-            <a href="#"><img src="/icons/facebook.svg" alt="Facebook" className="h-5 w-5" /></a>
-          </div>
-        </div>
+        {MobileView ? (
+            <MobileViewCard  product={product} onClick={addProductToCart} size={size}/>
+        ) : isHovered ? (
+            <MouseOverCard  product={product} onClick={addProductToCart} size={size}/>
+        ) : (
+            <MouseOutCard product={product} size={size}/>
+        )}
       </div>
-      <p className="text-center mt-6 text-xs text-gray-400">© {new Date().getFullYear()} JORYCIA. Tous droits réservés.</p>
-    </footer>
   );
-};
-
-export { LimitedEditionSection, Footer };
+}

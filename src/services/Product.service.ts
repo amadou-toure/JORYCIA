@@ -9,7 +9,7 @@ const ProductService = {
         const products: Product[] = response.data;
         return products;
     },
-    getOneProduct: async (id: number) => {
+    getOneProduct: async (id: string) => {
         const response = await axios.get(PERFUME_API_URL + '/product/' + id);
         const product: Product = { ...response.data, id: id };
         return product;
@@ -18,7 +18,7 @@ const ProductService = {
         const response = await axios.post(PERFUME_API_URL + '/product', product);
         return response.data;
     },
-    DeleteProduct: async (id: number) => {
+    DeleteProduct: async (id: string) => {
         const response = await axios.delete(PERFUME_API_URL + '/product/' + id);
         return response.data;
     }
