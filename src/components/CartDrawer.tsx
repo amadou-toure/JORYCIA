@@ -53,21 +53,21 @@ export function CartDrawer({
           <div className="flex flex-col">
             <div className="bg-white p-6 shadow-sm mb-6 rounded-xl">
               {cart.map((item) => (
-                <div key={item.Id} className="flex items-start justify-between border-b py-4 rounded-xl">
+                <div key={item.ID} className="flex items-start justify-between border-b py-4 rounded-xl">
                   <div className="flex gap-4">
                     <img src={`http://localhost:8080${item.Image[0]}`} alt={item.Name} className="w-16 h-16 object-cover rounded-md" />
                     <div>
                       <h3 className="font-semibold">{item.Name}</h3>
                       <div className="flex items-center gap-2 mt-2">
-                        <button onClick={() => updateQuantity(item.Id, -1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
+                        <button onClick={() => updateQuantity(item.ID, -1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
                           <Minus className="w-4 h-4"/>
                         </button>
                         <span className="text-sm font-medium">{item.Quantity}</span>
-                        <button onClick={() => updateQuantity(item.Id, 1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
+                        <button onClick={() => updateQuantity(item.ID, 1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
                           <Plus className="w-4 h-4"/>
                         </button>
                       </div>
-                      <button onClick={() => removeFromCart(item.Id)} className="mt-2 text-sm text-gray-500 hover:text-red-600">
+                      <button onClick={() => removeFromCart(item.ID)} className="mt-2 text-sm text-gray-500 hover:text-red-600">
                         <X className="inline-block w-4 h-4 mr-1" /> Remove
                       </button>
                     </div>

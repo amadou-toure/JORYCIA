@@ -8,7 +8,6 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>(() => {
     const storedCart = localStorage.getItem('jorycia_cart');
-    console.log('Stored cart from localStorage:', storedCart); // Debug log
     try {
       if (storedCart) {
         const parsedCart = JSON.parse(storedCart);
@@ -16,31 +15,25 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         return parsedCart;
       }
     } catch (error) {
-      console.error('Error parsing cart from localStorage:', error); // Debug log
+      console.error('Error parsing cart:', error); // Debug log
     }
     return [];
   });
 
   useEffect(() => {
-    console.log('CartProvider rendering'); // Debug log
-    console.log('Current cart state:', cart); // Debug log
     localStorage.setItem('jorycia_cart', JSON.stringify(cart));
-    console.log('Updated localStorage with cart:', cart); // Debug log
   }, [cart]);
 
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => String(item.ID) === String(product.ID));
-      console.log("previous cart:",prevCart)
       if (existingItem) {
-        console.log('Product exists, updating quantity.');
         return prevCart.map((item) =>
           String(item.ID) === String(product.ID)
             ? { ...item, Quantity: item.Quantity + 1 }
             : item
         );
       } else {
-        console.log('Product does not exist, adding to cart.');
         return [...prevCart, { ...product, Quantity: 1 }];
       }
     });
@@ -70,9 +63,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       (sum, item) => sum + item.Price * item.Quantity,
       0
   );
-
-  console.log('CartProvider rendering'); // Debug log
-  console.log('Current cart state:', cart); // Debug log
 
   return (
    <CartContext.Provider value={{ cart, updateQuantity, addToCart, removeFromCart, clearCart, subtotal }}>

@@ -3,8 +3,6 @@ import { Filter, ChevronDown } from "lucide-react";
 import {useProduct} from "../data/contexts/Product.context.tsx";
 import {Product_card} from "../components/Card.tsx";
 import page_hero from "../../public/assets/Product_page_Hero.png";
-import Footer from "../components/Footer.tsx";
-//import {Product_card} from "../components/Card.tsx";
 
 
 
@@ -109,7 +107,7 @@ const Collections = () => {
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredProductss.map((products) => (
-            <Product_card product={products} key={products.Id} size='m' />
+            <Product_card product={products} key={products.ID} size='m' />
           ))}
         </div>
 
@@ -121,7 +119,6 @@ const Collections = () => {
           </div>
         )}
       </div>
-        <Footer />
 
     </div>
   );

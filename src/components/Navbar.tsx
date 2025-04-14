@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Search, Menu, X,LogIn } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, LogIn } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
@@ -7,6 +7,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+
+  const transparentRoutes = ['/', '/home','/collections', '/about']; // liste des routes autorisant la transparence
+  const isTransparentAllowed = transparentRoutes.includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,8 +29,8 @@ const Navbar = () => {
     <>
       <nav className={`
         fixed w-full z-[100] transition-all duration-300
-        ${isScrolled 
-          ? 'bg-white shadow-sm' 
+        ${isScrolled || !isTransparentAllowed
+          ? 'bg-white shadow-sm'
           : 'bg-transparent'
         }
       `}>
@@ -35,22 +38,22 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-24">
             <div className="flex items-center gap-4">
               <Menu
-                className={`h-6 w-6 cursor-pointer md:hidden ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+                className={`h-6 w-6 cursor-pointer md:hidden ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               />
               <div className="md:hidden absolute left-1/2 top-6 transform -translate-x-1/2">
                 <Link to="/">
-                  <h1 className={`text-xl font-serif tracking-wide ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
+                  <h1 className={`text-xl font-serif tracking-wide ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`}>
                     JORYCIA
                   </h1>
                 </Link>
               </div>
               <Search
-                className={`h-6 w-6 cursor-pointer ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+                className={`h-6 w-6 cursor-pointer ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`}
                 onClick={() => setIsSearchOpen(true)}
               />
               <X
-                className={`h-6 w-6 cursor-pointer md:hidden ${isScrolled ? 'text-gray-800' : 'text-white'}`}
+                className={`h-6 w-6 cursor-pointer md:hidden ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`}
                 onClick={() => setIsMenuOpen(false)}
               />
               <div className={`
@@ -72,25 +75,25 @@ const Navbar = () => {
 
             <div className="text-center hidden md:block">
               <Link to="/">
-                <h1 className={`text-3xl font-serif tracking-wide ${isScrolled ? 'text-gray-800' : 'text-white'}`}>
+                <h1 className={`text-3xl font-serif tracking-wide ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`}>
                   JORYCIA
                 </h1>
               </Link>
             </div>
 
             <div className="hidden md:flex gap-6 text-sm font-medium">
-              <Link to="/" className={`${isScrolled ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Home</Link>
-              <Link to="/collections" className={`${isScrolled ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Collections</Link>
-              <Link to="/about" className={`${isScrolled ? 'text-gray-800' : 'text-white'} hover:underline transition`}>About Us</Link>
-              <Link to="/contact" className={`${isScrolled ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Contact</Link>
+              <Link to="/" className={`${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Home</Link>
+              <Link to="/collections" className={`${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Collections</Link>
+              <Link to="/about" className={`${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'} hover:underline transition`}>About Us</Link>
+              <Link to="/contact" className={`${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'} hover:underline transition`}>Contact</Link>
             </div>
 
             <div className="flex items-center gap-6">
               <Link to="/cart">
-                <ShoppingBag className={`h-6 w-6 cursor-pointer ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+                <ShoppingBag className={`h-6 w-6 cursor-pointer ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`} />
               </Link>
               <Link to="/LogIn">
-                <LogIn className={`h-6 w-6 cursor-pointer ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+                <LogIn className={`h-6 w-6 cursor-pointer ${isScrolled || !isTransparentAllowed ? 'text-gray-800' : 'text-white'}`} />
               </Link>
             </div>
           </div>
@@ -108,7 +111,7 @@ const Navbar = () => {
         <div className="py-6 space-y-4 text-lg font-medium">
           <Link
             to="/"
-            className={`block px-8 py-2 border-b ${isScrolled 
+            className={`block px-8 py-2 border-b ${isScrolled || !isTransparentAllowed 
               ? 'text-gray-800 border-gray-200 hover:bg-gray-50' 
               : 'text-white border-white/10 hover:bg-white/10'
             }`}
@@ -117,7 +120,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/collections"
-            className={`block px-8 py-2 border-b ${isScrolled 
+            className={`block px-8 py-2 border-b ${isScrolled || !isTransparentAllowed 
               ? 'text-gray-800 border-gray-200 hover:bg-gray-50' 
               : 'text-white border-white/10 hover:bg-white/10'
             }`}
@@ -126,7 +129,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/about"
-            className={`block px-8 py-2 border-b ${isScrolled 
+            className={`block px-8 py-2 border-b ${isScrolled || !isTransparentAllowed 
               ? 'text-gray-800 border-gray-200 hover:bg-gray-50' 
               : 'text-white border-white/10 hover:bg-white/10'
             }`}
@@ -135,7 +138,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/contact"
-            className={`block px-8 py-2 border-b ${isScrolled 
+            className={`block px-8 py-2 border-b ${isScrolled || !isTransparentAllowed 
               ? 'text-gray-800 border-gray-200 hover:bg-gray-50' 
               : 'text-white border-white/10 hover:bg-white/10'
             }`}
@@ -144,7 +147,7 @@ const Navbar = () => {
           </Link>
           <Link
             to="/cart"
-            className={`block px-8 py-2 border-b ${isScrolled 
+            className={`block px-8 py-2 border-b ${isScrolled || !isTransparentAllowed 
               ? 'text-gray-800 border-gray-200 hover:bg-gray-50' 
               : 'text-white border-white/10 hover:bg-white/10'
             }`}

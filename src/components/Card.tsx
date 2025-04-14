@@ -98,7 +98,7 @@ const MouseOutCard = ({
       <div className="flex justify-between ml-0 mr-4 ">
         <CustomRating RatingValue={product.Rating} />
         <span
-          className="bg-[#f7cfc5] text-gray-800 px-3 py-1 rounded-full shadow-sm text-sm font-medium"
+          className="bg-[#111827] text-white px-3 py-1 rounded-full shadow-sm text-sm font-medium"
         >
           {product.Price} CA$
         </span>
