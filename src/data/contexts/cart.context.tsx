@@ -1,33 +1,56 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import {Product} from "../../models/Product.model.ts";
-import {CartContextType} from "../../models/Cart.model.ts";
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Product } from "../../models/Product.model.ts";
+import { CartContextType } from "../../models/Cart.model.ts";
 
-
-
-const CartContext = createContext<CartContextType>({updateQuantity: () => {},cart: [], addToCart: () => {}, removeFromCart: () => {}, clearCart: () => {}, subtotal: 0})
+const CartContext = createContext<CartContextType | undefined>(undefined);
 
 // Define a provider component
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Product[]>(() => {
+    const storedCart = localStorage.getItem('jorycia_cart');
+    console.log('Stored cart from localStorage:', storedCart); // Debug log
+    try {
+      if (storedCart) {
+        const parsedCart = JSON.parse(storedCart);
+        console.log('Parsed cart:', parsedCart); // Debug log
+        return parsedCart;
+      }
+    } catch (error) {
+      console.error('Error parsing cart from localStorage:', error); // Debug log
+    }
+    return [];
+  });
 
-  // Function to add a product to the cart
+  useEffect(() => {
+    console.log('CartProvider rendering'); // Debug log
+    console.log('Current cart state:', cart); // Debug log
+    localStorage.setItem('jorycia_cart', JSON.stringify(cart));
+    console.log('Updated localStorage with cart:', cart); // Debug log
+  }, [cart]);
+
   const addToCart = (product: Product) => {
     setCart((prevCart) => {
-      const productExists = prevCart.some((item) => item.Id === product.Id);
-      if (productExists) {
+      const existingItem = prevCart.find((item) => String(item.Id) === String(product.Id));
+      console.log("previous cart:",prevCart)
+      if (existingItem) {
+        console.log('Product exists, updating quantity.');
         return prevCart.map((item) =>
-            item.Id === product.Id ? {...item, quantity: item.Quantity + 1} : item
+          String(item.Id) === String(product.Id)
+            ? { ...item, Quantity: item.Quantity + 1 }
+            : item
         );
       } else {
-        return [...prevCart, product];
+        console.log('Product does not exist, adding to cart.');
+        return [...prevCart, { ...product, Quantity: 1 }];
       }
     });
   };
+
   const updateQuantity = (id: string, change: number) => {
     setCart((prevItems) =>
         prevItems.map((item) =>
             item.Id === id
-                ? { ...item, quantity: Math.max(1, item.Quantity + change) }
+                ? { ...item, Quantity: Math.max(1, item.Quantity + change) }
                 : item
         )
     );
@@ -48,8 +71,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       0
   );
 
+  console.log('CartProvider rendering'); // Debug log
+  console.log('Current cart state:', cart); // Debug log
+
   return (
-   <CartContext.Provider value={{ cart,updateQuantity, addToCart, removeFromCart, clearCart,subtotal }}>
+   <CartContext.Provider value={{ cart, updateQuantity, addToCart, removeFromCart, clearCart, subtotal }}>
      {children}
    </CartContext.Provider>
   );
@@ -57,5 +83,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
 // Custom hook to use the cart context
 export const useCart = () => {
-  return useContext(CartContext);
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
 };

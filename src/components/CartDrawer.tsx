@@ -13,10 +13,10 @@ export function CartDrawer({
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();
 
   return (
-    <Drawer placement={"right"} open={Open} className="p-4 bg-[#f8f5f1]"   size={500}>
+    <Drawer placement={"right"} open={Open} className="p-4 bg-[#f8f5f1]/80 backdrop-blur-md rounded-l-2xl" size={500}>
       <div className="mb-6 flex items-center justify-between ">
         <Typography variant="h3" color="blue-gray">
-          Cart
+          Your Bag
         </Typography>
         <IconButton variant="text" color="blue-gray" onClick={onclick}>
           <svg
@@ -51,56 +51,28 @@ export function CartDrawer({
           </div>
         ) : (
           <div className="flex flex-col">
-            <div className="bg-white p-6 shadow-sm mb-6">
+            <div className="bg-white p-6 shadow-sm mb-6 rounded-xl">
               {cart.map((item) => (
-                <div
-                  key={item.Id}
-                  className="flex flex-row my-4 mx-0 px-4 border  items-center justify-start "
-                >
-                  <img
-                    src={`http://localhost:8080${item.Image[0]}`}
-                    alt={item.Name}
-                    className="w-[35px] h-auto ml-0 my-3"
-                  />
-                  <div>
-                    <h3 className="font-medium">{item.Name}</h3>
-                    <button
-                        onClick={() => removeFromCart(item.Id)}
-                        className="text-gray-500 hover:text-gray-700 text-sm flex items-center mt-1 md:hidden"
-                    >
-                      <X className="w-4 h-4 mr-1"/>
-                      Remove
-                    </button>
-                    <button
-                        onClick={() => updateQuantity(item.Id, -1)}
-                        className="px-3 py-1 bg-gray-50 hover:bg-gray-100"
-                    >
-                      <Minus className="w-4 h-4"/>
-                    </button>
-                    <span className="px-4 py-1 flex items-center justify-center">
-                          {item.Quantity}
-                        </span>
-                    <button
-                        onClick={() => updateQuantity(item.Id, 1)}
-                        className="px-3 py-1 bg-gray-50 hover:bg-gray-100"
-                    >
-                      <Plus className="w-4 h-4"/>
-                    </button>
-
+                <div key={item.Id} className="flex items-start justify-between border-b py-4 rounded-xl">
+                  <div className="flex gap-4">
+                    <img src={`http://localhost:8080${item.Image[0]}`} alt={item.Name} className="w-16 h-16 object-cover rounded-md" />
+                    <div>
+                      <h3 className="font-semibold">{item.Name}</h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <button onClick={() => updateQuantity(item.Id, -1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
+                          <Minus className="w-4 h-4"/>
+                        </button>
+                        <span className="text-sm font-medium">{item.Quantity}</span>
+                        <button onClick={() => updateQuantity(item.Id, 1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
+                          <Plus className="w-4 h-4"/>
+                        </button>
+                      </div>
+                      <button onClick={() => removeFromCart(item.Id)} className="mt-2 text-sm text-gray-500 hover:text-red-600">
+                        <X className="inline-block w-4 h-4 mr-1" /> Remove
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                     <span className="text-gray-900 font-medium md:text-right">
-                        ${(item.Price * item.Quantity).toFixed(2)}
-                      </span>
-                    <button
-                        onClick={() => removeFromCart(item.Id)}
-                        className="text-gray-500 hover:text-gray-700 hidden md:block"
-                    >
-                      <X className="w-5 h-5"/>
-                    </button>
-                  </div>
-
-
+                  <span className="text-sm font-semibold text-gray-900">${(item.Price * item.Quantity).toFixed(2)}</span>
                 </div>
               ))}
             </div>
@@ -124,23 +96,19 @@ export function CartDrawer({
                   </div>
                 </div>
 
-                <button className="mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors">
+                <button className="mt-4 mb-4 w-full bg-black text-white py-3 px-6 flex items-center justify-center rounded hover:bg-gray-900 transition">
                   <CreditCard className="w-5 h-5 mr-2" />
-                  Proceed to Checkout
+                  Checkout Securely
                 </button>
 
                 <div className="mt-6 text-sm text-gray-500">
-                  <p className="mb-2">We accept:</p>
-                  <div className="flex space-x-2">
-                    <div className="px-2 py-1 border border-gray-200 rounded">
-                      Visa
-                    </div>
-                    <div className="px-2 py-1 border border-gray-200 rounded">
-                      Mastercard
-                    </div>
-                    <div className="px-2 py-1 border border-gray-200 rounded">
-                      PayPal
-                    </div>
+                  <p className="mb-2">We accept</p>
+                  <div className="flex gap-2">
+                    {['Visa', 'Mastercard', 'PayPal'].map((method) => (
+                      <div key={method} className="px-3 py-1 bg-white border rounded shadow-sm">
+                        {method}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

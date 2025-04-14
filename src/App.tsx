@@ -13,8 +13,9 @@ import {ProductProvider} from "./data/contexts/Product.context.tsx";
 function App() {
 
   return (
-      <ProductProvider>
+
           <CartProvider>
+              <ProductProvider>
               <Router>
                   <div className="min-h-screen bg-[#f8f5f1]">
                       <Navbar />
@@ -27,8 +28,9 @@ function App() {
                       </Routes>
                   </div>
               </Router>
+              </ProductProvider>
           </CartProvider>
-      </ProductProvider>
+
 
   );
 }

@@ -2,38 +2,41 @@ import { useState } from "react";
 import { Filter, ChevronDown } from "lucide-react";
 import {useProduct} from "../data/contexts/Product.context.tsx";
 import {Product_card} from "../components/Card.tsx";
+import page_hero from "../../public/assets/Product_page_Hero.png";
+import Footer from "../components/Footer.tsx";
 //import {Product_card} from "../components/Card.tsx";
 
 
 
 const Collections = () => {
-  const [activeFilter, setActiveFilter] = useState<string>("all");
+  const [activeFilter, setActiveFilter] = useState<string>("All");
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
   const {Products} = useProduct();
 
    const Notes = [
-    { id: "1", name: "Fleur d'orange"},
-    { id: "2", name: "Jasmin sambac"},
-    { id: "3", name: "Iris Vanille"},
-    { id: "4", name: "Musc"},
-    { id: "5", name: "Bois de santal"},
-    { id: "6", name: "Ambre"}
+       { id: "All", name: "All" },
+    { id: "Fleur d'orange", name: "Fleur d'orange"},
+    { id: "Jasmin sambac", name: "Jasmin sambac"},
+    { id: "Iris Vanille", name: "Iris Vanille"},
+    { id: "Musc", name: "Musc"},
+    { id: "Bois de santal", name: "Bois de santal"},
+    { id: "Ambre", name: "Ambre"}
   ];
  const filteredProductss =
-    activeFilter === "all"
+    activeFilter === "All"
       ? Products
       : Products.filter(
           (item) => item.Notes.includes(activeFilter)
         );
 
   return (
-    <div>
-      <div className="relative h-[60vh] mb-10">
+    <div className="bg-white">
+      <div className="relative h-[60vh] mb-10 bg-white">
         <img
-          src="https://daralteeb.com.kw/wp-content/uploads/2020/11/Hero-simple.jpg?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+          src={page_hero}
           alt="Collections hero"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover rounded-b-3xl"
         />
         <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
           <h1 className="text-5xl font-serif text-white">Our Collections</h1>
@@ -65,11 +68,11 @@ const Collections = () => {
               <button
                 key={item.id}
                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                  activeFilter === item.id
+                  activeFilter === item.name
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveFilter(item.id)}
+                onClick={() => setActiveFilter(item.name)}
               >
                 {item.name}
               </button>
@@ -87,12 +90,12 @@ const Collections = () => {
                 <button
                   key={category.id}
                   className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                    activeFilter === category.id
+                    activeFilter === category.name
                       ? "bg-gray-900 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                   onClick={() => {
-                    setActiveFilter(category.id);
+                    setActiveFilter(category.name);
                     setFiltersOpen(false);
                   }}
                 >
@@ -105,8 +108,8 @@ const Collections = () => {
 
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredProductss.map((collection) => (
-            <Product_card product={collection} key={collection.Id} />
+          {filteredProductss.map((products) => (
+            <Product_card product={products} key={products.Id} size='m' />
           ))}
         </div>
 
@@ -118,6 +121,8 @@ const Collections = () => {
           </div>
         )}
       </div>
+        <Footer />
+
     </div>
   );
 };

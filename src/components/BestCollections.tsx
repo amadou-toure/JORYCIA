@@ -22,7 +22,7 @@ const BestCollections = () => {
       <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-4xl font-serif mb-3">Our selection</h2>
+            <h2 className="text-4xl font-serif mb-3">Produits les mieux notés</h2>
             <p className="text-gray-600 max-w-2xl">
               Explore our most coveted fragrance, each telling a unique
               olfactory story.
@@ -36,10 +36,13 @@ const BestCollections = () => {
             <ArrowRight className="w-5 h-5" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {Products.slice(0, 4).map((product, index) => (
-            <Product_card key={index} product={product} />
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {[...Products]
+            .sort((a, b) => b.Rating - a.Rating)
+            .slice(0, 4)
+            .map((product, index) => (
+              <Product_card key={index} product={product} />
+            ))}
         </div>
       </div>
 
@@ -47,7 +50,10 @@ const BestCollections = () => {
       <div className="md:hidden">
         <div className="bg-white p-8 rounded-lg relative">
           {Products.length > 0 && (
-            <Product_card MobileView={true} product={Products[currentIndex]} />
+            <Product_card
+              MobileView={true}
+              product={[...Products].sort((a, b) => b.Rating - a.Rating)[currentIndex]}
+            />
           )}
         </div>
 
@@ -59,7 +65,7 @@ const BestCollections = () => {
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex space-x-2 items-center">
-            {Products.map((_, index) => (
+            {[...Products].sort((a, b) => b.Rating - a.Rating).slice(0, 4).map((_, index) => (
               <span
                 key={index}
                 className={`block w-2 h-2 rounded-full ${
