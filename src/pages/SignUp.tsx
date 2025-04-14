@@ -4,7 +4,7 @@ import { Typography, Button } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 
-export function Basic() {
+export function SignUp(): JSX.Element {
     const [passwordShown, setPasswordShown] = useState(false);
     const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
@@ -37,8 +37,8 @@ export function Basic() {
                                 className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
                                 labelProps={{
                                     className: "hidden",
-                                }}
-                            />
+                                }}/>
+                        </label>
                     </div>
                     <div className="mb-6">
                         <label htmlFor="password">
@@ -109,7 +109,7 @@ export function Basic() {
                 </form>
             </div>
         </section>
-    );
+    )
 }
 
-export default Basic;
+export default SignUp;

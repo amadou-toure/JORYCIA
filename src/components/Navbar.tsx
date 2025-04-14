@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Search, Menu, X } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X,LogIn } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
@@ -88,6 +88,9 @@ const Navbar = () => {
             <div className="flex items-center gap-6">
               <Link to="/cart">
                 <ShoppingBag className={`h-6 w-6 cursor-pointer ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
+              </Link>
+              <Link to="/LogIn">
+                <LogIn className={`h-6 w-6 cursor-pointer ${isScrolled ? 'text-gray-800' : 'text-white'}`} />
               </Link>
             </div>
           </div>

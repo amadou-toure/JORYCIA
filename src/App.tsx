@@ -4,8 +4,11 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Collections from './pages/Collections';
 import AboutUs from './pages/AboutUs';
-import Contact from './pages/Contact';
 import Cart from './pages/Cart';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
+import NotFound from './pages/NotFound';
+import Footer from './components/Footer';
 import {CartProvider} from './data/contexts/cart.context.tsx';
 import {ProductProvider} from "./data/contexts/Product.context.tsx";
 
@@ -22,10 +25,13 @@ function App() {
                       <Routes>
                           <Route path="/" element={<Home />} />
                           <Route path="/collections" element={<Collections />} />
+                          <Route path="/LogIn" element={<LogIn />} />
+                          <Route path="/SingUp" element={<SignUp />} />
                           <Route path="/about" element={<AboutUs />} />
-                          <Route path="/contact" element={<Contact />} />
                           <Route path="/cart" element={<Cart />} />
+                          <Route path="*" element={<NotFound />} />
                       </Routes>
+                      <Footer />
                   </div>
               </Router>
               </ProductProvider>
