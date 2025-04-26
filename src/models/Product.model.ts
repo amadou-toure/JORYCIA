@@ -1,11 +1,14 @@
 export interface Product {
-    ID: string;
-    Name: string;
-    Price: number;
-    Notes: string[];
-    Rating: number;
-    Image: string[];
-    Quantity: number;
-    Description: string;
-    // Add other product properties as needed
+  id: string;
+  name: string;
+  price: number;
+  notes: string[];
+  rating: number;
+  image: string[];
+  quantity: number;
+  description: string;
+  metadata: string[];
+  stripeProductID: string;
+  stripePriceID: string;
+  // Add other product properties as needed
 }

@@ -1,32 +1,28 @@
 import { useState } from "react";
 import { Filter, ChevronDown } from "lucide-react";
-import {useProduct} from "../data/contexts/Product.context.tsx";
-import {Product_card} from "../components/Card.tsx";
+import { useProduct } from "../data/contexts/Product.context.tsx";
+import { Product_card } from "../components/Card.tsx";
 import page_hero from "../../public/assets/Product_page_Hero.png";
-
-
 
 const Collections = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
-  const {Products} = useProduct();
+  const { Products } = useProduct();
 
-   const Notes = [
-       { id: "All", name: "All" },
-    { id: "Fleur d'orange", name: "Fleur d'orange"},
-    { id: "Jasmin sambac", name: "Jasmin sambac"},
-    { id: "Iris Vanille", name: "Iris Vanille"},
-    { id: "Musc", name: "Musc"},
-    { id: "Bois de santal", name: "Bois de santal"},
-    { id: "Ambre", name: "Ambre"}
+  const Notes = [
+    { id: "All", name: "All" },
+    { id: "Fleur d'orange", name: "Fleur d'orange" },
+    { id: "Jasmin sambac", name: "Jasmin sambac" },
+    { id: "Iris Vanille", name: "Iris Vanille" },
+    { id: "Musc", name: "Musc" },
+    { id: "Bois de santal", name: "Bois de santal" },
+    { id: "Ambre", name: "Ambre" },
   ];
- const filteredProductss =
+  const filteredProductss =
     activeFilter === "All"
       ? Products
-      : Products.filter(
-          (item) => item.Notes.includes(activeFilter)
-        );
+      : Products.filter((item) => item.Notes.includes(activeFilter));
 
   return (
     <div className="bg-white">
@@ -107,7 +103,7 @@ const Collections = () => {
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredProductss.map((products) => (
-            <Product_card product={products} key={products.ID} size='m' />
+            <Product_card product={products} key={products.ID} size="l" />
           ))}
         </div>
 
@@ -119,7 +115,6 @@ const Collections = () => {
           </div>
         )}
       </div>
-
     </div>
   );
 };

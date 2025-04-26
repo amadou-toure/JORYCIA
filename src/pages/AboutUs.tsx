@@ -1,71 +1,81 @@
 import { Star } from "lucide-react";
 import about_us_hero from "../../public/assets/about_us_hero-90hTxhgG-90hTxhgG.jpg";
+import About_us_image from "../../public/assets/About_us_image.jpeg";
 
 const AboutUs = () => {
   return (
     <div>
       <div className="relative h-[60vh] mb-20">
         <img
-          // https://media.istockphoto.com/id/1402604850/photo/the-word-about-us-on-wooden-cubes-business-communication-and-information.jpg?s=612x612&w=0&k=20&c=Oc2HZUPVJRXFsjTwKVgWY_ddWrKeQUG0KCyKUGef-ig=
           src={about_us_hero}
           alt="About Us hero"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-          <h1 className="text-5xl font-serif text-white">Our Story</h1>
+          <h1 className="text-5xl md:text-6xl font-serif text-white text-center px-4">
+            JORYCIA ESSENCE — L’Art du Parfum
+          </h1>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-20">
           <div>
-            <h2 className="text-4xl font-serif mb-6">
-              Crafting Memories Since 1995
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Founded in 1995, Jorycia has been at the forefront of luxury
-              perfumery, creating exceptional fragrances that capture the
-              essence of sophistication and elegance. Our journey began with a
-              simple vision: to craft scents that tell stories and create
-              lasting memories.
+            <h2 className="text-4xl font-serif mb-6">À propos de nos huiles</h2>
+            <p className="text-gray-600 mb-6 leading-relaxed">
+              Chez <strong>JORYCIA ESSENCE</strong>, nous croyons que le parfum
+              est bien plus qu’un luxe : c’est une expression intime, une
+              empreinte invisible qui accompagne chaque moment de vie...
             </p>
-            <p className="text-gray-600">
-              Today, we continue to source the finest ingredients from around
-              the world, working with master perfumers to create unique
-              compositions that reflect our commitment to excellence and
-              artistry.
+            <h3 className="text-2xl font-semibold font-serif mb-4">
+              L’huile de parfum, sans compromis
+            </h3>
+            <ul className="list-disc list-inside text-gray-600 space-y-2">
+              <li>Tenue longue durée</li>
+              <li>Texture soyeuse</li>
+              <li>Sillage délicat qui épouse la peau</li>
+            </ul>
+            <p className="text-gray-600 mt-4">
+              Parce que le raffinement ne devrait pas être un privilège, mais
+              une sensation partagée.
+            </p>
+            <p className="text-lg font-serif italic text-gray-800 mt-4">
+              ✨ JORYCIA ESSENCE – L’Art du Parfum, Sans Compromis
             </p>
           </div>
           <div>
             <img
-              src="https://images.unsplash.com/photo-1583445095876-b4d8a012a1ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80"
+              src={About_us_image}
               alt="Perfume crafting"
               className="w-full rounded-lg shadow-lg"
             />
           </div>
         </div>
 
-        <div className="text-center py-20 bg-gray-50">
-          <h3 className="text-3xl font-serif mb-8">Our Values</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div>
-              <h4 className="text-xl font-serif mb-4">Artistry</h4>
-              <p className="text-gray-600">
-                Every fragrance is a work of art, carefully composed to create a
-                unique olfactory experience.
+        <div className="text-center py-20 bg-[#fefaf7]">
+          <h3 className="text-3xl font-serif mb-12">Nos valeurs</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div className="flex flex-col items-center">
+              <Star className="w-8 h-8 text-[#c084fc] mb-4" />
+              <h4 className="text-xl font-serif mb-2">Art & Création</h4>
+              <p className="text-gray-600 text-sm">
+                Chaque parfum est une œuvre olfactive, conçue avec passion et
+                précision.
               </p>
             </div>
-            <div>
-              <h4 className="text-xl font-serif mb-4">Sustainability</h4>
-              <p className="text-gray-600">
-                We are committed to sustainable practices in sourcing and
-                production.
+            <div className="flex flex-col items-center">
+              <Star className="w-8 h-8 text-[#34d399] mb-4" />
+              <h4 className="text-xl font-serif mb-2">Durabilité</h4>
+              <p className="text-gray-600 text-sm">
+                Des choix responsables dans la sélection de nos ingrédients et
+                emballages.
               </p>
             </div>
-            <div>
-              <h4 className="text-xl font-serif mb-4">Excellence</h4>
-              <p className="text-gray-600">
-                We maintain the highest standards in every aspect of our craft.
+            <div className="flex flex-col items-center">
+              <Star className="w-8 h-8 text-[#60a5fa] mb-4" />
+              <h4 className="text-xl font-serif mb-2">Excellence</h4>
+              <p className="text-gray-600 text-sm">
+                Un engagement constant pour une qualité sans compromis.
               </p>
             </div>
           </div>

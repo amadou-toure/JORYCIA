@@ -4,6 +4,8 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
+import { GoogleLogin } from '@react-oauth/google';
+
 import Product_hero from"../../public/assets/Product_page_Hero.png"
 
 import { Link } from "react-router-dom";
@@ -28,19 +30,28 @@ export default function LoginPage() {
                     </Typography>
 
                     <div className="flex flex-col gap-4">
-                        <Button
-                            variant="outlined"
-                            size="lg"
-                            className="mt-6 flex h-12 items-center justify-center gap-2"
-                            fullWidth
-                        >
-                            <img
-                                src={`https://www.material-tailwind.com/logos/logo-google.png`}
-                                alt="google"
-                                className="h-6 w-6"
-                            />{" "}
-                            sign in with google
-                        </Button>
+                        {/*<Button*/}
+                        {/*    variant="outlined"*/}
+                        {/*    size="lg"*/}
+                        {/*    className="mt-6 flex h-12 items-center justify-center gap-2"*/}
+                        {/*    fullWidth*/}
+                        {/*>*/}
+                        {/*  */}
+                        {/*    <img*/}
+                        {/*        src={`https://www.material-tailwind.com/logos/logo-google.png`}*/}
+                        {/*        alt="google"*/}
+                        {/*        className="h-6 w-6"*/}
+                        {/*    />{" "}*/}
+                        {/*    sign in with google*/}
+                        {/*</Button>*/}
+                        <GoogleLogin
+                            onSuccess={(credentialResponse) => {
+                                console.log(credentialResponse);
+                            }}
+                            onError={() => {
+                                console.log('Erreur lors de la connexion');
+                            }}
+                        />
                         <Button
                             variant="outlined"
                             size="lg"
@@ -96,7 +107,7 @@ export default function LoginPage() {
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover", // or 'contain' if you prefer the image to be fully visible
                 backgroundPosition: "center",
-            }} className="hidden md:flex w-1/2 items-center justify-center p-8">
+            }} className="hidden md:flex w-1/2 items-center justify-center p-8 rounded-l-3xl">
 
             </div>
         </div>

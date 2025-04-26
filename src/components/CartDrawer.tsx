@@ -2,6 +2,7 @@ import { Drawer, Typography, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CreditCard, Minus, Plus, X } from "lucide-react";
 import { useCart } from "../data/contexts/cart.context.tsx";
+import React from "react";
 
 export function CartDrawer({
   Open = false,
@@ -13,7 +14,12 @@ export function CartDrawer({
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();
 
   return (
-    <Drawer placement={"right"} open={Open} className="p-4 bg-[#f8f5f1]/80 backdrop-blur-md rounded-l-2xl" size={500}>
+    <Drawer
+      placement={"right"}
+      open={Open}
+      className="p-4 bg-[#f8f5f1]/80 backdrop-blur-md rounded-l-2xl"
+      size={500}
+    >
       <div className="mb-6 flex items-center justify-between ">
         <Typography variant="h3" color="blue-gray">
           Your Bag
@@ -53,35 +59,55 @@ export function CartDrawer({
           <div className="flex flex-col">
             <div className="bg-white p-6 shadow-sm mb-6 rounded-xl">
               {cart.map((item) => (
-                <div key={item.ID} className="flex items-start justify-between border-b py-4 rounded-xl">
+                <div
+                  key={item.id}
+                  className="flex items-start justify-between border-b py-4 rounded-xl"
+                >
                   <div className="flex gap-4">
-                    <img src={`http://localhost:8080${item.Image[0]}`} alt={item.Name} className="w-16 h-16 object-cover rounded-md" />
+                    <img
+                      src={item.image[0]}
+                      alt={item.name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
                     <div>
-                      <h3 className="font-semibold">{item.Name}</h3>
+                      <h3 className="font-semibold">{item.name}</h3>
                       <div className="flex items-center gap-2 mt-2">
-                        <button onClick={() => updateQuantity(item.ID, -1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
-                          <Minus className="w-4 h-4"/>
+                        <button
+                          onClick={() => updateQuantity(item.id, -1)}
+                          className="p-1 bg-gray-100 rounded hover:bg-gray-200"
+                        >
+                          <Minus className="w-4 h-4" />
                         </button>
-                        <span className="text-sm font-medium">{item.Quantity}</span>
-                        <button onClick={() => updateQuantity(item.ID, 1)} className="p-1 bg-gray-100 rounded hover:bg-gray-200">
-                          <Plus className="w-4 h-4"/>
+                        <span className="text-sm font-medium">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => updateQuantity(item.id, 1)}
+                          className="p-1 bg-gray-100 rounded hover:bg-gray-200"
+                        >
+                          <Plus className="w-4 h-4" />
                         </button>
                       </div>
-                      <button onClick={() => removeFromCart(item.ID)} className="mt-2 text-sm text-gray-500 hover:text-red-600">
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="mt-2 text-sm text-gray-500 hover:text-red-600"
+                      >
                         <X className="inline-block w-4 h-4 mr-1" /> Remove
                       </button>
                     </div>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900">${(item.Price * item.Quantity).toFixed(2)}</span>
+                  <span className="text-sm font-semibold text-gray-900">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </span>
                 </div>
               ))}
             </div>
 
             <Link
-                to="/collections"
-                className="inline-flex items-center text-gray-600 hover:text-gray-900"
+              to="/collections"
+              className="inline-flex items-center text-gray-600 hover:text-gray-900"
             >
-              <ArrowLeft className="w-4 h-4 mr-2"/>
+              <ArrowLeft className="w-4 h-4 mr-2" />
               Continue Shopping
             </Link>
 
@@ -104,8 +130,11 @@ export function CartDrawer({
                 <div className="mt-6 text-sm text-gray-500">
                   <p className="mb-2">We accept</p>
                   <div className="flex gap-2">
-                    {['Visa', 'Mastercard', 'PayPal'].map((method) => (
-                      <div key={method} className="px-3 py-1 bg-white border rounded shadow-sm">
+                    {["Visa", "Mastercard", "PayPal"].map((method) => (
+                      <div
+                        key={method}
+                        className="px-3 py-1 bg-white border rounded shadow-sm"
+                      >
                         {method}
                       </div>
                     ))}
