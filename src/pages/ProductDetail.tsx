@@ -1,11 +1,4 @@
-import {
-  Button,
-  Typography,
-  Chip,
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+import { Button, Typography, Chip } from "@material-tailwind/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import ProductService from "../services/Product.service.ts";
 import { Product } from "../models/Product.model.ts";
@@ -40,11 +33,11 @@ export default function ProductDetail() {
   if (!product) return <div className="p-10">Chargement du produit...</div>;
 
   return (
-    <div className="flex flex-col md:flex-row px-4 md:px-8 lg:px-16 py-20 gap-8 md:gap-12 bg-[#fefaf7] min-h-screen">
+    <div className="flex flex-col pt-28 md:flex-row px-4 md:px-8 lg:px-16 py-20 gap-8 md:gap-12 bg-[#fefaf7] min-h-screen">
       <CartDrawer Open={open} onclick={() => setOpen(false)} />
 
       {/* Left Sidebar - Thumbnails */}
-      <div className="hidden md:flex flex-col gap-4 w-24 mt-8">
+      <div className="hidden md:flex flex-col gap-4 w-24 ">
         {product.image.map((_, i) => (
           <div
             key={i}
@@ -65,7 +58,7 @@ export default function ProductDetail() {
       </div>
 
       {/* Main Image */}
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-start">
         <div className="relative w-full max-w-lg aspect-square bg-white rounded-3xl shadow-lg overflow-hidden group">
           <img
             src={product.image[index]}
@@ -125,20 +118,6 @@ export default function ProductDetail() {
             />
           </div>
 
-          <div className="flex items-center gap-2 mb-6">
-            <Chip
-              value="Free returns"
-              className="bg-gray-100 text-gray-700 px-3 py-1"
-              icon={<span className="text-xl">📦</span>}
-            />
-            <a
-              href="#"
-              className="text-sm text-blue-500 hover:text-blue-700 transition-colors"
-            >
-              Learn more
-            </a>
-          </div>
-
           <Button
             color="black"
             className="w-full text-white py-3 text-sm rounded-full mb-6 hover:bg-gray-800 transition-colors"
@@ -148,7 +127,7 @@ export default function ProductDetail() {
           </Button>
 
           {/* Notes & FAQ Sections */}
-          <div className="space-y-6 mt-8">
+          <div className="space-y-6">
             {/* Notes Section */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center gap-2 mb-4">
