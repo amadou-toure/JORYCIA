@@ -3,7 +3,7 @@ import { Facebook, Instagram } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="bg-[#f8f5f1] w-full text-gray-800 py-12 mt-12 ">
-      <div className=" mx-auto flex flex-row items-center justify-between w-[90%] gap-8">
+      <div className=" mx-auto flex flex-row flex-wrap lg:flex-row lg:items-center lg:justify-between  w-[90%]  gap-8">
         <div>
           <h3 className="font-serif text-xl mb-4">About Jorycia</h3>
           <p className="text-gray-600 mb-4">
@@ -61,11 +61,11 @@ const Footer = () => {
           <p className="text-gray-600 mb-4">
             Subscribe to receive updates and exclusive offers.
           </p>
-          <div className="flex">
+          <div className="flex flex-row items-center justify-between">
             <input
               type="email"
               placeholder="Your email"
-              className="flex-1 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-gray-500"
+              className="flex-1 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-gray-500 mr-1"
             />
             <button className="px-4 py-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 transition-colors">
               Subscribe

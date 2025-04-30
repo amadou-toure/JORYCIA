@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Product } from "../models/Product.model.ts";
 
-const PERFUME_API_URL = "http://localhost:8080"; // Ensure the URL is correctly formatted
+const PERFUME_API_URL = import.meta.env.VITE_API_URL; // Ensure the URL is correctly formatted
 
 const ProductService = {
   getAllProducts: async () => {
