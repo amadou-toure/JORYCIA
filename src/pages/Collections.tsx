@@ -100,10 +100,22 @@ const Collections = () => {
           </div>
         </div>
 
-        {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {/* Collections Grid Desktop */}
+        <div className="hidden lg:flex lg:flex-row lg:flex-wrap lg:items-center lg:justify-center gap-8 mb-16">
           {filteredProductss.map((products) => (
             <Product_card product={products} key={products.id} size="l" />
+          ))}
+        </div>
+
+        {/* Collections Grid Mobile and Tablet */}
+        <div className="flex flex-col items-center justify-between md:flex-wrap md:flex-row md:items-center md:justify-center lg:hidden gap-8 mb-16">
+          {filteredProductss.map((products) => (
+            <Product_card
+              MobileView={true}
+              product={products}
+              key={products.id}
+              size="m"
+            />
           ))}
         </div>
 
