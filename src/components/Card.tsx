@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-} from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 
 import { useState } from "react";
 import { CartDrawer } from "./CartDrawer.tsx";
@@ -113,65 +106,55 @@ const MobileViewCard = ({
 }) => {
   const navigate = useNavigate();
   const cardSizeClasses = {
-    l: "w-96 h-[500px]",
-    m: "w-80 h-[400px]",
-    s: "w-64 h-[300px]",
+    l: "w-96 h-[580px]",
+    m: "w-80 h-[480px]",
+    s: "w-64 h-[380px]",
   };
 
   return (
-    <Card
-      className={`${cardSizeClasses[size]} bg-[#f8f5f1] flex flex-col`}
+    <div
       onClick={() => navigate(`/product/${product.id}`)}
+      className={`${cardSizeClasses[size]} rounded-2xl shadow-md bg-[#fcf9f7] p-4 hover:shadow-lg transition`}
     >
-      <CardHeader
-        shadow={false}
-        floated={false}
-        className={`h-64 bg-transparent flex items-center justify-center ${cardSizeClasses[size]}`}
-      >
-        <img
-          src={`http://localhost:8080${product.image[0]}`} // Corrected URL and Image path
-          alt={product.name}
-          className="w-full h-auto " // Corrected width class
-        />
-      </CardHeader>
-      <CardBody className="grow flex flex-col justify-center">
-        <div className="mb-2 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
-            {product.name}
-          </Typography>
-          <div className="bg-[#F7CFC5] rounded-3xl p-0 ">
-            <Typography color="blue-gray" className="font-medium text-sm">
-              {product.price} CA$
-            </Typography>
-          </div>
-        </div>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal opacity-75"
-        >
-          {product.notes.join(", ")}
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0">
+      <img
+        src={product.image[0]}
+        alt={product.name}
+        className={`w-full h-auto} rounded-xl mb-4 object-cover`}
+      />
+      <h3 className="text-lg tracking-widest font-semibold text-gray-800 uppercase">
+        {product.name}
+      </h3>
+      <p className="text-sm text-gray-600 mt-1">
+        ❀ {product.notes.join(" • ")}
+      </p>
+      <CustomRating RatingValue={product.rating} />
+      <div className="flex justify-between ml-0 mr-0 ">
+        <span className="bg-[#111827] flex items-center justify-center rounded-full text-white w-20 text-center text-sm">
+          {product.price} CA$
+        </span>
         <Button
-          onClick={onClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.();
+          }}
           color="black"
           ripple={false}
-          fullWidth={true}
-          className="text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 mb-0"
+          fullWidth={false}
+          className="rounded-full text-white shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 flex-row justify-center items-center w-[200px]"
         >
-          Add to Cart
+          <div className="flex flex-row justify-center items-center">
+            <p>Add to Cart</p>
+          </div>
         </Button>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 };
 
 export function Product_card({
   product,
   MobileView = false,
-  size = "m", // Default size is "m"
+  size = "m",
 }: {
   product: Product;
   MobileView?: boolean;

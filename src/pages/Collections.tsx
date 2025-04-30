@@ -22,7 +22,7 @@ const Collections = () => {
   const filteredProductss =
     activeFilter === "All"
       ? Products
-      : Products.filter((item) => item.Notes.includes(activeFilter));
+      : Products.filter((item) => item.notes.includes(activeFilter));
 
   return (
     <div className="bg-white">
@@ -103,7 +103,7 @@ const Collections = () => {
         {/* Collections Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {filteredProductss.map((products) => (
-            <Product_card product={products} key={products.ID} size="l" />
+            <Product_card product={products} key={products.id} size="l" />
           ))}
         </div>
 
