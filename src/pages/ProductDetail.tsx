@@ -5,7 +5,7 @@ import { Product } from "../models/Product.model.ts";
 import { useParams } from "react-router-dom";
 import { CartDrawer } from "../components/CartDrawer.tsx";
 import { useState, useEffect } from "react";
-import { useCart } from "../data/contexts/cart.context.tsx";
+import { useCart } from "../contexts/cart.context.tsx";
 import { CustomRating } from "../components/Rating.tsx";
 
 export default function ProductDetail() {

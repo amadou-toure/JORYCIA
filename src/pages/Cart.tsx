@@ -1,6 +1,6 @@
 import { Minus, Plus, X, ArrowLeft, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useCart } from "../data/contexts/cart.context.tsx";
+import { useCart } from "../contexts/cart.context.tsx";
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();

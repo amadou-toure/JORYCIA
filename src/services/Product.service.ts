@@ -4,7 +4,7 @@ import { Product, ProductCreate } from "../models/Product.model";
 const PERFUME_API_URL = import.meta.env.VITE_API_URL; // Ensure the URL is correctly formatted
 const params = {
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
+    Authorization: `${localStorage.getItem("token")}`,
   },
 };
 

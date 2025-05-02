@@ -1,20 +1,18 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Input, Button, Typography } from "@material-tailwind/react";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import UserService from "../services/User.service";
 import { UserCreate } from "../models/User.model";
 
 const Register = () => {
   const [form, setForm] = useState<Partial<UserCreate>>({
-    FirstName: "",
-    LastName: "",
-    Email: "",
-    Password: "",
-    Phone: "",
-    Address: "",
-    Role: "user",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+    address: "",
+    role: "user",
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -24,18 +22,16 @@ const Register = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const fieldName =
-      e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1);
-    setForm({ ...form, [fieldName]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!/\S+@\S+\.\S+/.test(form.Email || ""))
+    if (!/\S+@\S+\.\S+/.test(form.email || ""))
       newErrors.email = "Adresse email invalide.";
-    if ((form.Password || "").length < 6)
+    if ((form.password || "").length < 6)
       newErrors.password = "Le mot de passe doit faire au moins 6 caractères.";
-    if ((form.Phone || "").length < 8)
+    if ((form.phone || "").length < 8)
       newErrors.phone = "Numéro de téléphone invalide.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -76,11 +72,7 @@ const Register = () => {
                 name={field}
                 type={field === "password" ? "password" : "text"}
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                value={
-                  (form as any)[
-                    field.charAt(0).toUpperCase() + field.slice(1)
-                  ] || ""
-                }
+                value={(form as any)[field] || ""}
                 onChange={handleChange}
                 required
                 className="w-full bg-white text-gray-800 border border-gray-200 rounded-xl px-4 py-2 font-serif shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"

@@ -5,8 +5,8 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import { Product } from "../../models/Product.model.ts";
-import { CartContextType } from "../../models/Cart.model.ts";
+import { Product } from "../models/Product.model.ts";
+import { CartContextType } from "../models/Cart.model.ts";
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 

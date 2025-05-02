@@ -6,17 +6,20 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import RequireAdmin from "./components/RequireAdmin.tsx";
 import Collections from "./pages/Collections";
 import AboutUs from "./pages/AboutUs";
 import Cart from "./pages/Cart";
 import LogIn from "./pages/LogIn";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
-import { CartProvider } from "./data/contexts/cart.context.tsx";
-import { ProductProvider } from "./data/contexts/Product.context.tsx";
+import AdminMenu from "./pages/admin/AdminMenu.tsx";
+import { CartProvider } from "./contexts/cart.context.tsx";
+import { ProductProvider } from "./contexts/Product.context.tsx";
 import ProductDetail from "./pages/ProductDetail";
-import ProductManagement from "./pages/ProductManagement";
+import ProductManagement from "./pages/admin/ProductManagement.tsx";
 import Register from "./pages/Register.tsx";
+import { UserProvider } from "./contexts/user.context.tsx";
 
 function AppRoutes() {
   const location = useLocation();
@@ -28,6 +31,14 @@ function AppRoutes() {
     <>
       {!hideLayout && <Navbar />}
       <Routes>
+        <Route
+          path="/admin"
+          element={
+            <RequireAdmin>
+              <AdminMenu />
+            </RequireAdmin>
+          }
+        />
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:id" element={<ProductDetail />} />
@@ -46,13 +57,15 @@ function AppRoutes() {
 
 function App() {
   return (
-    <CartProvider>
-      <ProductProvider>
-        <Router>
-          <AppRoutes />
-        </Router>
-      </ProductProvider>
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <ProductProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </ProductProvider>
+      </CartProvider>
+    </UserProvider>
   );
 }
 

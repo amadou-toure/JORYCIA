@@ -5,9 +5,9 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { Product } from "../../models/Product.model"; // Change extension if necessary
-import ProductService from "../../services/Product.service"; // Change extension if necessary
-import { ProductContextType } from "../../models/ProductContextType"; // Change extension if necessary
+import { Product } from "../models/Product.model"; // Change extension if necessary
+import ProductService from "../services/Product.service"; // Change extension if necessary
+import { ProductContextType } from "../models/ProductContextType"; // Change extension if necessary
 // Define the type for the ProductContext value
 
 const ProductContext = createContext<ProductContextType>({

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
-import ProductService from "../services/Product.service";
-import { Product, ProductCreate } from "../models/Product.model";
+import ProductService from "../../services/Product.service";
+import { Product, ProductCreate } from "../../models/Product.model";
 import * as base64 from "@ethersproject/base64";
 
 export default function ProductManagement() {
@@ -16,7 +16,7 @@ export default function ProductManagement() {
     notes: [],
     rating: 0,
     image: [],
-    quantity: 0,
+    quantity: 1,
     description: "",
     metadata: [],
     stripeProductID: "",
@@ -30,7 +30,7 @@ export default function ProductManagement() {
     rating: 0,
     image: [],
     description: "",
-    quantity: 0,
+    quantity: 1,
   });
   const [newNote, setNewNote] = useState("");
   //const [newImage, setNewImage] = useState("");
@@ -152,7 +152,6 @@ export default function ProductManagement() {
             }
             required
           />
-
           <div className="space-y-2">
             <Typography variant="h6">Notes</Typography>
             <div className="flex gap-2">

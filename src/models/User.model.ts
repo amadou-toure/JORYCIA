@@ -4,28 +4,34 @@ export interface loginModel {
 }
 export type UserContextType = {
   user: User | null;
+  login: (loginData: loginModel) => Promise<void>;
+  register: (registerData: User) => Promise<void>;
+  logout: () => void;
   isLoading: boolean;
   lastFetched: Date | null;
 };
 export interface User {
-  ID?: number;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Password: string;
-  Phone: string;
-  Address: string;
-  Role: string;
-  CreatedAt?: Date;
-  UpdatedAt?: Date;
+  id?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  role: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-
+export interface LoginResponse {
+  user: User;
+  token: string;
+}
 export interface UserCreate {
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  Password: string;
-  Phone: string;
-  Address: string;
-  Role: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  role: string;
 }

@@ -1,7 +1,7 @@
 import { Drawer, Typography, IconButton } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CreditCard, Minus, Plus, X } from "lucide-react";
-import { useCart } from "../data/contexts/cart.context.tsx";
+import { useCart } from "../contexts/cart.context.tsx";
 
 export function CartDrawer({
   Open = false,

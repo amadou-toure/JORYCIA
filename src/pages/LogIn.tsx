@@ -1,31 +1,28 @@
 import { Input, Button, Typography } from "@material-tailwind/react";
-import { GoogleLogin } from "@react-oauth/google";
+//import { GoogleLogin } from "@react-oauth/google";
 
 import Product_hero from "../../public/assets/Product_page_Hero.png";
 
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import UserService from "../services/User.service";
 import { loginModel } from "../models/User.model";
+import { useUser } from "../contexts/user.context";
 
 export default function LoginPage() {
-  const navigate = useNavigate();
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
-
+  const { login, user } = useUser();
   const handleLogin = async () => {
-    try {
-      await UserService.login(form);
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
+    await login(form);
+    console.log(user?.role);
+    user ? (user.role === "admin" ? navigate("/admin") : navigate("/")) : null;
   };
   const [form, setForm] = useState<loginModel>({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   return (
     <div className="flex min-h-screen">

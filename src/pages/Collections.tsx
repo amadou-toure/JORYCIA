@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Filter, ChevronDown } from "lucide-react";
-import { useProduct } from "../data/contexts/Product.context.tsx";
+import { useProduct } from "../contexts/Product.context.tsx";
 import { Product_card } from "../components/Card.tsx";
 import page_hero from "../../public/assets/Product_page_Hero.png";
 

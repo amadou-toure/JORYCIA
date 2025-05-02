@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Product_card } from "./Card.tsx";
-import { useProduct } from "../data/contexts/Product.context.tsx";
+import { useProduct } from "../contexts/Product.context.tsx";
 
 const BestCollections = () => {
   const { Products } = useProduct();

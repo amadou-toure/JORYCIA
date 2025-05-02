@@ -2,7 +2,7 @@ import { Button } from "@material-tailwind/react";
 
 import { useState } from "react";
 import { CartDrawer } from "./CartDrawer.tsx";
-import { useCart } from "../data/contexts/cart.context.tsx";
+import { useCart } from "../contexts/cart.context.tsx";
 import { Product } from "../models/Product.model";
 import { CustomRating } from "../components/Rating.tsx";
 import { useNavigate } from "react-router-dom";
