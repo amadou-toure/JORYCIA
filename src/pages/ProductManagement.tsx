@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
 import ProductService from "../services/Product.service";
-import { Product } from "../models/Product.model";
+import { Product, ProductCreate } from "../models/Product.model";
+import * as base64 from "@ethersproject/base64";
 
 export default function ProductManagement() {
   const { id } = useParams();
@@ -21,16 +22,25 @@ export default function ProductManagement() {
     stripeProductID: "",
     stripePriceID: "",
   });
-  const [newNote, setNewNote] = useState("");
-  const [newImage, setNewImage] = useState("");
 
+  const [newProduct, setNewProduct] = useState<ProductCreate>({
+    name: "",
+    price: 0,
+    notes: [],
+    rating: 0,
+    image: [],
+    description: "",
+    quantity: 0,
+  });
+  const [newNote, setNewNote] = useState("");
+  //const [newImage, setNewImage] = useState("");
   useEffect(() => {
     if (id) {
       const fetchProduct = async () => {
         setIsLoading(true);
         try {
           const fetchedProduct = await ProductService.getOneProduct(id);
-          setProduct(fetchedProduct);
+          setNewProduct(fetchedProduct);
         } catch (error) {
           console.error("Error fetching product:", error);
         } finally {
@@ -48,7 +58,7 @@ export default function ProductManagement() {
       if (id) {
         await ProductService.updateProduct(id, product);
       } else {
-        await ProductService.createProduct(product);
+        await ProductService.createProduct(newProduct);
       }
       navigate("/admin/products");
     } catch (error) {
@@ -56,11 +66,12 @@ export default function ProductManagement() {
     } finally {
       setIsLoading(false);
     }
+    console.log(newProduct);
   };
 
   const handleAddNote = () => {
     if (newNote.trim()) {
-      setProduct((prev) => ({
+      setNewProduct((prev) => ({
         ...prev,
         notes: [...prev.notes, newNote.trim()],
       }));
@@ -69,24 +80,22 @@ export default function ProductManagement() {
   };
 
   const handleRemoveNote = (index: number) => {
-    setProduct((prev) => ({
+    setNewProduct((prev) => ({
       ...prev,
       notes: prev.notes.filter((_, i) => i !== index),
     }));
   };
-
-  const handleAddImage = () => {
-    if (newImage.trim()) {
-      setProduct((prev) => ({
-        ...prev,
-        image: [...prev.image, newImage.trim()],
-      }));
-      setNewImage("");
-    }
+  const handleAddImage = async (file: File) => {
+    const buffer = await file.arrayBuffer();
+    const base64Image = base64.encode(new Uint8Array(buffer));
+    setNewProduct((prev) => ({
+      ...prev,
+      image: [...prev.image, base64Image],
+    }));
   };
 
   const handleRemoveImage = (index: number) => {
-    setProduct((prev) => ({
+    setNewProduct((prev) => ({
       ...prev,
       image: prev.image.filter((_, i) => i !== index),
     }));
@@ -110,9 +119,9 @@ export default function ProductManagement() {
         <div className="space-y-4">
           <Input
             label="Product Name"
-            value={product.name}
+            value={newProduct.name}
             onChange={(e) =>
-              setProduct((prev) => ({ ...prev, name: e.target.value }))
+              setNewProduct((prev) => ({ ...prev, name: e.target.value }))
             }
             required
             crossOrigin="anonymous"
@@ -121,9 +130,9 @@ export default function ProductManagement() {
           <Input
             label="Price"
             type="number"
-            value={product.price}
+            value={newProduct.price}
             onChange={(e) =>
-              setProduct((prev) => ({
+              setNewProduct((prev) => ({
                 ...prev,
                 price: parseFloat(e.target.value),
               }))
@@ -134,9 +143,12 @@ export default function ProductManagement() {
 
           <Textarea
             label="Description"
-            value={product.description}
+            value={newProduct.description}
             onChange={(e) =>
-              setProduct((prev) => ({ ...prev, description: e.target.value }))
+              setNewProduct((prev) => ({
+                ...prev,
+                description: e.target.value,
+              }))
             }
             required
           />
@@ -155,7 +167,7 @@ export default function ProductManagement() {
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
-              {product.notes.map((note, index) => (
+              {newProduct.notes.map((note, index) => (
                 <div
                   key={index}
                   className="flex items-center gap-1 bg-gray-100 px-3 py-1 rounded-full"
@@ -205,15 +217,23 @@ export default function ProductManagement() {
                       SVG, PNG, JPG or GIF (MAX. 800x400px)
                     </p>
                   </div>
-                  <input id="dropzone-file" type="file" className="hidden" />
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleAddImage(file);
+                    }}
+                  />
                 </label>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {product.image.map((img, index) => (
+              {newProduct.image.map((img, index) => (
                 <div key={index} className="relative group">
                   <img
-                    src={img}
+                    src={`data:image/webp;base64,${img}`}
                     alt={`Product image ${index + 1}`}
                     className="w-full h-32 object-cover rounded-lg"
                   />
@@ -232,35 +252,14 @@ export default function ProductManagement() {
           <Input
             label="Quantity"
             type="number"
-            value={product.quantity}
+            value={newProduct.quantity}
             onChange={(e) =>
-              setProduct((prev) => ({
+              setNewProduct((prev) => ({
                 ...prev,
                 quantity: parseInt(e.target.value),
               }))
             }
             required
-            crossOrigin="anonymous"
-          />
-
-          <Input
-            label="Stripe Product ID"
-            value={product.stripeProductID}
-            onChange={(e) =>
-              setProduct((prev) => ({
-                ...prev,
-                stripeProductID: e.target.value,
-              }))
-            }
-            crossOrigin="anonymous"
-          />
-
-          <Input
-            label="Stripe Price ID"
-            value={product.stripePriceID}
-            onChange={(e) =>
-              setProduct((prev) => ({ ...prev, stripePriceID: e.target.value }))
-            }
             crossOrigin="anonymous"
           />
         </div>
@@ -278,7 +277,7 @@ export default function ProductManagement() {
             type="button"
             color="red"
             variant="outlined"
-            onClick={() => navigate("/admin/products")}
+            onClick={() => navigate("/")}
           >
             Cancel
           </Button>

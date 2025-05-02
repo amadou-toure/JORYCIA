@@ -1,7 +1,12 @@
 import axios from "axios";
-import { Product } from "../models/Product.model.ts";
+import { Product, ProductCreate } from "../models/Product.model";
 
 const PERFUME_API_URL = import.meta.env.VITE_API_URL; // Ensure the URL is correctly formatted
+const params = {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+};
 
 const ProductService = {
   getAllProducts: async () => {
@@ -14,19 +19,27 @@ const ProductService = {
     const product: Product = { ...response.data, ID: ID };
     return product;
   },
-  createProduct: async (product: Product) => {
-    const response = await axios.post(PERFUME_API_URL + "/product", product);
+  createProduct: async (product: ProductCreate) => {
+    const response = await axios.post(
+      PERFUME_API_URL + "/product/",
+      product,
+      params
+    );
     return response.data;
   },
   updateProduct: async (id: string, product: Product) => {
     const response = await axios.put(
       PERFUME_API_URL + "/product/" + id,
-      product
+      product,
+      params
     );
     return response.data;
   },
   deleteProduct: async (ID: string) => {
-    const response = await axios.delete(PERFUME_API_URL + "/product/" + ID);
+    const response = await axios.delete(
+      PERFUME_API_URL + "/product/" + ID,
+      params
+    );
     return response.data;
   },
 };

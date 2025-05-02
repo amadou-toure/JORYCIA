@@ -12,3 +12,13 @@ export interface Product {
   stripePriceID: string;
   // Add other product properties as needed
 }
+
+export interface ProductCreate {
+  name: string;
+  price: number;
+  notes: string[];
+  rating: number;
+  image: string[];
+  description: string;
+  quantity: number;
+}

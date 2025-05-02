@@ -7,10 +7,12 @@ const UserService = {
   login: async (data: loginModel) => {
     const response = await axios.post(JORYCIA_API_URL + "/user/login", data);
     const user: User = response.data;
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", response.data.token);
     return user;
   },
   register: async (newUser: User) => {
-    const response = await axios.post(JORYCIA_API_URL + "/user/login", newUser); // Adjust the endpoint if necessary
+    const response = await axios.post(JORYCIA_API_URL + "/user/", newUser); // Adjust the endpoint if necessary
     const user: User = response.data;
     return user;
   },
