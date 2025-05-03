@@ -5,19 +5,23 @@ import Product_hero from "../../public/assets/Product_page_Hero.png";
 
 import { Link, useNavigate } from "react-router-dom";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginModel } from "../models/User.model";
 import { useUser } from "../contexts/user.context";
 
 export default function LoginPage() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
-  const { login, user } = useUser();
+  const { login, user, isLoading } = useUser();
   const handleLogin = async () => {
     await login(form);
     console.log(user?.role);
-    user ? (user.role === "admin" ? navigate("/admin") : navigate("/")) : null;
   };
+  useEffect(() => {
+    !isLoading &&
+      user &&
+      (user.role === "admin" ? navigate("/admin") : navigate("/"));
+  }, [isLoading]);
   const [form, setForm] = useState<loginModel>({
     email: "",
     password: "",
@@ -82,8 +86,8 @@ export default function LoginPage() {
                 </i>
               }
             />
-            <Button onClick={handleLogin} fullWidth>
-              SIGN IN/UP
+            <Button onClick={handleLogin} fullWidth disabled={isLoading}>
+              {isLoading ? "Loading..." : "SIGN IN/UP"}
             </Button>
           </form>
 

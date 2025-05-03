@@ -16,9 +16,14 @@ const UserService = {
   },
   logout: async () => {},
   getUser: async (ID: string) => {
-    const response = await axios.get(JORYCIA_API_URL + `/user/logout/${ID}`);
+    const response = await axios.get(JORYCIA_API_URL + `/user/${ID}`);
     const user: User = response.data;
     return user;
+  },
+  getUsers: async () => {
+    const response = await axios.get(JORYCIA_API_URL + "/user/");
+    const users: User[] = response.data;
+    return users;
   },
   updateUser: async () => {},
 };

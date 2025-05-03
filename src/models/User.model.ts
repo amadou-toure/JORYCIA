@@ -4,11 +4,13 @@ export interface loginModel {
 }
 export type UserContextType = {
   user: User | null;
+  users: User[] | null;
   login: (loginData: loginModel) => Promise<void>;
   register: (registerData: User) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
   lastFetched: Date | null;
+  RequireAdmin: ({ children }: { children: JSX.Element }) => JSX.Element;
 };
 export interface User {
   id?: number;

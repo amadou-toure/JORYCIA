@@ -1,9 +1,9 @@
-import { useUser } from "../contexts/user.context"; // adapte selon ton projet
+import { useUser } from "../contexts/user.context";
 import { Navigate } from "react-router-dom";
 
 const RequireAdmin = ({ children }: { children: JSX.Element }) => {
-  const { user } = useUser(); // tu dois avoir un contexte utilisateur
-
+  const { user } = useUser();
+  console.log(user);
   if (!user || user.role !== "admin") {
     return <Navigate to="/" />;
   }

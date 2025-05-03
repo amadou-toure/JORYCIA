@@ -1,35 +1,63 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { User, loginModel, UserContextType } from "../models/User.model.ts";
 import UserService from "../services/User.service.ts";
+import { Navigate } from "react-router-dom";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
+
+export const RequireAdmin = ({ children }: { children: JSX.Element }) => {
+  const { user } = useUser();
+  console.log(user);
+  if (!user || user.role !== "admin") {
+    return <Navigate to="/" />;
+  }
+  return children;
+};
 
 // Define a provider component
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setLoading] = useState(true);
+  const [users, setUsers] = useState<User[] | null>(null);
+  const [isLoading, setLoading] = useState(false);
   const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
-  //const navigate = useNavigate();
   const login = async (loginData: loginModel): Promise<void> => {
     setLoading(true);
-
     try {
       const response = await UserService.login(loginData);
       setUser(response.user);
       setLastFetched(new Date());
+      localStorage.setItem("userId", response.user.id);
       localStorage.setItem("token", response.token);
-      //if (response.user.role === "admin") {
-      //  navigate("/admin");
-      //} else {
-      //  navigate("/");
-      //}
+      return response.user;
     } catch (error) {
       console.error("Login failed:", error);
       setUser(null);
+      throw error;
     } finally {
+      await fetchUser();
       setLoading(false);
     }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+  const fetchUser = async (): Promise<void> => {
+    const response = await UserService.getUser(
+      localStorage.getItem("userId") || ""
+    );
+    setUser(response);
+    console.log(response);
+  };
+  const getUsers = async (): Promise<void> => {
+    const response = await UserService.getUsers();
+    setUsers(response);
   };
 
   const register = async (registerData: User) => {
@@ -49,17 +77,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     setLastFetched(null);
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
   };
 
   return (
     <UserContext.Provider
       value={{
         user,
+        users,
         isLoading,
         lastFetched,
         login,
         register,
         logout,
+        RequireAdmin,
       }}
     >
       {children}
