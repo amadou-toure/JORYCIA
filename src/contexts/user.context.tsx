@@ -47,6 +47,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     fetchUser();
+    getUsers();
+    console.log("users feched");
   }, []);
   const fetchUser = async (): Promise<void> => {
     const response = await UserService.getUser(

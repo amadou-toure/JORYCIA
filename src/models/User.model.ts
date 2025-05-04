@@ -13,7 +13,7 @@ export type UserContextType = {
   RequireAdmin: ({ children }: { children: JSX.Element }) => JSX.Element;
 };
 export interface User {
-  id?: number;
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;

@@ -20,7 +20,7 @@ import ProductManagement from "./pages/admin/ProductManagement.tsx";
 import Register from "./pages/Register.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
 import { UserProvider } from "./contexts/user.context.tsx";
-
+import UserManagement from "./pages/admin/UserManagement.tsx";
 function AppRoutes() {
   const location = useLocation();
   const hideLayout =
@@ -40,14 +40,21 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/admin/product/new"
+          path="/admin/product"
           element={
             <RequireAdmin>
               <ProductManagement />
             </RequireAdmin>
           }
         />
-
+        <Route
+          path="/admin/user/"
+          element={
+            <RequireAdmin>
+              <UserManagement />
+            </RequireAdmin>
+          }
+        />
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:id" element={<ProductDetail />} />

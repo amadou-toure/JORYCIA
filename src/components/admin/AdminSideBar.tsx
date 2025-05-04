@@ -31,10 +31,16 @@ export const Sidebar: React.FC = () => {
 
   return (
     <>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
       {/* Mobile menu button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="md:hidden p-2 m-2 text-white"
+        className="md:hidden fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
       >
         <Menu className="w-6 h-6" />
       </button>
@@ -61,11 +67,11 @@ export const Sidebar: React.FC = () => {
           </h3>
           <div className="space-y-1">
             {navItem(
-              "/admin/product/new",
+              "/admin/product",
               <ShoppingCart className="w-5 h-5" />,
               "Products"
             )}
-            {navItem("/admin/users", <Users className="w-5 h-5" />, "Users")}
+            {navItem("/admin/user", <Users className="w-5 h-5" />, "Users")}
             {navItem(
               "/admin/admins",
               <UserPlus className="w-5 h-5" />,

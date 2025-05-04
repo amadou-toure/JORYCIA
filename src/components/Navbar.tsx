@@ -205,15 +205,15 @@ const Navbar = () => {
                         {/* <li className="px-4 py-2 hover:bg-gray-100">Message Center({user.messagesCount})</li> */}
                         <li className="px-4 py-2 hover:bg-gray-100">Payment</li>
                         {/* <li className="px-4 py-2 hover:bg-gray-100">Wish List</li> */}
-                        <li className="px-4 py-2 hover:bg-gray-100">
-                          My Coupons
-                        </li>
+                        {/* <li className="px-4 py-2 hover:bg-gray-100">
+                            My Coupons
+                          </li> */}
                       </ul>
                       <div className="border-t">
                         <ul className="py-1 text-sm text-gray-600">
-                          <li className="px-4 py-2 hover:bg-gray-100">
-                            Settings
-                          </li>
+                          {/* <li className="px-4 py-2 hover:bg-gray-100">
+                                  Settings
+                                </li> */}
                           {/* <li className="px-4 py-2 hover:bg-gray-100">AliExpress Business</li> */}
                           {/* <li className="px-4 py-2 hover:bg-gray-100">DS Center</li> */}
                           {/* <li className="px-4 py-2 hover:bg-gray-100">Seller Log In</li> */}
@@ -342,7 +342,7 @@ const Navbar = () => {
                   </ul>
                   <div className="border-t">
                     <ul className="py-1 text-sm text-gray-600">
-                      <li className="px-4 py-2 hover:bg-gray-100">Settings</li>
+                      {/* <li className="px-4 py-2 hover:bg-gray-100">Settings</li> */}
                       {/* <li className="px-4 py-2 hover:bg-gray-100">AliExpress Business</li> */}
                       {/* <li className="px-4 py-2 hover:bg-gray-100">DS Center</li> */}
                       {/* <li className="px-4 py-2 hover:bg-gray-100">Seller Log In</li> */}

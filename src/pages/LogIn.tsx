@@ -86,7 +86,12 @@ export default function LoginPage() {
                 </i>
               }
             />
-            <Button onClick={handleLogin} fullWidth disabled={isLoading}>
+            <Button
+              onClick={handleLogin}
+              fullWidth
+              loading={isLoading}
+              disabled={isLoading}
+            >
               {isLoading ? "Loading..." : "SIGN IN/UP"}
             </Button>
           </form>

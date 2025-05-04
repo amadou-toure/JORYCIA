@@ -321,7 +321,7 @@ export default function ProductManagement() {
   const renderCreateForm = () => (
     <form
       onSubmit={handleSubmit}
-      className="relative space-y-6 w-[90%] max-w-2xl bg-white mb-8 p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto max-h-[90vh]"
+      className="relative space-y-6 w-[90%] max-w-2xl bg-white mt-[10%] mb-8 p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto max-h-[80%]"
     >
       <Typography variant="h2" className="mb-8">
         Create New Product
@@ -490,14 +490,16 @@ export default function ProductManagement() {
         <Button
           type="submit"
           color="black"
-          className="w-full"
+          loading={isLoading}
           disabled={isLoading}
+          className="w-full"
         >
-          Create Product
+          {isLoading ? "Loading..." : "Create Product"}
         </Button>
         <Button
           type="button"
           color="black"
+          disabled={isLoading}
           variant="outlined"
           onClick={() => {
             setIsOpen(false);
@@ -527,10 +529,10 @@ export default function ProductManagement() {
   }
 
   return (
-    <div className="container relative mx-auto px-4 py-20">
+    <div className="container relative mx-auto px-4 pt-[10%]">
       <div className="flex flex-col justify-between items-center mb-8">
         {isOpen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 pt-[200px]">
+          <div className="fixed inset-0 flex items-center justify-center z-50 ">
             <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
             {product.id !== "" ? renderEditForm() : renderCreateForm()}
           </div>
@@ -543,7 +545,7 @@ export default function ProductManagement() {
               <img
                 src={p.image[0]}
                 alt="img"
-                className="w-16 h-16 object-cover rounded"
+                className="w-16 h-16 object-cover rounded "
               />
             ),
             name: p.name,
