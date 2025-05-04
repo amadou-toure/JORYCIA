@@ -15,6 +15,10 @@ const ProductContext = createContext<ProductContextType>({
   isLoading: false,
   lastFetched: null,
   refreshProducts: () => {},
+  fetchOneProduct: (id: string) => Promise.resolve(undefined),
+  createProduct: (product: Product) => Promise.resolve(undefined),
+  updateProduct: (id: string, product: Product) => Promise.resolve(undefined),
+  deleteProduct: (id: string) => Promise.resolve(undefined),
 });
 
 // Define a provider component
@@ -23,6 +27,57 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastFetched, setLastFetched] = useState<Date | null>(null);
 
+  const fetchOneProduct = async (id: string) => {
+    setIsLoading(true);
+    try {
+      const fetchedProduct: Product = await ProductService.getOneProduct(id);
+      return fetchedProduct;
+    } catch (error) {
+      console.error("Error fetching product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteProduct = async (id: string) => {
+    setIsLoading(true);
+    try {
+      await ProductService.deleteProduct(id);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const createProduct = async (product: Product) => {
+    setIsLoading(true);
+    try {
+      const createdProduct: Product = await ProductService.createProduct(
+        product
+      );
+      return createdProduct;
+    } catch (error) {
+      console.error("Error creating product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateProduct = async (id: string, product: Product) => {
+    setIsLoading(true);
+    try {
+      const updatedProduct: Product = await ProductService.updateProduct(
+        id,
+        product
+      );
+      return updatedProduct;
+    } catch (error) {
+      console.error("Error updating product:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
@@ -49,7 +104,16 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ProductContext.Provider
-      value={{ Products, isLoading, lastFetched, refreshProducts }}
+      value={{
+        Products,
+        isLoading,
+        lastFetched,
+        refreshProducts,
+        fetchOneProduct,
+        createProduct,
+        updateProduct,
+        deleteProduct,
+      }}
     >
       {children}
     </ProductContext.Provider>

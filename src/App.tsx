@@ -13,7 +13,6 @@ import Cart from "./pages/Cart";
 import LogIn from "./pages/LogIn";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
-import AdminMenu from "./pages/admin/AdminMenu.tsx";
 import { CartProvider } from "./contexts/cart.context.tsx";
 import { ProductProvider } from "./contexts/Product.context.tsx";
 import ProductDetail from "./pages/ProductDetail";
@@ -48,14 +47,7 @@ function AppRoutes() {
             </RequireAdmin>
           }
         />
-        <Route
-          path="/admin/product/:id"
-          element={
-            <RequireAdmin>
-              <ProductManagement />
-            </RequireAdmin>
-          }
-        />
+
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:id" element={<ProductDetail />} />
