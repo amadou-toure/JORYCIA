@@ -27,7 +27,7 @@ export default function ProductDetail() {
   const addProductToCart = () => {
     if (!product) return;
     setOpen(true);
-    addToCart(product);
+    addToCart(product, 1);
   };
 
   if (!product) return <div className="p-10">Chargement du produit...</div>;

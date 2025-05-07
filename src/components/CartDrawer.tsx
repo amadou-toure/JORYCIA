@@ -41,7 +41,7 @@ export function CartDrawer({
         </IconButton>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {cart.length === 0 ? (
+        {cart.length === 0 || null || undefined || "" ? (
           <div className="text-center py-16">
             <h2 className="text-2xl font-serif mb-6">Your cart is empty</h2>
             <p className="text-gray-600 mb-8">
@@ -59,20 +59,20 @@ export function CartDrawer({
             <div className="bg-white p-6 shadow-sm mb-6 rounded-xl">
               {cart.map((item) => (
                 <div
-                  key={item.id}
+                  key={item.product.id}
                   className="flex items-start justify-between border-b py-4 rounded-xl"
                 >
                   <div className="flex gap-4">
                     <img
-                      src={item.image[0]}
-                      alt={item.name}
+                      src={item.product.image[0]}
+                      alt={item.product.name}
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div>
-                      <h3 className="font-semibold">{item.name}</h3>
+                      <h3 className="font-semibold">{item.product.name}</h3>
                       <div className="flex items-center gap-2 mt-2">
                         <button
-                          onClick={() => updateQuantity(item.id, -1)}
+                          onClick={() => updateQuantity(item.product.id, -1)}
                           className="p-1 bg-gray-100 rounded hover:bg-gray-200"
                         >
                           <Minus className="w-4 h-4" />
@@ -81,14 +81,14 @@ export function CartDrawer({
                           {item.quantity}
                         </span>
                         <button
-                          onClick={() => updateQuantity(item.id, 1)}
+                          onClick={() => updateQuantity(item.product.id, 1)}
                           className="p-1 bg-gray-100 rounded hover:bg-gray-200"
                         >
                           <Plus className="w-4 h-4" />
                         </button>
                       </div>
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.product.id)}
                         className="mt-2 text-sm text-gray-500 hover:text-red-600"
                       >
                         <X className="inline-block w-4 h-4 mr-1" /> Remove
@@ -96,7 +96,7 @@ export function CartDrawer({
                     </div>
                   </div>
                   <span className="text-sm font-semibold text-gray-900">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ${(item.product.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
               ))}

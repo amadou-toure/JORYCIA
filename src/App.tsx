@@ -21,6 +21,7 @@ import Register from "./pages/Register.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
 import { UserProvider } from "./contexts/user.context.tsx";
 import UserManagement from "./pages/admin/UserManagement.tsx";
+import { PaymentProvider } from "./contexts/payment.context.tsx";
 function AppRoutes() {
   const location = useLocation();
   const hideLayout =
@@ -75,9 +76,11 @@ function App() {
     <UserProvider>
       <CartProvider>
         <ProductProvider>
-          <Router>
-            <AppRoutes />
-          </Router>
+          <PaymentProvider>
+            <Router>
+              <AppRoutes />
+            </Router>
+          </PaymentProvider>
         </ProductProvider>
       </CartProvider>
     </UserProvider>

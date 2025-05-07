@@ -165,10 +165,9 @@ export function Product_card({
   const { addToCart, cart } = useCart();
 
   const addProductToCart = () => {
-    console.log("Product to add:", product.id);
-    cart.forEach((item) => console.log("In cart:", item.id, typeof item.id));
+    cart.forEach((item) => console.log("In cart:", item));
     setOpen(true);
-    addToCart({ ...product, id: product.id });
+    addToCart(product, 1);
   };
 
   return (

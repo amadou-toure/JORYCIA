@@ -17,7 +17,7 @@ export default function ProductManagement() {
     notes: [],
     rating: 0,
     image: [],
-    quantity: 1,
+    inStock: 1,
     description: "",
     metadata: [],
     stripeProductID: "",
@@ -31,7 +31,7 @@ export default function ProductManagement() {
     rating: 0,
     image: [],
     description: "",
-    quantity: 1,
+    inStock: 1,
   });
   const [newNote, setNewNote] = useState("");
 
@@ -130,7 +130,7 @@ export default function ProductManagement() {
             rating: 0,
             image: [],
             description: "",
-            quantity: 1,
+            inStock: 1,
             metadata: [],
             stripeProductID: "",
             stripePriceID: "",
@@ -174,13 +174,13 @@ export default function ProductManagement() {
         required
       />
       <Input
-        label="Quantity"
+        label="In Stock"
         type="number"
-        value={product.quantity}
+        value={product.inStock}
         onChange={(e) =>
           setProduct((prev) => ({
             ...prev,
-            quantity: parseInt(e.target.value),
+            inStock: parseInt(e.target.value),
           }))
         }
         required
@@ -305,7 +305,7 @@ export default function ProductManagement() {
               rating: 0,
               image: [],
               description: "",
-              quantity: 1,
+              inStock: 1,
               metadata: [],
               stripeProductID: "",
               stripePriceID: "",
@@ -337,7 +337,7 @@ export default function ProductManagement() {
             rating: 0,
             image: [],
             description: "",
-            quantity: 1,
+            inStock: 1,
           });
         }}
       />
@@ -380,11 +380,11 @@ export default function ProductManagement() {
       <Input
         label="Quantity"
         type="number"
-        value={newProduct.quantity}
+        value={newProduct.inStock}
         onChange={(e) =>
           setNewProduct((prev) => ({
             ...prev,
-            quantity: parseInt(e.target.value),
+            inStock: parseInt(e.target.value),
           }))
         }
         required
@@ -510,7 +510,7 @@ export default function ProductManagement() {
               rating: 0,
               image: [],
               description: "",
-              quantity: 1,
+              inStock: 1,
             });
           }}
         >
@@ -550,7 +550,7 @@ export default function ProductManagement() {
             ),
             name: p.name,
             description: p.description,
-            quantity: p.quantity,
+            inStock: p.inStock,
             price: `${p.price} $CA`,
             notes: p.notes.join(", "),
             id: p.id,
@@ -559,7 +559,7 @@ export default function ProductManagement() {
             "image",
             "name",
             "description",
-            "quantity",
+            "inStock",
             "price",
             "notes",
           ]}

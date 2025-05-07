@@ -20,6 +20,9 @@ const ProductService = {
     return product;
   },
   createProduct: async (product: ProductCreate) => {
+    if (params.headers.Authorization === null) {
+      throw new Error("User not authenticated");
+    }
     const response = await axios.post(
       PERFUME_API_URL + "/product/",
       product,

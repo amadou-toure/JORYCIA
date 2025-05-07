@@ -5,7 +5,7 @@ export interface Product {
   notes: string[];
   rating: number;
   image: string[];
-  quantity: number;
+  inStock: number;
   description: string;
   metadata: string[];
   stripeProductID: string;
@@ -20,5 +20,5 @@ export interface ProductCreate {
   rating: number;
   image: string[];
   description: string;
-  quantity: number;
+  inStock: number;
 }

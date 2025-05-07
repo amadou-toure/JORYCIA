@@ -1,10 +1,11 @@
 import { Minus, Plus, X, ArrowLeft, CreditCard } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCart } from "../contexts/cart.context.tsx";
+import { usePayment } from "../contexts/payment.context.tsx";
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();
-
+  const { proceedToPayment } = usePayment();
   const shipping = 12;
   const total = subtotal + shipping;
 
@@ -38,21 +39,29 @@ const Cart = () => {
                 </div>
 
                 {cart.map((item) => (
-                  <div key={item.id} className="py-6 border-b last:border-b-0">
+                  <div
+                    key={item.product?.id ?? "unknown"}
+                    className="py-6 border-b last:border-b-0"
+                  >
                     <div className="md:grid md:grid-cols-6 flex flex-col gap-4">
                       <div className="md:col-span-3 flex">
                         <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded-md">
                           <img
-                            src={item.image[0]}
-                            alt={item.name}
+                            src={item.product?.image?.[0] ?? ""}
+                            alt={item.product?.name ?? ""}
                             className="w-full h-full object-cover"
                           />
                         </div>
                         <div className="ml-4 flex flex-col justify-center">
-                          <h3 className="text-lg font-medium">{item.name}</h3>
+                          <h3 className="text-lg font-medium">
+                            {item.product?.name ?? ""}
+                          </h3>
                           {/*<p className="text-sm text-gray-500">{item.size}</p>*/}
                           <button
-                            onClick={() => removeFromCart(item.id)}
+                            onClick={() =>
+                              item.product?.id &&
+                              removeFromCart(item.product.id)
+                            }
                             className="text-gray-500 hover:text-gray-700 text-sm flex items-center mt-1 md:hidden"
                           >
                             <X className="w-4 h-4 mr-1" />
@@ -62,13 +71,18 @@ const Cart = () => {
                       </div>
 
                       <div className="flex items-center justify-center">
-                        <span className="text-gray-900">${item.price}</span>
+                        <span className="text-gray-900">
+                          ${item.product?.price ?? 0}
+                        </span>
                       </div>
 
                       <div className="flex items-center justify-center">
                         <div className="flex border border-gray-300">
                           <button
-                            onClick={() => updateQuantity(item.id, -1)}
+                            onClick={() =>
+                              item.product?.id &&
+                              updateQuantity(item.product.id, -1)
+                            }
                             className="px-3 py-1 bg-gray-50 hover:bg-gray-100"
                           >
                             <Minus className="w-4 h-4" />
@@ -77,7 +91,10 @@ const Cart = () => {
                             {item.quantity}
                           </span>
                           <button
-                            onClick={() => updateQuantity(item.id, 1)}
+                            onClick={() =>
+                              item.product?.id &&
+                              updateQuantity(item.product.id, 1)
+                            }
                             className="px-3 py-1 bg-gray-50 hover:bg-gray-100"
                           >
                             <Plus className="w-4 h-4" />
@@ -87,10 +104,15 @@ const Cart = () => {
 
                       <div className="flex items-center justify-between md:justify-end">
                         <span className="text-gray-900 font-medium md:text-right">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          $
+                          {((item.product?.price ?? 0) * item.quantity).toFixed(
+                            2
+                          )}
                         </span>
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() =>
+                            item.product?.id && removeFromCart(item.product.id)
+                          }
                           className="text-gray-500 hover:text-gray-700 hidden md:block"
                         >
                           <X className="w-5 h-5" />
@@ -129,7 +151,10 @@ const Cart = () => {
                   </div>
                 </div>
                 <span className="text-gray-600">Methode de paiement</span>
-                <button className="rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors">
+                <button
+                  onClick={() => proceedToPayment(cart)}
+                  className="rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors"
+                >
                   <CreditCard className="w-5 h-5 mr-2" />
                   proceder au paiement
                 </button>
