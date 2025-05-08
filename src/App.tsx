@@ -18,6 +18,7 @@ import { ProductProvider } from "./contexts/Product.context.tsx";
 import ProductDetail from "./pages/ProductDetail";
 import ProductManagement from "./pages/admin/ProductManagement.tsx";
 import Register from "./pages/Register.tsx";
+import SuccessPayment from "./pages/SuccessPayment.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
 import { UserProvider } from "./contexts/user.context.tsx";
 import UserManagement from "./pages/admin/UserManagement.tsx";
@@ -59,7 +60,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-
+        <Route path="/success" element={<SuccessPayment />} />
         <Route path="/LogIn" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutUs />} />

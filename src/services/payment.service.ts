@@ -17,9 +17,9 @@ export const paymentService = {
     const checkoutSession = response.data;
     return checkoutSession;
   },
-  verifyPayment: async (sessionId: string): Promise<void> => {
+  getCheckoutSession: async (sessionId: string): Promise<object> => {
     const response = await axios.get(
-      API_URL + `/payment/VerifyPayment/${sessionId}`,
+      API_URL + `/payment/GetCheckoutSession/${sessionId}`,
       params
     );
     return response.data;

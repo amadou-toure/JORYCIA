@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
 import { paymentService } from "../services/payment.service";
 import { useCart } from "./cart.context";
 import { CartItem } from "../models/Cart.model";
@@ -6,7 +12,8 @@ import { loadStripe } from "@stripe/stripe-js";
 interface PaymentContextType {
   isVerifying: boolean;
   error: string | null;
-  // verifySession: (sessionId: string) => Promise<void>;
+  checkoutSession: object;
+  getCheckoutSession: (sessionId: string) => void;
   proceedToPayment: (cart: CartItem[]) => void;
 }
 
@@ -15,32 +22,10 @@ const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [checkoutSession, setCheckoutSession] = useState<object>({});
 
   const { clearCart } = useCart();
 
-  // const verifySession = useCallback(
-  //   async (sessionId: string) => {
-  //     if (!sessionId) {
-  //       setError("No session ID found");
-  //       return;
-  //     }
-
-  //     setIsVerifying(true);
-  //     setError(null);
-
-  //     try {
-  //       await verifyPayment(sessionId);
-  //       clearCart();
-  //     } catch (err) {
-  //       setError(
-  //         err instanceof Error ? err.message : "Failed to verify payment"
-  //       );
-  //     } finally {
-  //       setIsVerifying(false);
-  //     }
-  //   },
-  //   [clearCart]
-  // );
   const stripePromise = loadStripe(
     "pk_test_51RFfkU1rBEIPaA7x3zBDB934wHBo7GP8PWNwaSHdTkcT5kJPygmCzRRlpqPN6PBjkyaflo2uaVUPyUsHmrLkHnOz00GirAFY83"
   );
@@ -53,7 +38,6 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
 
     if (result.error) {
       console.error(result.error.message);
-      // Gère l'erreur d'affichage si besoin
     }
   }
   const proceedToPayment = async (cart: CartItem[]) => {
@@ -65,12 +49,28 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       throw error;
     }
   };
+  const getCheckoutSession = async (sessionId: string) => {
+    try {
+      setIsVerifying(true);
+      const checkoutSession = await paymentService.getCheckoutSession(
+        sessionId
+      );
+      setCheckoutSession(checkoutSession);
+      setIsVerifying(false);
+    } catch (error: any) {
+      console.error("Failed to get checkout session:", error);
+      setError(error);
+      setIsVerifying(false);
+    }
+  };
+
   return (
     <PaymentContext.Provider
       value={{
         isVerifying,
         error,
-        // verifySession,
+        checkoutSession,
+        getCheckoutSession,
         proceedToPayment,
       }}
     >

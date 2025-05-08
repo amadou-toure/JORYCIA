@@ -2,11 +2,20 @@ import { useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { CheckCircle2 } from "lucide-react";
 import { usePayment } from "../contexts/payment.context";
+import { loadStripe } from "@stripe/stripe-js";
 
 const SuccessPayment = () => {
   const [searchParams] = useSearchParams();
-  const { isVerifying, error } = usePayment();
+  const { isVerifying, error, checkoutSession, getCheckoutSession } =
+    usePayment();
   const sessionId = searchParams.get("session_id");
+
+  useEffect(() => {
+    getCheckoutSession(sessionId as string);
+    {
+      console.log(checkoutSession);
+    }
+  }, []);
 
   if (isVerifying) {
     return (
@@ -69,7 +78,7 @@ const SuccessPayment = () => {
             to="/collections"
             className="inline-block bg-gray-900 text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors"
           >
-            Continue Shopping
+            ] Continue Shopping
           </Link>
           <div>
             <Link
