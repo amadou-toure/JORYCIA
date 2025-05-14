@@ -13,7 +13,6 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const RequireAdmin = ({ children }: { children: JSX.Element }) => {
   const { user } = useUser();
-  console.log(user);
   if (!user || user.role !== "admin") {
     return <Navigate to="/" />;
   }
@@ -55,7 +54,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       localStorage.getItem("userId") || ""
     );
     setUser(response);
-    console.log(response);
   };
   const getUsers = async (): Promise<void> => {
     const response = await UserService.getUsers();

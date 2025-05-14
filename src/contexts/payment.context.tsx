@@ -1,19 +1,14 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useCallback,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import { paymentService } from "../services/payment.service";
 import { useCart } from "./cart.context";
 import { CartItem } from "../models/Cart.model";
 import { loadStripe } from "@stripe/stripe-js";
+import { CheckoutSessionType } from "../models/Checkout.model";
 interface PaymentContextType {
   isVerifying: boolean;
   error: string | null;
-  checkoutSession: object;
-  getCheckoutSession: (sessionId: string) => void;
+  checkoutSession: CheckoutSessionType | null;
+  getCheckoutSession: (sessionId: string | null) => void;
   proceedToPayment: (cart: CartItem[]) => void;
 }
 
@@ -22,9 +17,12 @@ const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   const [isVerifying, setIsVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [checkoutSession, setCheckoutSession] = useState<object>({});
-
-  const { clearCart } = useCart();
+  const [checkoutSession, setCheckoutSession] = useState<CheckoutSessionType>({
+    status: "",
+    payment_status: "",
+    shipping_address: "",
+    session_id: "",
+  });
 
   const stripePromise = loadStripe(
     "pk_test_51RFfkU1rBEIPaA7x3zBDB934wHBo7GP8PWNwaSHdTkcT5kJPygmCzRRlpqPN6PBjkyaflo2uaVUPyUsHmrLkHnOz00GirAFY83"
@@ -33,9 +31,7 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
   async function redirectToCheckout(sessionId: string) {
     const stripe = await stripePromise;
     if (!stripe) throw new Error("Stripe failed to load");
-
     const result = await stripe.redirectToCheckout({ sessionId });
-
     if (result.error) {
       console.error(result.error.message);
     }
@@ -49,18 +45,29 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
       throw error;
     }
   };
-  const getCheckoutSession = async (sessionId: string) => {
+  const getCheckoutSession = async (sessionId: string | null) => {
     try {
       setIsVerifying(true);
-      const checkoutSession = await paymentService.getCheckoutSession(
-        sessionId
-      );
-      setCheckoutSession(checkoutSession);
+      const checkoutSession =
+        sessionId != null
+          ? await paymentService.getCheckoutSession(sessionId)
+          : null;
+      if (checkoutSession == null) {
+        throw error;
+      }
+      sessionId != null
+        ? setCheckoutSession({
+            status: checkoutSession.status,
+            payment_status: checkoutSession.payment_status,
+            shipping_address: checkoutSession.shipping_address,
+            session_id: sessionId,
+          })
+        : null;
       setIsVerifying(false);
     } catch (error: any) {
       console.error("Failed to get checkout session:", error);
-      setError(error);
-      setIsVerifying(false);
+      // You can also rethrow the error if you want it to be handled by the outer catch block
+      throw error;
     }
   };
 

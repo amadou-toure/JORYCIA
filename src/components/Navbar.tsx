@@ -198,9 +198,12 @@ const Navbar = () => {
                         </button>
                       </div>
                       <ul className="py-1 text-sm text-gray-700">
-                        <li className="px-4 py-2 hover:bg-gray-100">
+                        <Link
+                          to="/orders"
+                          className="px-4 py-2 hover:bg-gray-100"
+                        >
                           My Orders
-                        </li>
+                        </Link>
                         {/* <li className="px-4 py-2 hover:bg-gray-100">My Coins</li> */}
                         {/* <li className="px-4 py-2 hover:bg-gray-100">Message Center({user.messagesCount})</li> */}
                         <li className="px-4 py-2 hover:bg-gray-100">Payment</li>

@@ -52,9 +52,9 @@ const AboutUs = () => {
           </div>
         </div>
 
-        <div className="text-center py-20 bg-[#fefaf7]">
+        <div className="text-center w-full py-20 bg-[#f8f5f1]">
           <h3 className="text-3xl font-serif mb-12">Nos valeurs</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+          <div className="flex flex-row justify-center items-center w-full">
             <div className="flex flex-col items-center">
               <Star className="w-8 h-8 text-[#c084fc] mb-4" />
               <h4 className="text-xl font-serif mb-2">Art & Création</h4>

@@ -1,5 +1,10 @@
-import { Drawer, Typography, IconButton } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import {
+  Drawer,
+  Typography,
+  IconButton,
+  button,
+} from "@material-tailwind/react";
+import { Link, Navigate } from "react-router-dom";
 import { ArrowLeft, CreditCard, Minus, Plus, X } from "lucide-react";
 import { useCart } from "../contexts/cart.context.tsx";
 
@@ -120,25 +125,10 @@ export function CartDrawer({
                     <span className="font-medium">${subtotal.toFixed(2)}</span>
                   </div>
                 </div>
-
-                <button className="mt-4 mb-4 w-full bg-black text-white py-3 px-6 flex items-center justify-center rounded hover:bg-gray-900 transition">
-                  <CreditCard className="w-5 h-5 mr-2" />
+                <Link to="/cart">
+                  <CreditCard className="w-5 h-5 mr-2 cursor-pointer" />
                   Checkout Securely
-                </button>
-
-                <div className="mt-6 text-sm text-gray-500">
-                  <p className="mb-2">We accept</p>
-                  <div className="flex gap-2">
-                    {["Visa", "Mastercard", "PayPal"].map((method) => (
-                      <div
-                        key={method}
-                        className="px-3 py-1 bg-white border rounded shadow-sm"
-                      >
-                        {method}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

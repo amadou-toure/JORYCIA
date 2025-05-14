@@ -84,7 +84,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       const fetchedProducts: Product[] = await ProductService.getAllProducts();
       setProducts(fetchedProducts.sort((a, b) => b.rating - a.rating));
       setLastFetched(new Date());
-      console.log(Products);
     } catch (error) {
       console.error("Error fetching products:", error);
     } finally {
@@ -99,7 +98,6 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const refreshProducts = async () => {
     setIsLoading(true);
     await fetchProducts();
-    console.log(Products);
   };
 
   return (

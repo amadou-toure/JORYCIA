@@ -11,13 +11,12 @@ export const paymentService = {
     console.log(cart);
     const response = await axios.post(
       API_URL + "/payment/ProceedToPayment/",
-      cart,
-      params
+      cart
     );
     const checkoutSession = response.data;
     return checkoutSession;
   },
-  getCheckoutSession: async (sessionId: string): Promise<object> => {
+  getCheckoutSession: async (sessionId: string): Promise<any> => {
     const response = await axios.get(
       API_URL + `/payment/GetCheckoutSession/${sessionId}`,
       params

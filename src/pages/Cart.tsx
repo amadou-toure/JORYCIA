@@ -152,7 +152,9 @@ const Cart = () => {
                 </div>
                 <span className="text-gray-600">Methode de paiement</span>
                 <button
-                  onClick={() => proceedToPayment(cart)}
+                  onClick={() => {
+                    proceedToPayment(cart);
+                  }}
                   className="rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
                   <CreditCard className="w-5 h-5 mr-2" />

@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Grid,
-  Users,
-  UserPlus,
-  ShoppingCart,
-  Server,
-  Menu,
-  X,
-} from "lucide-react";
+import { Grid, Users, ShoppingCart, Server, Menu, X } from "lucide-react";
 
 export const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,57 +22,53 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <>
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
+    <div>
       {/* Mobile menu button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="md:hidden fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
-      >
-        <Menu className="w-6 h-6" />
-      </button>
-
-      <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-[#111827] text-white transform transition-transform duration-200 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          md:relative md:translate-x-0 flex flex-col h-full`}
-      >
-        {/* Close button on mobile */}
+      {!isOpen && (
         <button
-          onClick={() => setIsOpen(false)}
-          className="md:hidden absolute top-4 right-4 text-white"
+          onClick={() => setIsOpen(true)}
+          className="md:hidden fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
         >
-          <X className="w-6 h-6" />
+          <Menu className="w-6 h-6" />
         </button>
-        <div className="px-6 py-4">
-          <h2 className="text-xl font-bold">Menu</h2>
-          {navItem("/dashboard", <Grid className="w-5 h-5" />, "Dashboard")}
-        </div>
-        <nav className="px-6 mt-6">
-          <h3 className="uppercase text-xs font-semibold opacity-70 mb-2">
-            Management
-          </h3>
-          <div className="space-y-1">
-            {navItem(
-              "/admin/product",
-              <ShoppingCart className="w-5 h-5" />,
-              "Products"
-            )}
-            {navItem("/admin/user", <Users className="w-5 h-5" />, "Users")}
-            {navItem(
-              "/admin/admins",
-              <UserPlus className="w-5 h-5" />,
-              "Admins"
-            )}
-            {navItem("/admin/orders", <Server className="w-5 h-5" />, "Orders")}
+      )}
+      {isOpen ? (
+        <aside
+          className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#111827] transform transition-transform duration-200 ease-in-out ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } md:relative md:translate-x-0 md:block h-full`}
+        >
+          {/* Close button on mobile */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="md:hidden flex w-full p-4 items-center justify-end text-white"
+          >
+            <X />
+          </button>
+          <div className="px-6 py-4">
+            <h2 className="text-xl font-bold">Menu</h2>
+            {navItem("/dashboard", <Grid className="w-5 h-5" />, "Dashboard")}
           </div>
-        </nav>
-      </aside>
-    </>
+          <nav className="px-6 mt-6">
+            <h3 className="uppercase text-xs text-white font-semibold opacity-70 mb-2">
+              Management
+            </h3>
+            <div className="space-y-1">
+              {navItem(
+                "/admin/product",
+                <ShoppingCart className="w-5 h-5" />,
+                "Products"
+              )}
+              {navItem("/admin/user", <Users className="w-5 h-5" />, "Users")}
+              {navItem(
+                "/admin/orders",
+                <Server className="w-5 h-5" />,
+                "Orders"
+              )}
+            </div>
+          </nav>
+        </aside>
+      ) : null}
+    </div>
   );
 };

@@ -101,7 +101,7 @@ export default function Dashboard() {
             ),
             name: p.name,
             description: p.description,
-            quantity: p.quantity,
+            quantity: p.inStock,
             price: `${p.price} $CA`,
             notes: p.notes.join(", "),
           }))}

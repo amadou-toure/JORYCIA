@@ -17,11 +17,15 @@ import { CartProvider } from "./contexts/cart.context.tsx";
 import { ProductProvider } from "./contexts/Product.context.tsx";
 import ProductDetail from "./pages/ProductDetail";
 import ProductManagement from "./pages/admin/ProductManagement.tsx";
+import { OrderProvider } from "./contexts/Order.context.tsx";
 import Register from "./pages/Register.tsx";
 import SuccessPayment from "./pages/SuccessPayment.tsx";
 import Dashboard from "./pages/admin/Dashboard.tsx";
+import OrderManagement from "./pages/admin/OrderManagement.tsx";
 import { UserProvider } from "./contexts/user.context.tsx";
 import UserManagement from "./pages/admin/UserManagement.tsx";
+import Orders from "./pages/Orders.tsx";
+import OrderDetail from "./pages/OrderDetail";
 import { PaymentProvider } from "./contexts/payment.context.tsx";
 function AppRoutes() {
   const location = useLocation();
@@ -57,7 +61,16 @@ function AppRoutes() {
             </RequireAdmin>
           }
         />
+        <Route
+          path="/admin/orders"
+          element={
+            <RequireAdmin>
+              <OrderManagement />
+            </RequireAdmin>
+          }
+        />
         <Route path="/" element={<Home />} />
+        <Route path="/orders/:id" element={<OrderDetail />} />
         <Route path="/collections" element={<Collections />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/success" element={<SuccessPayment />} />
@@ -65,6 +78,7 @@ function AppRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideLayout && <Footer />}
@@ -78,9 +92,11 @@ function App() {
       <CartProvider>
         <ProductProvider>
           <PaymentProvider>
-            <Router>
-              <AppRoutes />
-            </Router>
+            <OrderProvider>
+              <Router>
+                <AppRoutes />
+              </Router>
+            </OrderProvider>
           </PaymentProvider>
         </ProductProvider>
       </CartProvider>
