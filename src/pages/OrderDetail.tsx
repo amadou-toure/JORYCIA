@@ -100,7 +100,7 @@ function ProductCardList({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchOneProduct(order.productId).then((p) => {
+    fetchOneProduct(order.productId ?? "").then((p) => {
       setProduct(p || null);
       setIsLoading(false);
     });

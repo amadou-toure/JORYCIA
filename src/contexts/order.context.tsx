@@ -1,7 +1,7 @@
 import OrderService from "../services/Order.service";
 import { CartItem } from "../models/Cart.model";
 import { useUser } from "./user.context";
-import { CreateOrderInput, Order, OrderItem } from "../models/Order.model";
+import { CreateOrderInput, Order } from "../models/Order.model";
 import {
   createContext,
   ReactNode,
