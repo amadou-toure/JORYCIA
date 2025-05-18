@@ -8,6 +8,7 @@ import {
 import { Product } from "../models/Product.model"; // Change extension if necessary
 import ProductService from "../services/Product.service"; // Change extension if necessary
 import { ProductContextType } from "../models/ProductContextType"; // Change extension if necessary
+import MessageBox from "../components/MessageBox";
 // Define the type for the ProductContext value
 
 const ProductContext = createContext<ProductContextType>({
@@ -35,6 +36,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error fetching product:", error);
     } finally {
+      refreshProducts();
       setIsLoading(false);
     }
   };
@@ -46,6 +48,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error deleting product:", error);
     } finally {
+      refreshProducts();
       setIsLoading(false);
     }
   };
@@ -60,6 +63,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error creating product:", error);
     } finally {
+      refreshProducts();
       setIsLoading(false);
     }
   };
@@ -75,6 +79,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error("Error updating product:", error);
     } finally {
+      refreshProducts();
       setIsLoading(false);
     }
   };
@@ -98,6 +103,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const refreshProducts = async () => {
     setIsLoading(true);
     await fetchProducts();
+    return (
+      <MessageBox
+        isOpen={true}
+        title="Success"
+        message="Products refreshed"
+        buttons={null}
+      />
+    );
   };
 
   return (

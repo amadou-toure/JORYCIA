@@ -3,6 +3,8 @@ import { Sidebar } from "../../components/admin/AdminSideBar";
 import { ArrowUpRight, Box, ShoppingCart, Users } from "lucide-react";
 import { useUser } from "../../contexts/user.context";
 import { useProduct } from "../../contexts/Product.context";
+import { useOrder } from "../../contexts/Order.context";
+import { Order } from "../../models/Order.model";
 import Table from "../../components/Table";
 //import { useOrder } from "../../contexts/Order.context";
 interface Metric {
@@ -15,7 +17,54 @@ interface Metric {
 export default function Dashboard() {
   const { users } = useUser();
   const { Products } = useProduct();
-  // const { orders } = useOrder();
+  const { orders } = useOrder();
+  const data =
+    orders?.map((o: Order) => {
+      let statusClass = "";
+      switch (o.status) {
+        case "processing":
+          statusClass =
+            "inline-block px-2 py-1 text-sm font-semibold bg-yellow-100 text-yellow-800 rounded-full";
+          break;
+        case "shipped":
+          statusClass =
+            "inline-block px-2 py-1 text-sm font-semibold bg-blue-100 text-blue-800 rounded-full";
+          break;
+        case "delivered":
+          statusClass =
+            "inline-block px-2 py-1 text-sm font-semibold bg-green-100 text-green-800 rounded-full";
+          break;
+        case "cancelled":
+          statusClass =
+            "inline-block px-2 py-1 text-sm font-semibold bg-red-100 text-red-800 rounded-full";
+          break;
+        default:
+          statusClass =
+            "inline-block px-2 py-1 text-sm font-semibold bg-gray-100 text-gray-800 rounded-full";
+      }
+
+      return {
+        id: o.id,
+        userId: o.userId || "Guest",
+        items: o.items
+          .map((i) => `${i.productName} x ${i.quantity}`)
+          .join(", "),
+        total: `$${o.total.toFixed(2)}`,
+        paymentStatus: o.paymentStatus,
+        status: <span className={statusClass}>{o.status}</span>,
+        createdAt: o.createdAt ? new Date(o.createdAt).toLocaleString() : "",
+      };
+    }) || [];
+
+  const columns = [
+    "id",
+    "userId",
+    "total",
+    "paymentStatus",
+    "status",
+    "createdAt",
+  ];
+
   const [metrics, setMetrics] = useState<Metric[]>([
     {
       label: "Total Users",
@@ -42,19 +91,22 @@ export default function Dashboard() {
     setMetrics([
       {
         label: "Total Users",
-        value: 4215,
+        value: users?.length || 0,
         icon: <Users className="w-6 h-6 text-blue-500" />,
         change: "+12% this month",
       },
       {
         label: "Total Products",
-        value: 548,
+        value:
+          Products && Products.length > 0
+            ? Products.length * Products.reduce((acc, p) => acc + p.inStock, 0)
+            : 0,
         icon: <Box className="w-6 h-6 text-green-500" />,
         change: "+8% this month",
       },
       {
         label: "Total Orders",
-        value: 278,
+        value: orders?.length || 0,
         icon: <ShoppingCart className="w-6 h-6 text-purple-500" />,
         change: "+5% this month",
       },
@@ -129,6 +181,9 @@ export default function Dashboard() {
           }
           columns={["name", "email", "phone", "address", "role"]}
         />
+        {/* Commandes */}
+
+        <Table name="Orders" data={data} columns={columns} />
       </div>
     </div>
   );

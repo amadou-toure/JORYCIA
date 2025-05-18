@@ -1,17 +1,36 @@
 import { useState, useEffect } from "react";
-import { Button, Input, Textarea, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Spinner,
+  Textarea,
+  Typography,
+  Alert,
+} from "@material-tailwind/react";
 import { Product, ProductCreate } from "../../models/Product.model";
 import * as base64 from "@ethersproject/base64";
 import { useProduct } from "../../contexts/Product.context";
 import Table from "../../components/Table";
 import { X } from "lucide-react";
+import MessageBox from "../../components/MessageBox";
 
 export default function ProductManagement() {
   const [isOpen, setIsOpen] = useState(false);
-  const { Products, fetchOneProduct, createProduct, updateProduct, isLoading } =
-    useProduct();
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    buttons: null as React.ReactNode | null,
+  });
+  const {
+    Products,
+    fetchOneProduct,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    isLoading,
+  } = useProduct();
   const [product, setProduct] = useState<Product>({
-    id: "",
     name: "",
     price: 0,
     notes: [],
@@ -34,25 +53,72 @@ export default function ProductManagement() {
     inStock: 1,
   });
   const [newNote, setNewNote] = useState("");
+  const [selected, setSelected] = useState(false);
 
   const handleSelectedProduct = (id: string) => {
+    setSelected(!selected); //bascule entre true et false. permet d'afficher le bouton modifier se suprimer
     fetchOneProduct(id).then((selectedProduct) => {
       if (selectedProduct) {
         setProduct(selectedProduct);
-        setIsOpen(true);
-        console.log(selectedProduct);
+        console.log(product);
       }
     });
   };
 
+  const handleUpdateButton = () => {
+    setIsOpen(true);
+  };
+
+  const handleDeleteButton = () => {
+    if (product.id) {
+      console.log("handleDeleteButton: ", product.id, dialog.isOpen);
+      setDialog({
+        isOpen: true,
+        title: "Delete Product",
+        message: "Are you sure you want to delete this product?",
+        buttons: (
+          <div className="flex flex-row gap-2 ml-5 ">
+            <Button
+              onClick={() => {
+                if (product.id) {
+                  deleteProduct(product.id);
+                  setDialog({ ...dialog, isOpen: false });
+                }
+                setDialog({ ...dialog, isOpen: false });
+                setIsOpen(false);
+              }}
+              color="red"
+            >
+              confirmer
+            </Button>
+            <Button onClick={() => setDialog({ ...dialog, isOpen: false })}>
+              Annuler
+            </Button>
+          </div>
+        ),
+      });
+    } else {
+      alert("Please select a product to delete");
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (product.id !== "") {
-      updateProduct(product.id, product);
-      setIsOpen(false);
-    } else {
-      createProduct(newProduct as Product);
-      setIsOpen(false);
+    if (product.id) {
+      if (product.id !== "") {
+        updateProduct(product.id, product);
+        setIsOpen(false);
+      } else {
+        createProduct(newProduct as Product);
+        isLoading
+          ? MessageBox({
+              isOpen: true,
+              title: "Error",
+              message: "Please wait for the product to be created",
+              buttons: null,
+            })
+          : setIsOpen(false);
+      }
     }
   };
   const handleAddNote = () => {
@@ -113,7 +179,7 @@ export default function ProductManagement() {
   const renderEditForm = () => (
     <form
       onSubmit={handleSubmit}
-      className="relative space-y-6 w-[90%] max-w-2xl bg-white mb-8 p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto max-h-[90vh]"
+      className="relative space-y-6 w-[90%] max-w-2xl bg-white mt-[10%] mb-8 p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto max-h-[80%]"
     >
       <Typography variant="h2" className="mb-8">
         Edit Product
@@ -493,6 +559,7 @@ export default function ProductManagement() {
           loading={isLoading}
           disabled={isLoading}
           className="w-full"
+          onClick={() => handleSubmit}
         >
           {isLoading ? "Loading..." : "Create Product"}
         </Button>
@@ -523,13 +590,19 @@ export default function ProductManagement() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        Loading...
+        <Spinner height={100} width={100} />
       </div>
     );
   }
 
   return (
     <div className="container relative mx-auto px-4 pt-[10%]">
+      <MessageBox
+        isOpen={dialog.isOpen}
+        title={dialog.title}
+        message={dialog.message}
+        buttons={dialog.buttons}
+      />
       <div className="flex flex-col justify-between items-center mb-8">
         {isOpen && (
           <div className="fixed inset-0 flex items-center justify-center z-50 ">
@@ -564,7 +637,20 @@ export default function ProductManagement() {
             "notes",
           ]}
         />
-        <Button onClick={() => setIsOpen(true)}>Add a new product</Button>
+        <div className="flex justify-center items-center w-[50%]">
+          {selected ? (
+            <>
+              <Button color="white" onClick={handleUpdateButton}>
+                Modifier le produit
+              </Button>
+              <Button color="red" onClick={handleDeleteButton}>
+                Supprimerle produit
+              </Button>
+            </>
+          ) : (
+            <Button onClick={() => setIsOpen(true)}>Ajouter un produit</Button>
+          )}
+        </div>
       </div>
     </div>
   );

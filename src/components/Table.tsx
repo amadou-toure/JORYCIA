@@ -38,7 +38,6 @@ export default function Table({
                     setSelectedRow(p.id);
                     setSelectedId?.(p.id);
                   }
-                  console.log(selectedRow);
                 }}
                 key={p.id}
                 className="border-t hover:bg-gray-100"

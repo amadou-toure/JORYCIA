@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Grid, Users, ShoppingCart, Server, Menu, X } from "lucide-react";
+import {
+  IconButton,
+  Button,
+  Drawer,
+  Typography,
+  button,
+} from "@material-tailwind/react";
 
 export const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,48 +34,71 @@ export const Sidebar: React.FC = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
+          className="fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
         >
           <Menu className="w-6 h-6" />
         </button>
       )}
-      {isOpen ? (
-        <aside
-          className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#111827] transform transition-transform duration-200 ease-in-out ${
-            isOpen ? "translate-x-0" : "-translate-x-full"
-          } md:relative md:translate-x-0 md:block h-full`}
-        >
-          {/* Close button on mobile */}
-          <button
+      <Drawer
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="p-4 bg-[#f8f5f1] rounder-xl"
+      >
+        <div className="mb-6 flex items-center justify-between">
+          <Grid className="w-5 h-5" />
+          <Typography variant="h5" color="blue-gray">
+            Menu
+          </Typography>
+          <IconButton
+            variant="text"
+            color="blue-gray"
             onClick={() => setIsOpen(false)}
-            className="md:hidden flex w-full p-4 items-center justify-end text-white"
           >
-            <X />
-          </button>
-          <div className="px-6 py-4">
-            <h2 className="text-xl font-bold">Menu</h2>
-            {navItem("/dashboard", <Grid className="w-5 h-5" />, "Dashboard")}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </IconButton>
+        </div>
+        <div className="flex flex-col items-start justify-between pt-[25%] gap-2">
+          <Typography variant="h5" color="blue-gray">
+            Management
+          </Typography>
+          <div className="space-y-1 flex flex-col w-full">
+            <Link
+              to="/admin/product"
+              className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors text-black hover:bg-white"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              <span>Products</span>
+            </Link>
+            <Link
+              to="/admin/user"
+              className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors text-black hover:bg-white"
+            >
+              <Users className="w-5 h-5" />
+              <span>Users</span>
+            </Link>
+            <Link
+              to="/admin/orders"
+              className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors text-black hover:bg-white"
+            >
+              <Server className="w-5 h-5" />
+              <span>Orders</span>
+            </Link>
           </div>
-          <nav className="px-6 mt-6">
-            <h3 className="uppercase text-xs text-white font-semibold opacity-70 mb-2">
-              Management
-            </h3>
-            <div className="space-y-1">
-              {navItem(
-                "/admin/product",
-                <ShoppingCart className="w-5 h-5" />,
-                "Products"
-              )}
-              {navItem("/admin/user", <Users className="w-5 h-5" />, "Users")}
-              {navItem(
-                "/admin/orders",
-                <Server className="w-5 h-5" />,
-                "Orders"
-              )}
-            </div>
-          </nav>
-        </aside>
-      ) : null}
+        </div>
+      </Drawer>
     </div>
   );
 };
