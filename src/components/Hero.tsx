@@ -25,7 +25,14 @@ const Hero = () => {
           transition: "transform 0.1s ease-out",
         }}
       >
-        <video
+        <img
+          src="/assets/cover2.webp"
+          className="w-full h-full object-cover"
+          style={{
+            willChange: "transform",
+          }}
+        />
+        {/* <video
           src={Hero_video}
           className="w-full h-[120vh] object-cover"
           autoPlay
@@ -34,7 +41,7 @@ const Hero = () => {
           style={{
             willChange: "transform",
           }}
-        />
+        /> */}
 
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
       </div>
@@ -53,9 +60,6 @@ const Hero = () => {
           <p className="text-xl text-white mb-8 transform transition-transform duration-500 hover:scale-105">
             Luxurious fragrances crafted with the finest ingredients
           </p>
-          <button className="bg-white text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
-            Shop
-          </button>
         </div>
       </div>
     </div>
