@@ -1,7 +1,9 @@
 import axios from "axios";
 import { CreateOrderInput, Order } from "../models/Order.model";
+const { hostname, protocol } = window.location;
 
-const API_URL = import.meta.env.VITE_API_URL; // Ensure the URL is correctly formatted
+const API_URL = import.meta.env.VITE_API_URL || `${protocol}//${hostname}:8080`;
+// Ensure the URL is correctly formatted
 const params = {
   headers: {
     Authorization: `${localStorage.getItem("token")}`,

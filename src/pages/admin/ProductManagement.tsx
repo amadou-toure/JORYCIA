@@ -104,21 +104,19 @@ export default function ProductManagement() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (product.id) {
-      if (product.id !== "") {
-        updateProduct(product.id, product);
-        setIsOpen(false);
-      } else {
-        createProduct(newProduct as Product);
-        isLoading
-          ? MessageBox({
-              isOpen: true,
-              title: "Error",
-              message: "Please wait for the product to be created",
-              buttons: null,
-            })
-          : setIsOpen(false);
-      }
+    if (product.id && product.id !== "") {
+      updateProduct(product.id, product);
+      setIsOpen(false);
+    } else {
+      createProduct(newProduct as Product);
+      isLoading
+        ? MessageBox({
+            isOpen: true,
+            title: "Error",
+            message: "Please wait for the product to be created",
+            buttons: null,
+          })
+        : setIsOpen(false);
     }
   };
   const handleAddNote = () => {

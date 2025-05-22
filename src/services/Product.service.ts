@@ -1,7 +1,9 @@
 import axios from "axios";
 import { Product, ProductCreate } from "../models/Product.model";
 
-const PERFUME_API_URL = import.meta.env.VITE_API_URL; // Ensure the URL is correctly formatted
+const { hostname, protocol } = window.location;
+const PERFUME_API_URL =
+  import.meta.env.VITE_API_URL || `${protocol}//${hostname}:8080`; // Ensure the URL is correctly formatted
 const params = {
   headers: {
     Authorization: `${localStorage.getItem("token")}`,
@@ -10,12 +12,12 @@ const params = {
 
 const ProductService = {
   getAllProducts: async () => {
-    const response = await axios.get(PERFUME_API_URL + "/product/"); // Adjust the endpoint if necessary
+    const response = await axios.get(`${PERFUME_API_URL}/product/`); // Adjust the endpoint if necessary
     const products: Product[] = response.data;
     return products;
   },
   getOneProduct: async (ID: string) => {
-    const response = await axios.get(PERFUME_API_URL + "/product/" + ID);
+    const response = await axios.get(`${PERFUME_API_URL}/product/${ID} `);
     const product: Product = { ...response.data, ID: ID };
     return product;
   },
@@ -24,7 +26,7 @@ const ProductService = {
       throw new Error("User not authenticated");
     }
     const response = await axios.post(
-      PERFUME_API_URL + "/product/",
+      `${PERFUME_API_URL}/product/`,
       product,
       params
     );
@@ -32,7 +34,7 @@ const ProductService = {
   },
   updateProduct: async (id: string, product: Product) => {
     const response = await axios.put(
-      PERFUME_API_URL + "/product/" + id,
+      `${PERFUME_API_URL}/product/${id}`,
       product,
       params
     );
@@ -40,7 +42,7 @@ const ProductService = {
   },
   deleteProduct: async (ID: string) => {
     const response = await axios.delete(
-      PERFUME_API_URL + "/product/" + ID,
+      `${PERFUME_API_URL}/product/${ID}`,
       params
     );
     return response.data;
