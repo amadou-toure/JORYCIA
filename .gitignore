@@ -1,43 +1,143 @@
-# Fichiers d'environnement sensibles
+ Fichiers d'environnement sensibles
+
+
+
 .env
+
+
 *.env
 
+
+
+
+
 # Modules Node.js
+
+
 client/node_modules/
+
+
+
+
 
 # Build React (Vite ou Create React App)
 
+
+client/dist/
+
+
+client/build/
+
+
+
+
+
 # Logs
+
+
 *.log
+
+
 npm-debug.log*
+
+
 yarn-debug.log*
+
+
 yarn-error.log*
 
+
+
+
+
 # Cache
+
+
 client/.vite/
+
+
 client/.parcel-cache/
+
+
 client/.cache/
 
+
+
+
+
 # IDEs et systèmes d’exploitation
+
+
 .vscode/
+
+
 .idea/
+
+
 .DS_Store
+
+
 Thumbs.db
 
+
+
+
+
 # Fichiers binaires ou temporaires générés par Go
+
+
+api/bin/
+
+
+api/tmp/
+
+
+api/*.exe
+
+
+api/*.out
+
+
+api/*.test
+
+
 
 
 
 # Dépendances Go (au cas où tu les vendrais en cache locale)
 
 
+api/vendor/
+
+
+
+
+
 # Couverture des tests Go
+
+
 *.cover
+
+
 *.coverprofile
 
+
+
+
+
 # Fichiers générés
+
+
 *.log
+
+
 *.tmp
 
+
+
+
+
 # Docker
+
+
 docker-compose.override.yml
