@@ -6,8 +6,6 @@
 client/node_modules/
 
 # Build React (Vite ou Create React App)
-client/dist/
-client/build/
 
 # Logs
 *.log
@@ -27,11 +25,10 @@ client/.cache/
 Thumbs.db
 
 # Fichiers binaires ou temporaires générés par Go
-api/bin/
+
 
 
 # Dépendances Go (au cas où tu les vendrais en cache locale)
-api/Files
 
 
 # Couverture des tests Go
