@@ -28,13 +28,11 @@ Thumbs.db
 
 # Fichiers binaires ou temporaires générés par Go
 api/bin/
-api/tmp/
-api/*.exe
-api/*.out
-api/*.test
+
 
 # Dépendances Go (au cas où tu les vendrais en cache locale)
-api/vendor/
+api/Files
+
 
 # Couverture des tests Go
 *.cover
