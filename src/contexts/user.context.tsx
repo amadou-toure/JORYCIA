@@ -29,6 +29,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const login = async (loginData: loginModel): Promise<void> => {
     setLoading(true);
     try {
+      setUser(null);
       const response = await UserService.login(loginData);
       setUser(response.user);
       setLastFetched(new Date());
@@ -36,18 +37,15 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem("token", response.token);
       return response.user;
     } catch (error) {
-      console.error("Login failed:", error);
       setUser(null);
       throw error;
     } finally {
-      await fetchUser();
       setLoading(false);
     }
   };
   useEffect(() => {
     fetchUser();
     getUsers();
-    console.log("users feched");
   }, []);
   const fetchUser = async (): Promise<void> => {
     const response = await UserService.getUser(

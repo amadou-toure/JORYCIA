@@ -174,7 +174,7 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-6">
-              {user ? (
+              {user && user != null ? (
                 <div className="relative">
                   <User
                     className={`h-6 w-6 cursor-pointer ${
@@ -198,36 +198,19 @@ const Navbar = () => {
                         </button>
                       </div>
                       <ul className="py-1 text-sm text-gray-700">
-                        <Link
-                          to="/orders"
-                          className="px-4 py-2 hover:bg-gray-100"
-                        >
-                          My Orders
+                        <Link to="/orders">
+                          <li className="px-4 py-2 hover:bg-gray-100">
+                            My Orders
+                          </li>
                         </Link>
-                        {/* <li className="px-4 py-2 hover:bg-gray-100">My Coins</li> */}
-                        {/* <li className="px-4 py-2 hover:bg-gray-100">Message Center({user.messagesCount})</li> */}
+                        <Link to="/">
+                          <li className="px-4 py-2 hover:bg-gray-100">
+                            Account
+                          </li>
+                        </Link>
+
                         <li className="px-4 py-2 hover:bg-gray-100">Payment</li>
-                        {/* <li className="px-4 py-2 hover:bg-gray-100">Wish List</li> */}
-                        {/* <li className="px-4 py-2 hover:bg-gray-100">
-                            My Coupons
-                          </li> */}
                       </ul>
-                      <div className="border-t">
-                        <ul className="py-1 text-sm text-gray-600">
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">
-                                  Settings
-                                </li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">AliExpress Business</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">DS Center</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Seller Log In</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Return &amp; refund policy</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Help Center</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Disputes &amp; Reports</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Report IPR infringement</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Accessibility</li> */}
-                          {/* <li className="px-4 py-2 hover:bg-gray-100">Penalties information</li> */}
-                        </ul>
-                      </div>
                     </div>
                   )}
                 </div>
@@ -309,7 +292,7 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          {user ? (
+          {user && user != null ? (
             <div className="relative">
               <div
                 className={`flex items-center px-8 py-2 border-b cursor-pointer ${

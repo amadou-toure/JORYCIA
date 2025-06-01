@@ -1,10 +1,5 @@
-import {
-  Drawer,
-  Typography,
-  IconButton,
-  button,
-} from "@material-tailwind/react";
-import { Link, Navigate } from "react-router-dom";
+import { Drawer, Typography, IconButton } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 import { ArrowLeft, CreditCard, Minus, Plus, X } from "lucide-react";
 import { useCart } from "../contexts/cart.context.tsx";
 
@@ -101,7 +96,7 @@ export function CartDrawer({
                     </div>
                   </div>
                   <span className="text-sm font-semibold text-gray-900">
-                    ${(item.product.price * item.quantity).toFixed(2)}
+                    {(item.product.price * item.quantity).toFixed(2)} CA$
                   </span>
                 </div>
               ))}
@@ -122,12 +117,16 @@ export function CartDrawer({
                 <div className="space-y-4 mb-6">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
-                    <span className="font-medium">${subtotal.toFixed(2)}</span>
+                    <span className="font-medium">
+                      {subtotal.toFixed(2)} CA$
+                    </span>
                   </div>
                 </div>
                 <Link to="/cart">
-                  <CreditCard className="w-5 h-5 mr-2 cursor-pointer" />
-                  Checkout Securely
+                  <div className="flex flex-row items-center justify-center bg-[#111827] rounded-xl px-4 py-2 text-white">
+                    <CreditCard className="w-5 h-5 mr-2 cursor-pointer" />
+                    Checkout
+                  </div>
                 </Link>
               </div>
             </div>

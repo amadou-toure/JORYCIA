@@ -1,4 +1,5 @@
 import { Input, Button, Typography } from "@material-tailwind/react";
+import CustomAlert from "../components/Alert";
 //import { GoogleLogin } from "@react-oauth/google";
 
 import Product_hero from "../../public/assets/Product_page_Hero.png";
@@ -8,19 +9,38 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { loginModel } from "../models/User.model";
 import { useUser } from "../contexts/user.context";
+import { AxiosError } from "axios";
 
 export default function LoginPage() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [AlertMessage, setAlertMessage] = useState("");
+  const [AlertType, setAlertType] = useState<
+    "Info" | "Success" | "Warning" | "Error"
+  >("Info");
   const { login, user, isLoading } = useUser();
   const handleLogin = async () => {
-    await login(form);
-    console.log(user?.role);
+    try {
+      console.log("form : ", form);
+      await login(form);
+    } catch (error: any) {
+      console.log("catch: ", error);
+      setOpenAlert(true);
+      setAlertType("Error");
+      if (error.response?.status === 404) {
+        setAlertMessage("Utilisateur n'existe pas");
+      } else {
+        setAlertMessage("Mot de passe incorrect");
+      }
+    }
   };
   useEffect(() => {
-    !isLoading &&
-      user &&
-      (user.role === "admin" ? navigate("/admin") : navigate("/"));
+    user?.role === "admin"
+      ? navigate("/admin")
+      : user?.role == "user"
+      ? navigate("/")
+      : null;
   }, [isLoading]);
   const [form, setForm] = useState<loginModel>({
     email: "",
@@ -30,6 +50,24 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen">
+      {openAlert ? (
+        <CustomAlert
+          AlertButton={
+            <Button
+              variant="text"
+              color="white"
+              size="sm"
+              className="!absolute top-3 right-3"
+              onClick={() => setOpenAlert(false)}
+            >
+              Close
+            </Button>
+          }
+          Message={AlertMessage}
+          AlertType={AlertType}
+        />
+      ) : null}
+
       {/* Left side */}
       <div className="w-full md:w-1/2 flex flex-col justify-center items-center p-6">
         <div className="w-full max-w-md">
@@ -94,6 +132,7 @@ export default function LoginPage() {
             >
               {isLoading ? "Loading..." : "SIGN IN/UP"}
             </Button>
+            <Button onClick={() => setOpenAlert(true)}>ouvrir alert</Button>
           </form>
 
           <Typography className="mt-4 text-sm text-center text-gray-600">
