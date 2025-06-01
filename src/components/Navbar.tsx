@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ShoppingBag, Search, Menu, X, LogIn, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useUser } from "../contexts/user.context"; // adjust path as needed
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -234,6 +235,7 @@ const Navbar = () => {
                   }`}
                 />
               </Link>
+              <LanguageSwitcher />
             </div>
           </div>
         </div>

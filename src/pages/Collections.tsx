@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter, ChevronDown } from "lucide-react";
 import { useProduct } from "../contexts/Product.context.tsx";
 import { Product_card } from "../components/Card.tsx";
@@ -11,19 +11,20 @@ const Collections = () => {
   const { Products } = useProduct();
 
   const Notes = [
-    { id: "All", name: "All" },
-    { id: "Fleur d'orange", name: "Fleur d'orange" },
-    { id: "Jasmin sambac", name: "Jasmin sambac" },
-    { id: "Iris Vanille", name: "Iris Vanille" },
-    { id: "Musc", name: "Musc" },
-    { id: "Bois de santal", name: "Bois de santal" },
-    { id: "Ambre", name: "Ambre" },
+    "All",
+    ...Array.from(new Set(Products.flatMap((item) => item.notes))),
   ];
+
+  const customNotes = Products.map((product) => {
+    return product.notes;
+  });
   const filteredProductss =
     activeFilter === "All"
       ? Products
       : Products.filter((item) => item.notes.includes(activeFilter));
-
+  useEffect(() => {
+    console.log(customNotes);
+  });
   return (
     <div className="bg-white">
       <div className="relative h-[60vh] mb-10 bg-white">
@@ -60,15 +61,15 @@ const Collections = () => {
           <div className="hidden md:flex space-x-4 overflow-x-auto pb-2">
             {Notes.map((item) => (
               <button
-                key={item.id}
+                key={item}
                 className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                  activeFilter === item.name
+                  activeFilter === item
                     ? "bg-gray-900 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
-                onClick={() => setActiveFilter(item.name)}
+                onClick={() => setActiveFilter(item)}
               >
-                {item.name}
+                {item}
               </button>
             ))}
           </div>
@@ -82,18 +83,18 @@ const Collections = () => {
             <div className="grid grid-cols-2 gap-2">
               {Notes.map((category) => (
                 <button
-                  key={category.id}
+                  key={category}
                   className={`px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                    activeFilter === category.name
+                    activeFilter === category
                       ? "bg-gray-900 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                   onClick={() => {
-                    setActiveFilter(category.name);
+                    setActiveFilter(category);
                     setFiltersOpen(false);
                   }}
                 >
-                  {category.name}
+                  {category}
                 </button>
               ))}
             </div>

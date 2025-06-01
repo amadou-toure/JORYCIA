@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "@material-tailwind/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import "./i18n";
 
 createRoot(document.getElementById("root")!).render(
   <GoogleOAuthProvider
