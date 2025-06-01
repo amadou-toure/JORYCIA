@@ -49,21 +49,27 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-6">
+    <div className="bg-[#f8f5f1] flex items-center justify-center py-12 pt-[15%]">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-xl shadow-sm p-10 w-full max-w-xl space-y-6 border border-gray-200"
+        className="bg-white rounded-xl shadow-sm p-10 w-full max-w-[90%] space-y-6 border border-gray-200"
       >
         <h2 className="text-3xl font-serif font-semibold text-gray-800 text-center">
           Créer un compte
         </h2>
-
-        {["firstName", "lastName", "email", "password", "phone", "address"].map(
-          (field) => (
-            <div key={field}>
+        <div className="flex flex-col lg:flex-row lg:flex-wrap lg:justify-between lg:items-start">
+          {[
+            "firstName",
+            "lastName",
+            "email",
+            "phone",
+            "password",
+            "address",
+          ].map((field) => (
+            <div className=" lg:w-[45%] m-2 " key={field}>
               <label
                 htmlFor={field}
-                className="block text-gray-700 font-medium mb-1 capitalize font-serif"
+                className="block text-gray-700 font-medium mb-1 capitalize "
               >
                 {field}
               </label>
@@ -75,18 +81,18 @@ const Register = () => {
                 value={(form as any)[field] || ""}
                 onChange={handleChange}
                 required
-                className="w-full bg-white text-gray-800 border border-gray-200 rounded-xl px-4 py-2 font-serif shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
+                className="w-full bg-white text-gray-800 border border-gray-200 rounded-xl px-4 py-2 f shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"
               />
               {errors[field] && (
                 <p className="text-red-600 text-sm mt-1">{errors[field]}</p>
               )}
             </div>
-          )
-        )}
+          ))}
+        </div>
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 px-4 rounded-xl hover:bg-gray-800 transition font-serif"
+          className="w-full bg-black text-white py-2 px-4 rounded-xl hover:bg-gray-800 transition "
         >
           Register
         </button>

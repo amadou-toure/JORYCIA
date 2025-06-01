@@ -18,7 +18,7 @@ const Profile = () => {
         <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg overflow-hidden z-50">
           <div className="px-4 py-3 border-b">
             <p className="text-sm text-gray-600">
-              Welcome back hjkl, {user.firstName}
+              Welcome back hjklgbd, {user.firstName}
             </p>
             <button
               onClick={logout}

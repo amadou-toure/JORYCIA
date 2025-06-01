@@ -113,7 +113,6 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
       const result = await OrderService.getUser_Orders(user.id);
-      // Support both axios-like { data } and direct returns
       const userOrders: Order[] = (result as any).data ?? (result as any);
       setOrders(userOrders);
       return userOrders;

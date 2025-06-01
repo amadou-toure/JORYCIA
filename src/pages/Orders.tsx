@@ -6,10 +6,11 @@ import { Order } from "../models/Order.model";
 import { Link } from "react-router-dom";
 
 export default function Orders() {
-  const { orders, isLoading, fetchUser_Orders } = useOrder();
+  const { orders, fetchUser_Orders } = useOrder();
 
   useEffect(() => {
     fetchUser_Orders();
+    console.log(orders);
   }, []);
 
   const data =
