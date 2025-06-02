@@ -1,8 +1,7 @@
 import axios from "axios";
 import { CreateOrderInput, Order } from "../models/Order.model";
-const { hostname, protocol } = window.location;
 
-const API_URL = import.meta.env.VITE_API_URL || `${protocol}//${hostname}:8080`;
+const API_URL = import.meta.env.VITE_API_URL || "https://api.jorycia.ca";
 // Ensure the URL is correctly formatted
 const params = {
   headers: {

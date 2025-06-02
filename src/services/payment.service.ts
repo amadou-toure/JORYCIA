@@ -1,9 +1,7 @@
 import axios from "axios";
 import { CartItem } from "../models/Cart.model";
 
-const { hostname, protocol } = window.location;
-
-const API_URL = import.meta.env.VITE_API_URL || `${protocol}//${hostname}:8080`; // Ensure the URL is correctly formatted
+const API_URL = import.meta.env.VITE_API_URL || "https://api.jorycia.ca";
 const params = {
   headers: {
     Authorization: `${localStorage.getItem("token")}`,

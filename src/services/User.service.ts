@@ -1,9 +1,8 @@
 import axios from "axios";
 import { User, loginModel } from "../models/User.model.ts";
-const { hostname, protocol } = window.location;
 
 const JORYCIA_API_URL =
-  import.meta.env.VITE_API_URL || `${protocol}//${hostname}:8080`;
+  import.meta.env.VITE_API_URL || "https://api.jorycia.ca";
 
 const UserService = {
   login: async (data: loginModel) => {
