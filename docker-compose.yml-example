@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  mongo:
+    image: "mongo:latest"
+    container_name: "mongo"
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    networks:
+      - mynetwork
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: "api"
+    depends_on:
+      - mongo
+    environment:
+      - PORT=${PORT}
+      - MONGO_URI=${MONGO_URI}
+    volumes:
+      - ./api/Files/Images:/API/Files/Images
+    ports:
+      - "${PORT}:${PORT}"
+    networks:
+      - mynetwork
+    env_file:
+      - .env
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client
+    depends_on:
+      - api
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    networks:
+      - mynetwork
+
+volumes:
+  mongo-data:
+
+networks:
+  mynetwork:
