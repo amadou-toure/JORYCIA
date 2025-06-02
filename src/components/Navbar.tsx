@@ -5,7 +5,6 @@ import { useUser } from "../contexts/user.context"; // adjust path as needed
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAccountOpen, setIsAccountOpen] = useState(false);
@@ -69,39 +68,6 @@ const Navbar = () => {
                     JORYCIA
                   </h1>
                 </Link>
-              </div>
-              <Search
-                className={`h-6 w-6 cursor-pointer ${
-                  isScrolled || !isTransparentAllowed
-                    ? "text-gray-800"
-                    : "text-white"
-                }`}
-                onClick={() => setIsSearchOpen(true)}
-              />
-              <X
-                className={`h-6 w-6 cursor-pointer md:hidden ${
-                  isScrolled || !isTransparentAllowed
-                    ? "text-gray-800"
-                    : "text-white"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              />
-              <div
-                className={`
-                relative
-                transition-all
-                duration-300
-                ease-in-out
-                overflow-hidden
-                ${isSearchOpen ? "w-64 opacity-100" : "w-0 opacity-0"}
-              `}
-              >
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full h-8 pl-4 pr-8 bg-white border border-gray-200 rounded-full focus:outline-none focus:border-gray-400"
-                  onBlur={() => setIsSearchOpen(false)}
-                />
               </div>
             </div>
 
