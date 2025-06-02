@@ -19,7 +19,7 @@ const BestCollections = () => {
   };
 
   return (
-    <div className="py-20 relative bg-white">
+    <div className="py-20 relative bg-white"> 
       {/* Normal Desktop */}
       <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">

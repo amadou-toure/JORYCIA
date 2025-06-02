@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="bg-[#f8f5f1] w-full text-gray-800 py-12 mt-0 ">
       <div className=" mx-auto flex flex-row flex-wrap lg:flex-row lg:items-center lg:justify-between  w-[90%]  gap-8">
         <div>
-          <h3 className="font-serif text-xl mb-4">About Jorycia</h3>
+          <h3 className="font-serif text-xl mb-4">About Jorycia</h3> 
           <p className="text-gray-600 mb-4">
             Crafting luxurious fragrances with the finest ingredients since
             2024.
