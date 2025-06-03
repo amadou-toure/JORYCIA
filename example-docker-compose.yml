@@ -7,11 +7,33 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+      - ./mongo-audit:/var/log
     environment:
       - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+        - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=28_fevrier_2025
     networks:
       - mynetwork
-
+    command: >
+      mongo --auditDestination file
+         --auditFormat JSON
+         --auditPath /var/log/auditLog.json
+         --auditFilter '{ atype: { $in: ["insert", "update", "remove"] } }'
+  mongo_dump:
+    image: mongo:latest
+    container_name: mongo_dump
+    depends_on:
+      - mongo
+    volumes:
+      - ./mongo-backups:/backups
+    networks:
+      - mynetwork
+    entrypoint: /bin/bash
+    command: >
+      -c "while true; do
+            mongodump --host=mongo --username=admin --password=StrongPassword123 --authenticationDatabase=admin --out=/backups/$(date +%F_%T);
+            sleep 3600;
+          done"
   api:
     build:
       context: ./api

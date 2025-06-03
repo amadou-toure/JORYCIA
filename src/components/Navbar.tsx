@@ -142,17 +142,21 @@ const Navbar = () => {
 
             <div className="flex items-center gap-6">
               {user && user != null ? (
-                <div className="relative">
+                <div className="hidden md:flex lg:flex">
                   <User
                     className={`h-6 w-6 cursor-pointer ${
                       isScrolled || !isTransparentAllowed
                         ? "text-gray-800"
                         : "text-white"
                     }`}
+                    onMouseEnter={() => setIsAccountOpen(true)}
                     onClick={() => setIsAccountOpen(!isAccountOpen)}
                   />
                   {isAccountOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg overflow-hidden z-50">
+                    <div
+                      className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-lg overflow-hidden z-50"
+                      onMouseLeave={() => setIsAccountOpen(false)}
+                    >
                       <div className="px-4 py-3 border-b">
                         <p className="text-sm text-gray-600">
                           Welcome back, {user.firstName}
@@ -182,7 +186,7 @@ const Navbar = () => {
                   )}
                 </div>
               ) : (
-                <Link to="/login">
+                <Link className="lg:flex hidden" to="/login">
                   <LogIn
                     className={`h-6 w-6 cursor-pointer ${
                       isScrolled || !isTransparentAllowed
@@ -192,7 +196,7 @@ const Navbar = () => {
                   />
                 </Link>
               )}
-              <Link to="/cart">
+              <Link className="hidden lg:flex" to="/cart">
                 <ShoppingBag
                   className={`h-6 w-6 cursor-pointer ${
                     isScrolled || !isTransparentAllowed
@@ -263,7 +267,7 @@ const Navbar = () => {
           {user && user != null ? (
             <div className="relative">
               <div
-                className={`flex items-center px-8 py-2 border-b cursor-pointer ${
+                className={`hidden lg:flex items-center px-8 py-2 border-b cursor-pointer ${
                   isScrolled || !isTransparentAllowed
                     ? "text-gray-800 border-gray-200 hover:bg-gray-50"
                     : "text-white border-white/10 hover:bg-white/10"
@@ -288,33 +292,15 @@ const Navbar = () => {
                   </div>
                   <ul className="py-1 text-sm text-gray-700">
                     <li className="px-4 py-2 hover:bg-gray-100">My Orders</li>
-                    {/* <li className="px-4 py-2 hover:bg-gray-100">My Coins</li> */}
-                    {/* <li className="px-4 py-2 hover:bg-gray-100">Message Center({user.messagesCount})</li> */}
                     <li className="px-4 py-2 hover:bg-gray-100">Payment</li>
-                    {/* <li className="px-4 py-2 hover:bg-gray-100">Wish List</li> */}
-                    {/* <li className="px-4 py-2 hover:bg-gray-100">My Coupons</li> */}
                   </ul>
-                  <div className="border-t">
-                    <ul className="py-1 text-sm text-gray-600">
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Settings</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">AliExpress Business</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">DS Center</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Seller Log In</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Return &amp; refund policy</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Help Center</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Disputes &amp; Reports</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Report IPR infringement</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Accessibility</li> */}
-                      {/* <li className="px-4 py-2 hover:bg-gray-100">Penalties information</li> */}
-                    </ul>
-                  </div>
                 </div>
               )}
             </div>
           ) : (
             <Link
               to="/login"
-              className={`block px-8 py-2 border-b ${
+              className={` block px-8 py-2 border-b ${
                 isScrolled || !isTransparentAllowed
                   ? "text-gray-800 border-gray-200 hover:bg-gray-50"
                   : "text-white border-white/10 hover:bg-white/10"
