@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: connect to server
+      - name: Setup SSH agent with ED25519 key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY}}
+      - name: Deploy to VPS
         run: |
-          ssh admin@192.250.238.176 -p 1969
-          ${{secrets.GITHUB_PASSWORD}}
-
-      - name: update client
-        run: |
-          /scripts/update_jorycia.sh
+          ssh -p 1969 admin@192.250.238.176 "/scripts/update_jorycia.sh"
