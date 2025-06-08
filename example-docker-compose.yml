@@ -6,10 +6,15 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
-      - ./mongo-audit:/var/log
+      volumes:
+        - ./mongo-init.js:/docker-entrypoint-initdb.d/init.js
+        - mongo-data:/data/db
+        - ./mongo-audit:/var/log
     environment:
       - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME: root
+      - MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE: jorycia
     networks:
       - mynetwork
   api:

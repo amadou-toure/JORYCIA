@@ -160,22 +160,6 @@ const Cart = () => {
                   <CreditCard className="w-5 h-5 mr-2" />
                   proceder au paiement
                 </button>
-                {/* <button className="rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <img
-                    src={`http://localhost:8080/image/GoogleLogo.webp`}
-                    alt="google-logo"
-                    className=" w-5 h-5 mr-2"
-                  />
-                  Pay
-                </button>
-                <button className=" rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <img
-                    src="http://localhost:8080/image/appleLogo.webp"
-                    alt="google-logo"
-                    className=" w-5 h-5 mr-2"
-                  />
-                  Pay
-                </button> */}
               </div>
             </div>
           </div>
