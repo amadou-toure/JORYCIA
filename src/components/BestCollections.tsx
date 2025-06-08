@@ -19,7 +19,7 @@ const BestCollections = () => {
   };
 
   return (
-    <div className="py-20 relative bg-white"> 
+    <div className="py-20 relative bg-white">
       {/* Normal Desktop */}
       <div className="mx-auto hidden md:block lg:px-8">
         <div className="flex justify-between items-end mb-12">
@@ -51,7 +51,7 @@ const BestCollections = () => {
       </div>
 
       {/* Mobile View - Carousel */}
-      <div className="md:hidden sm:flex sm:flex-col sm:items-center sm:justify-center">
+      <div className="md:hidden sm:flex sm:flex-col sm:items-center sm:justify-center sm:w-full">
         <div className="bg-white p-8 rounded-lg relative">
           {Products.length > 0 && (
             <Product_card

@@ -13,9 +13,6 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <p>
-        {import.meta.env.MODE} — {location.hostname} mof
-      </p>
       <BestCollections />
       <AboutSection />
       <Testimonials />
