@@ -14,6 +14,10 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY}}
+      - name: Add VPS to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 1969 192.250.238.176 >> ~/.ssh/known_hosts
       - name: Deploy to VPS
         run: |
           ssh -p 1969 admin@192.250.238.176 "/scripts/update_jorycia.sh"
