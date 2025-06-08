@@ -14,7 +14,7 @@ const Home = () => {
     <>
       <Hero />
       <p>
-        {import.meta.env.MODE} — {location.hostname}
+        {import.meta.env.MODE} — {location.hostname} mof
       </p>
       <BestCollections />
       <AboutSection />
