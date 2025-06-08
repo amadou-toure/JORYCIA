@@ -20,8 +20,5 @@ jobs:
       - name: Deploy CLIENT via SSH
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd /opt/client  # ← dossier client sur ton VPS
-            git pull origin main 
-            docker-compose down client
-            docker-compose up --build client
+          /scripts/update_jorycia.sh
           EOF
