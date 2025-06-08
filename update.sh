@@ -8,5 +8,5 @@ cp /opt/JORYCIA/client/example-docker-compose.yml /opt/JORYCIA/docker-compose.ym
 echo "Lancement du conteneur ..."
 cd ..
 docker-compose down
-docker-compose --env-file /opt/JORYCIA/.env up --build
+docker-compose --env-file /opt/JORYCIA/.env up --build -d
 echo "update ended"
