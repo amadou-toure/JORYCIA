@@ -20,4 +20,4 @@ jobs:
           ssh-keyscan -p 1969 192.250.238.176 >> ~/.ssh/known_hosts
       - name: Deploy to VPS
         run: |
-          ssh -p 1969 admin@192.250.238.176 "/scripts/update_jorycia.sh"
+          ssh -p 1969 github@192.250.238.176 "/scripts/update_jorycia.sh"
