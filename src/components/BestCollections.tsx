@@ -51,8 +51,19 @@ const BestCollections = () => {
       </div>
 
       {/* Mobile View - Carousel */}
-      <div className="md:hidden sm:flex sm:flex-col sm:items-center sm:justify-center sm:w-full">
-        <div className="bg-white p-8 rounded-lg relative">
+      <div className="md:hidden sm:flex sm:flex-col sm:items-center sm:justify-center">
+        <div className="flex justify-between items-end mb-12">
+          <div className="px-2">
+            <h2 className="text-4xl font-serif mb-3">
+              Produits les mieux notés
+            </h2>
+            <p className="text-gray-600 max-w-2xl">
+              Explore our most coveted fragrance, each telling a unique
+              olfactory story.
+            </p>
+          </div>
+        </div>
+        <div className="bg-white py-8 flex items-center justify-center rounded-lg relative ">
           {Products.length > 0 && (
             <Product_card
               MobileView={true}
@@ -90,14 +101,14 @@ const BestCollections = () => {
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
-        <Link
-          to="/collections"
-          className="items-center text-gray-800 hover:text-gray-600 transition-colors"
-        >
-          <span className="mr-0">View All </span>
-          <ArrowRight className="w-5 h-5" />
-        </Link>
       </div>
+      <Link
+        to="/collections"
+        className="lg:hidden md:hidden flex pt-4  justify-end items-center text-gray-800 hover:text-gray-600 transition-colors"
+      >
+        <span className="mr-2">consulter la boutique </span>
+        <ArrowRight className="w-5 h-5" />
+      </Link>
     </div>
   );
 };

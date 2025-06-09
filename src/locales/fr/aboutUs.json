@@ -1,0 +1,27 @@
+{
+  "title": "À propos de nos huiles",
+  "intro": "Chez {{brand}}, nous croyons que le parfum est bien plus qu’un luxe : c’est une expression intime, une empreinte invisible qui accompagne chaque moment de vie...",
+  "subtitle": "L’huile de parfum, sans compromis",
+  "features": {
+    "longLasting": "Tenue longue durée",
+    "smoothTexture": "Texture soyeuse",
+    "subtleScent": "Sillage délicat qui épouse la peau"
+  },
+  "sharingElegance": "Parce que le raffinement ne devrait pas être un privilège, mais une sensation partagée.",
+  "signature": "JORYCIA ESSENCE – L’Art du Parfum, Sans Compromis",
+  "valuesTitle": "Nos valeurs",
+  "values": {
+    "art": {
+      "title": "Art & Création",
+      "description": "Chaque parfum est une œuvre olfactive, conçue avec passion et précision."
+    },
+    "durability": {
+      "title": "Durabilité",
+      "description": "Des choix responsables dans la sélection de nos ingrédients et emballages."
+    },
+    "excellence": {
+      "title": "Excellence",
+      "description": "Un engagement constant pour une qualité sans compromis."
+    }
+  }
+}
