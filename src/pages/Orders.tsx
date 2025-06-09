@@ -6,15 +6,14 @@ import { Order } from "../models/Order.model";
 import { Link } from "react-router-dom";
 
 export default function Orders() {
-  const { orders, fetchUser_Orders } = useOrder();
+  const { userOrder, fetchUser_Orders } = useOrder();
 
   useEffect(() => {
     fetchUser_Orders();
-    console.log(orders);
   }, []);
 
   const data =
-    orders?.map((o: Order) => {
+    userOrder?.map((o: Order) => {
       let statusClass = "";
       switch (o.status) {
         case "processing":

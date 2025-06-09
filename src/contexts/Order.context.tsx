@@ -9,9 +9,11 @@ import {
   useEffect,
   useContext,
 } from "react";
+import { ErrorToast } from "./Toast";
 
 interface OrderContextType {
   orders: Order[];
+  userOrder: Order[];
   isLoading: Boolean;
   createOrder: (order: CreateOrderInput) => Promise<Order | undefined>;
   fetchOrders: () => Promise<Order[]>;
@@ -33,7 +35,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useUser();
-
+  const [userOrder, setUserOrder] = useState<Order[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
@@ -107,17 +109,18 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUser_Orders = async (): Promise<Order[]> => {
     if (!user || !user.id) {
-      console.error("User not logged in");
+      ErrorToast("L'utilisateur n'est pas connecter !");
       return [];
     }
     setIsLoading(true);
     try {
       const result = await OrderService.getUser_Orders(user.id);
       const userOrders: Order[] = (result as any).data ?? (result as any);
-      setOrders(userOrders);
+      setUserOrder([]);
+      setUserOrder(userOrders);
       return userOrders;
     } catch (error) {
-      console.error("Error fetching user orders:", error);
+      ErrorToast("Error fetching user orders: /n" + error);
       return [];
     } finally {
       setIsLoading(false);
@@ -152,6 +155,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
       value={{
         isLoading,
         orders,
+        userOrder,
         createOrder,
         fetchOrders,
         fetchOneOrder,

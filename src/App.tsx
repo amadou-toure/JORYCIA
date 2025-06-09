@@ -27,6 +27,7 @@ import UserManagement from "./pages/admin/UserManagement.tsx";
 import Orders from "./pages/Orders.tsx";
 import OrderDetail from "./pages/OrderDetail";
 import { PaymentProvider } from "./contexts/payment.context.tsx";
+import { Toaster } from "react-hot-toast";
 function AppRoutes() {
   const location = useLocation();
   const hideLayout =
@@ -94,6 +95,7 @@ function App() {
           <PaymentProvider>
             <OrderProvider>
               <Router>
+                <Toaster />
                 <AppRoutes />
               </Router>
             </OrderProvider>

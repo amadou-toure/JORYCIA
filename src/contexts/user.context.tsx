@@ -8,6 +8,7 @@ import {
 import { User, loginModel, UserContextType } from "../models/User.model.ts";
 import UserService from "../services/User.service.ts";
 import { Navigate } from "react-router-dom";
+import { ErrorToast } from "./Toast.tsx";
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -54,8 +55,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser(response);
   };
   const getUsers = async (): Promise<void> => {
-    const response = await UserService.getUsers();
-    setUsers(response);
+    try {
+      const response = await UserService.getUsers();
+      setUsers(response);
+    } catch (error) {
+      ErrorToast("une erreur s'est produite: " + error);
+    }
   };
 
   const register = async (registerData: User) => {
@@ -65,7 +70,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       setUser(response);
       setLastFetched(new Date());
     } catch (error) {
-      console.error("Registration failed:", error);
+      ErrorToast("Creation du compte echouer:" + error);
       setUser(null);
     } finally {
       setLoading(false);

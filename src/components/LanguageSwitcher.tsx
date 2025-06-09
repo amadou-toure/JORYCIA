@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ isScrolled }: { isScrolled: boolean }) => {
   const { i18n } = useTranslation();
   const currentLanguage = i18n.language;
   const changeLanguage = (lng: "fr" | "en") => {
@@ -8,11 +8,21 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 ">
       {currentLanguage == "fr" ? (
-        <button onClick={() => changeLanguage("en")}>EN</button>
+        <button
+          className={`underline ${isScrolled ? "text-gray-800" : "text-white"}`}
+          onClick={() => changeLanguage("en")}
+        >
+          EN
+        </button>
       ) : (
-        <button onClick={() => changeLanguage("fr")}>FR</button>
+        <button
+          className={`underline ${isScrolled ? "text-gray-800" : "text-white"}`}
+          onClick={() => changeLanguage("fr")}
+        >
+          FR
+        </button>
       )}
     </div>
   );
