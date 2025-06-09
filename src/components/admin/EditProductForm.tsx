@@ -4,7 +4,7 @@ import { Product } from "../../models/Product.model";
 import * as base64 from "@ethersproject/base64";
 import { useProduct } from "../../contexts/Product.context";
 import { X } from "lucide-react";
-import CustomAlert from "../Alert";
+import { ErrorToast, SuccessToast } from "../../contexts/Toast";
 
 const EditProductForm = ({
   productToUpdate,
@@ -13,11 +13,6 @@ const EditProductForm = ({
   productToUpdate: Product;
   setOpen: (value: boolean) => void;
 }) => {
-  const [openAlert, setOpenAlert] = useState(false);
-  const [AlertMessage, setAlertMessage] = useState("");
-  const [AlertType, setAlertType] = useState<
-    "Info" | "Success" | "Warning" | "Error"
-  >("Info");
   const {
     updateProduct,
 
@@ -31,20 +26,13 @@ const EditProductForm = ({
       e.preventDefault();
       product.id
         ? (updateProduct(product.id, product),
-          setOpen(false),
-          setOpenAlert(true),
-          setAlertType("Success"),
-          setAlertMessage("Modification effectuer avec succes"))
-        : setOpenAlert(true);
-      setAlertType("Error");
-      setAlertMessage("aucun produit selectionner !");
+          SuccessToast("Produit modifier avec success!!"))
+        : ErrorToast("aucun produit selectionner !");
     } catch (error: any) {
-      setOpenAlert(true);
-      setAlertType("Error");
       if (error.response?.status === 404) {
-        setAlertMessage("le Produit n'existe pas");
+        ErrorToast("le Produit n'existe pas");
       } else {
-        setAlertMessage("une erreur s'est produite");
+        ErrorToast("une erreur s'est produite");
       }
     }
   };
@@ -86,23 +74,6 @@ const EditProductForm = ({
   console.log("edit Form");
 
   return (
-    // {openAlert ? (
-    // 		<CustomAlert
-    // 		  AlertButton={
-    // 			<Button
-    // 			  variant="text"
-    // 			  color="white"
-    // 			  size="sm"
-    // 			  className="!absolute top-3 right-3"
-    // 			  onClick={() => setOpenAlert(false)}
-    // 			>
-    // 			  Close
-    // 			</Button>
-    // 		  }
-    // 		  Message={AlertMessage}
-    // 		  AlertType={AlertType}
-    // 		/>
-    // 	  ) : null}
     <form
       onSubmit={handleSubmit}
       className="relative space-y-6 w-[90%] max-w-2xl bg-white mt-[10%] mb-8 p-6 rounded-xl shadow-lg border border-gray-200 overflow-y-auto max-h-[80%]"

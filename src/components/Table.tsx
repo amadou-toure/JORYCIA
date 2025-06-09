@@ -16,12 +16,12 @@ export default function Table({
   return (
     <section className="bg-white mb-8 p-6 rounded-xl shadow-sm border border-gray-200">
       <h2 className="text-xl font-serif mb-4 text-gray-700">{name}</h2>
-      <div className="overflow-auto">
-        <table className="min-w-full text-sm text-left text-gray-800">
+      <div className="overflow-x-auto sm:overflow-x-visible">
+        <table className="w-full min-w-[600px] text-xs sm:text-sm text-left text-gray-800">
           <thead>
             <tr className="border-b">
               {columns.map((column) => (
-                <th key={column} className="px-4 py-2">
+                <th key={column} className="px-3 py-2 text-xs sm:text-sm">
                   {column}
                 </th>
               ))}
@@ -45,7 +45,7 @@ export default function Table({
                 {columns.map((column) => (
                   <td
                     key={column}
-                    className={`px-4 py-2 ${
+                    className={`px-3 py-2 text-xs sm:text-sm ${
                       selectedRow === p.id ? "bg-[#f8f5f1]" : ""
                     }`}
                   >

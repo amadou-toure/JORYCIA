@@ -1,32 +1,10 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Grid, Users, ShoppingCart, Server, Menu, X } from "lucide-react";
-import {
-  IconButton,
-  Button,
-  Drawer,
-  Typography,
-  button,
-} from "@material-tailwind/react";
+import { IconButton, Drawer, Typography } from "@material-tailwind/react";
 
 export const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { pathname } = useLocation();
-
-  const navItem = (to: string, icon: React.ReactNode, label: string) => {
-    const active = pathname === to;
-    return (
-      <Link
-        to={to}
-        className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
-          active ? "bg-white/20 text-white" : "text-white hover:bg-white/10"
-        }`}
-      >
-        {icon}
-        <span>{label}</span>
-      </Link>
-    );
-  };
 
   return (
     <div>
@@ -34,7 +12,7 @@ export const Sidebar: React.FC = () => {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg text-white"
+          className="fixed right-4 z-50 bg-[#111827] p-3 rounded-full shadow-lg text-white"
         >
           <Menu className="w-6 h-6" />
         </button>

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Typography, Button } from "@material-tailwind/react";
+import { Typography, Button, Spinner } from "@material-tailwind/react";
 import Table from "../../components/Table";
 import { useOrder } from "../../contexts/Order.context";
 import { Order } from "../../models/Order.model";
+import { Sidebar } from "../../components/admin/AdminSideBar";
 
 export default function OrderManagement() {
   const { orders, isLoading, fetchOrders, refreshOrders } = useOrder();
@@ -50,23 +51,18 @@ export default function OrderManagement() {
       };
     }) || [];
 
-  const columns = [
-    "id",
-    "userId",
-    "total",
-    "paymentStatus",
-    "status",
-    "createdAt",
-  ];
+  const columns = ["userId", "total", "status", "paymentStatus", "createdAt"];
 
-  return (
-    <div className="container mx-auto px-4 pt-[10%] pb-[10%]">
-      <Typography variant="h2" className="mb-4">
-        Order Management
-      </Typography>
-
+  return isLoading ? (
+    <div className="bg-[#f8f5f1] flex justify-center items-center min-h-screen">
+      <Spinner height={100} width={100} />
+    </div>
+  ) : (
+    <div className="flex-1 lg:pt-[10%] pt-[25%] flex-col items-center justify-center p-8 bg-[#f8f5f1] overflow-auto">
+      <Sidebar />
+      <Typography variant="h2">Order Management</Typography>
       <Table name="Orders" data={data} columns={columns} />
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end ">
         <Button onClick={refreshOrders} ripple={true}>
           Refresh
         </Button>

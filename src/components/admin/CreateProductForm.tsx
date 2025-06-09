@@ -5,6 +5,7 @@ import * as base64 from "@ethersproject/base64";
 import { useProduct } from "../../contexts/Product.context";
 import { X } from "lucide-react";
 import MessageBox from "../MessageBox";
+import { ErrorToast, SuccessToast, WarningToast } from "../../contexts/Toast";
 
 const CreateProductForm = ({
   setOpen,
@@ -24,16 +25,16 @@ const CreateProductForm = ({
   const [newNote, setNewNote] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    createProduct(newProduct as Product);
-    isLoading
-      ? MessageBox({
-          isOpen: true,
-          title: "Error",
-          message: "Please wait for the product to be created",
-          buttons: null,
-        })
-      : setOpen(false);
+    try {
+      e.preventDefault();
+      createProduct(newProduct as Product);
+      isLoading
+        ? WarningToast("produit deja en cours de creation")
+        : (setOpen(false), SuccessToast("Produit ajouter avec success !!"));
+    } catch (error) {
+      setOpen(false);
+      ErrorToast("une erreur s'est produite: /n" + error);
+    }
   };
   const handleAddNote = () => {
     if (newNote.trim()) {

@@ -3,11 +3,15 @@ import { Typography, Button } from "@material-tailwind/react";
 import Table from "../components/Table";
 import { useOrder } from "../contexts/Order.context";
 import { Order } from "../models/Order.model";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Orders() {
   const { userOrder, fetchUser_Orders } = useOrder();
-
+  const navigate = useNavigate();
+  const handleSelectedOrder = (id: string) => {
+    navigate(`/orders/${id}`);
+    console.log("is navigating to: " + id);
+  };
   useEffect(() => {
     fetchUser_Orders();
   }, []);
@@ -43,35 +47,25 @@ export default function Orders() {
         paymentStatus: o.paymentStatus,
         status: <span className={statusClass}>{o.status}</span>,
         createdAt: o.createdAt ? new Date(o.createdAt).toLocaleString() : "",
-        details: (
-          <Link
-            to={`/orders/${o.id}`}
-            className="text-blue-600 hover:underline"
-          >
-            Voir détails
-          </Link>
-        ),
       };
     }) || [];
 
-  const columns = [
-    "id",
-    "total",
-    "paymentStatus",
-    "status",
-    "createdAt",
-    "details",
-  ];
+  const columns = ["id", "total", "paymentStatus", "status", "createdAt"];
 
   return (
-    <div className="container mx-auto px-4 pt-[8%] w-full pb-20">
-      <div className="bg-white rounded-xl shadow-sm p-6">
+    <div className="w-full">
+      <div className="lex-1 lg:pt-[10%] pt-[25%] flex-col items-center justify-center p-8 bg-[#f8f5f1] overflow-auto">
         <Typography variant="h2" className="mb-6 font-serif text-gray-800">
           Mes Commandes
         </Typography>
         <hr className="mb-6 border-t border-gray-200" />
 
-        <Table name="Mes Commandes" data={data} columns={columns} />
+        <Table
+          name="Mes Commandes"
+          data={data}
+          columns={columns}
+          setSelectedId={handleSelectedOrder}
+        />
 
         <div className="flex justify-end mt-4">
           <Button

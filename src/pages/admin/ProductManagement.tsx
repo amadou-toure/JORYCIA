@@ -1,19 +1,15 @@
 import { useState } from "react";
-import { Button, Spinner } from "@material-tailwind/react";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
 import { Product } from "../../models/Product.model";
 import { useProduct } from "../../contexts/Product.context";
 import Table from "../../components/Table";
 import MessageBox from "../../components/MessageBox";
 import CreateProductForm from "../../components/admin/CreateProductForm";
 import EditProductForm from "../../components/admin/EditProductForm";
-import CustomAlert from "../../components/Alert";
+import { Sidebar } from "../../components/admin/AdminSideBar";
+import { ErrorToast, SuccessToast } from "../../contexts/Toast";
 
 export default function ProductManagement() {
-  const [openAlert, setOpenAlert] = useState(false);
-  const [AlertMessage, setAlertMessage] = useState("");
-  const [AlertType, setAlertType] = useState<
-    "Info" | "Success" | "Warning" | "Error"
-  >("Info");
   const [OpenCreateForm, setOpenCreateForm] = useState(false);
   const [OpenEditForm, setOpenEditForm] = useState(false);
   const [dialog, setDialog] = useState({
@@ -66,19 +62,15 @@ export default function ProductManagement() {
                   if (product.id) {
                     deleteProduct(product.id);
                     setDialog({ ...dialog, isOpen: false });
-                    setOpenAlert(true);
-                    setAlertType("Success");
-                    setAlertMessage("Produit supprimer avec success !");
+                    SuccessToast("Produit supprimer avec success !");
                   }
                 } catch (error: any) {
                   setDialog({ ...dialog, isOpen: false });
                   setOpenEditForm(false);
-                  setOpenAlert(true);
-                  setAlertType("Error");
                   if (error.response?.status === 404) {
-                    setAlertMessage("le produit n'existe pas");
+                    ErrorToast("le produit n'existe pas");
                   } else {
-                    setAlertMessage("une errreur s'est produite");
+                    ErrorToast("une errreur s'est produite");
                   }
                 }
               }}
@@ -106,16 +98,17 @@ export default function ProductManagement() {
   }
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center w-full relative mx-0 px-4 pt-[10%] bg-[#f8f5f1]">
+    <div className="h-screen relative pt-[20%] lg:pt-[10%] bg-[#f8f5f1] overflow-auto">
       <MessageBox
         isOpen={dialog.isOpen}
         title={dialog.title}
         message={dialog.message}
         buttons={dialog.buttons}
       />
-      <div className="flex flex-col justify-between items-center">
+      <Sidebar />
+      <div>
         {OpenCreateForm ? (
-          <div className="fixed inset-0 flex items-center justify-center z-50 ">
+          <div className="fixed inset-0  flex items-center justify-center z-50 ">
             <div className="absolute inset-0 bg-black opacity-50 backdrop-blur-sm"></div>
             <CreateProductForm setOpen={setOpenCreateForm} />
           </div>
@@ -129,51 +122,41 @@ export default function ProductManagement() {
             />
           </div>
         ) : null}
-        <Table
-          setSelectedId={handleSelectedProduct}
-          name="Produits"
-          data={Products.map((p) => ({
-            image: (
-              <img
-                src={p.image[0]}
-                alt="img"
-                className="w-16 h-16 object-cover rounded "
-              />
-            ),
-            name: p.name,
-            description: p.description,
-            inStock: p.inStock,
-            price: `${p.price} $CA`,
-            notes: p.notes.join(", "),
-            id: p.id,
-          }))}
-          columns={[
-            "image",
-            "name",
-            "description",
-            "inStock",
-            "price",
-            "notes",
-          ]}
-        />
-        {openAlert ? (
-          <CustomAlert
-            AlertButton={
-              <Button
-                variant="text"
-                color="white"
-                size="sm"
-                className="!absolute top-3 right-3"
-                onClick={() => setOpenAlert(true)}
-              >
-                Close
-              </Button>
-            }
-            Message={AlertMessage}
-            AlertType={AlertType}
+
+        <div className="flex-1 lg:pt-[10%] pt-[25%] flex-col items-center justify-center p-8 bg-[#f8f5f1] overflow-auto">
+          <Typography variant="h2" className="pb-4">
+            Product Management
+          </Typography>
+          <Table
+            setSelectedId={handleSelectedProduct}
+            name="Produits"
+            data={Products.map((p) => ({
+              image: (
+                <img
+                  src={p.image[0]}
+                  alt="img"
+                  className="w-16 h-16 object-cover rounded "
+                />
+              ),
+              name: p.name,
+              description: p.description,
+              inStock: p.inStock,
+              price: `${p.price} $CA`,
+              notes: p.notes.join(", "),
+              id: p.id,
+            }))}
+            columns={[
+              "image",
+              "name",
+              "description",
+              "inStock",
+              "price",
+              "notes",
+            ]}
           />
-        ) : null}
-        <div className="flex justify-center items-center w-[50%]">
+        </div>
+
+        <div className="flex justify-center items-center w-[70%]">
           {selected ? (
             <>
               <Button color="white" onClick={handleUpdateButton}>
