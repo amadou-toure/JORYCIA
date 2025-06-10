@@ -22,7 +22,6 @@ services:
       - ENABLE_POSTGREY=1
       - ONE_DIR=1
       - DMS_DEBUG=0
-      - SSL_TYPE=letsencrypt
       - PERMIT_DOCKER=host
       - SSL_TYPE=manual
       - SSL_CERT_PATH=/etc/letsencrypt/live/mail.jorycia.ca/fullchain.pem
