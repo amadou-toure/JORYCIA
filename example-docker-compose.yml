@@ -13,6 +13,7 @@ services:
       - ./maildata:/var/mail
       - ./mailstate:/var/mail-state
       - ./config:/tmp/docker-mailserver
+      - ./config/postfix-accounts.cf:/tmp/docker-mailserver/postfix-accounts.cf:ro
       - /etc/letsencrypt/live/mail.jorycia.ca/fullchain.pem:/etc/letsencrypt/live/mail.jorycia.ca/fullchain.pem:ro
       - /etc/letsencrypt/live/mail.jorycia.ca/privkey.pem:/etc/letsencrypt/live/mail.jorycia.ca/privkey.pem:ro
     environment:
