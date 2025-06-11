@@ -74,6 +74,8 @@ services:
       context: ./client
       dockerfile: Dockerfile
     container_name: client
+    ports:
+      - 80:80
     depends_on:
       - api
     environment:
