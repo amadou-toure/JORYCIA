@@ -80,7 +80,6 @@ services:
       - VITE_API_URL=${VITE_API_URL}
     networks:
       - mynetwork
-
 volumes:
   mongo-data:
   mailconfig:
