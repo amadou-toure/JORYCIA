@@ -20,4 +20,4 @@ jobs:
           ssh-keyscan -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_HOST}} >> ~/.ssh/known_hosts
       - name: Deploy to VPS
         run: |
-          ssh -p 1969 ${{secrets.VPS_USER}}@192.250.238.176 "/scripts/update_jorycia.sh"
+          ssh -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_USER}}@jorycia.ca "/scripts/update_jorycia.sh"

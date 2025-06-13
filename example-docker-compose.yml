@@ -88,7 +88,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./nginx/sites-available:/etc/nginx/sites-available
+      - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - client
