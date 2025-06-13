@@ -91,6 +91,7 @@ services:
       - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
       - /etc/letsencrypt:/etc/letsencrypt
+    command: ["nginx", "-g", "daemon off;"]
     # command:
     #   - "rm /etc/nginx/sites-enabled/jorycia"
     #   - "rm /etc/nginx/sites-enabled/jorycia"
