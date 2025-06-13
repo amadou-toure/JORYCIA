@@ -95,6 +95,7 @@ services:
       - "rm /etc/nginx/sites-enabled/jorycia-api"
       - "ln -s /etc/nginx/sites-available/jorycia /etc/nginx/sites-enabled/jorycia"
       - "ln -s /etc/nginx/sites-available/jorycia-api /etc/nginx/sites-enabled/jorycia-api"
+      - "nginx -g daemon off;"
     depends_on:
       - client
       - api
