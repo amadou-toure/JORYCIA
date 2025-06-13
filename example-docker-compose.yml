@@ -91,11 +91,11 @@ services:
       - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
       - /etc/letsencrypt:/etc/letsencrypt
-    command:
-      - "rm /etc/nginx/sites-enabled/jorycia"
-      - "rm /etc/nginx/sites-enabled/jorycia"
-      - "ln -s /etc/nginx/sites-available/jorycia /etc/nginx/sites-enabled/jorycia"
-      - "ln -s /etc/nginx/sites-available/jorycia-api /etc/nginx/sites-enabled/jorycia-api"
+    # command:
+    #   - "rm /etc/nginx/sites-enabled/jorycia"
+    #   - "rm /etc/nginx/sites-enabled/jorycia"
+    #   - "ln -s /etc/nginx/sites-available/jorycia /etc/nginx/sites-enabled/jorycia"
+    #   - "ln -s /etc/nginx/sites-available/jorycia-api /etc/nginx/sites-enabled/jorycia-api"
     depends_on:
       - client
       - api
