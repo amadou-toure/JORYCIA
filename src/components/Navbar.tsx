@@ -212,7 +212,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu - Positioned relative to viewport */}
+      {/* Mobile Menu */}
       <MobileMenu
         isScrolled={isScrolled}
         isMenuOpen={isMenuOpen}
