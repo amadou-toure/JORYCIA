@@ -90,6 +90,7 @@ services:
     volumes:
       - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
+      - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
     command: ["nginx", "-g", "daemon off;"]
     # command:
