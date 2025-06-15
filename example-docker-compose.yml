@@ -62,8 +62,6 @@ services:
       - MONGO_URI=${MONGO_URI}
     volumes:
       - ./api/Files/Images:/API/Files/Images
-    ports:
-      - "${PORT}:${PORT}"
     networks:
       - mynetwork
     env_file:
@@ -93,11 +91,6 @@ services:
       - /etc/nginx:/etc/nginx
       - /etc/letsencrypt:/etc/letsencrypt
     command: ["nginx", "-g", "daemon off;"]
-    # command:
-    #   - "rm /etc/nginx/sites-enabled/jorycia"
-    #   - "rm /etc/nginx/sites-enabled/jorycia"
-    #   - "ln -s /etc/nginx/sites-available/jorycia /etc/nginx/sites-enabled/jorycia"
-    #   - "ln -s /etc/nginx/sites-available/jorycia-api /etc/nginx/sites-enabled/jorycia-api"
     depends_on:
       - client
       - api
