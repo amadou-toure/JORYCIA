@@ -24,11 +24,11 @@ const OrderService = {
     return response.data;
   },
   async updateOrder(id: string, order: Order) {
-    const response = await axios.put(`${API_URL}/orders/${id}`, order, params);
+    const response = await axios.put(`${API_URL}/order/${id}`, order, params);
     return response.data;
   },
   async deleteOrder(id: string) {
-    const response = await axios.delete(`${API_URL}/orders/${id}`, params);
+    const response = await axios.delete(`${API_URL}/order/${id}`, params);
     return response.data;
   },
   async getUser_Orders(id: string) {
