@@ -26,22 +26,10 @@ export default function OrderManagement() {
     message: "",
     buttons: null as React.ReactNode | null,
   });
-  const [selectedOrder, setSelectedOrder] = useState<Order>({
-    id: "",
-    userId: "",
-    items: [],
-    total: 0,
-    status: "processing",
-    paymentStatus: "paid",
-    shippingAddress: "",
-    stripeSessionId: "",
-  });
   const handleStatusUpdate = (
     order: Order,
     status: "processing" | "shipped" | "delivered" | "cancelled"
   ) => {
-    setSelectedOrder(order);
-    setSelectedOrder({ ...selectedOrder, status: status });
     setDialog({
       isOpen: true,
       message:
@@ -51,21 +39,9 @@ export default function OrderManagement() {
         <div className="flex flex-row gap-2 ml-5 ">
           <Button
             onClick={() => {
-              try {
-                const updated = { ...selectedOrder, status };
-                console.log("updating ", order);
-                setSelectedOrder(updated);
-                updateOrder(updated.id, updated);
-                setDialog({ ...dialog, isOpen: false });
-                SuccessToast("Status mis a jour !");
-              } catch (error: any) {
-                setDialog({ ...dialog, isOpen: false });
-                if (error.response?.status === 404) {
-                  ErrorToast("la commande n'existe pas");
-                } else {
-                  ErrorToast("une errreur s'est produite");
-                }
-              }
+              const updatedOrder = { ...order, status };
+              updateOrder(updatedOrder.id, updatedOrder);
+              setDialog({ ...dialog, isOpen: false });
             }}
             color="red"
           >
@@ -134,14 +110,29 @@ export default function OrderManagement() {
             <MenuHandler>
               <button className={statusClass}>{o.status}</button>
             </MenuHandler>
-            <MenuList>
-              <MenuItem onClick={() => handleStatusUpdate(o, "shipped")}>
+            <MenuList className="flex flex-col items-center justify-center gap-3">
+              <MenuItem
+                className="flex items-center justify-center text-sm font-semibold bg-yellow-100 text-yellow-800 rounded-full"
+                onClick={() => handleStatusUpdate(o, "processing")}
+              >
+                Pending
+              </MenuItem>
+              <MenuItem
+                className="flex items-center justify-center text-sm font-semibold bg-blue-100 text-blue-800 rounded-full"
+                onClick={() => handleStatusUpdate(o, "shipped")}
+              >
                 Shipped
               </MenuItem>
-              <MenuItem onClick={() => handleStatusUpdate(o, "delivered")}>
+              <MenuItem
+                className="flex items-center justify-center text-sm font-semibold bg-green-100 text-green-800 rounded-full"
+                onClick={() => handleStatusUpdate(o, "delivered")}
+              >
                 Delivered
               </MenuItem>
-              <MenuItem onClick={() => handleStatusUpdate(o, "cancelled")}>
+              <MenuItem
+                className="flex items-center justify-center text-sm font-semibold bg-red-100 text-red-800 rounded-full"
+                onClick={() => handleStatusUpdate(o, "cancelled")}
+              >
                 Cancelled
               </MenuItem>
             </MenuList>

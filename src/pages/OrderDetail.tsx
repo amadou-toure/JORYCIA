@@ -6,11 +6,47 @@ import { useOrder } from "../contexts/Order.context";
 import { Order as IOrder, OrderItem } from "../models/Order.model";
 import { useProduct } from "../contexts/Product.context";
 import { Product } from "../models/Product.model";
+import MessageBox from "../components/MessageBox";
 
 export default function OrderDetail() {
   const { id } = useParams();
-  const { fetchOneOrder, isLoading } = useOrder();
+  const { fetchOneOrder, isLoading, updateOrder } = useOrder();
   const [order, setOrder] = useState<IOrder | null>(null);
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    buttons: null as React.ReactNode | null,
+  });
+
+  const handleCancelOrder = (order: IOrder) => {
+    setDialog({
+      isOpen: true,
+      message: "Voulez vous vraiment annuler cette commande ?",
+      title: "Annulation de la commande:",
+      buttons: (
+        <div className="flex flex-row gap-2 ml-5 ">
+          <Button
+            onClick={() => {
+              const updatedOrder: IOrder = { ...order, status: "cancelled" };
+              updateOrder(order.id, updatedOrder);
+              setDialog({ ...dialog, isOpen: false });
+            }}
+            color="red"
+          >
+            confirmer
+          </Button>
+          <Button
+            onClick={() => {
+              setDialog({ ...dialog, isOpen: false });
+            }}
+          >
+            Annuler
+          </Button>
+        </div>
+      ),
+    });
+  };
 
   useEffect(() => {
     if (id) {
@@ -23,7 +59,7 @@ export default function OrderDetail() {
           console.error("Error fetching order:", err);
         });
     }
-  }, [id]);
+  }, [isLoading]);
 
   if (isLoading) {
     return (
@@ -41,6 +77,12 @@ export default function OrderDetail() {
     } else {
       return (
         <div className="flex flex-col items-center bg-[#f8f5f1] justify-center min-h-screen py-8 gap-4 pt-[10%]">
+          <MessageBox
+            isOpen={dialog.isOpen}
+            message={dialog.message}
+            title={dialog.title}
+            buttons={dialog.buttons}
+          />
           <div className="self-start px-4 py-2">
             <Link to="/orders">
               <Button variant="outlined" size="sm">
@@ -70,6 +112,14 @@ export default function OrderDetail() {
               }
               variant="ghost"
             />
+            {order.status === "processing" ? (
+              <Button
+                className="bg-[#f8f5f1] my-3 outline text-red-900 w-[100%]"
+                onClick={() => handleCancelOrder(order)}
+              >
+                Annuler la commande
+              </Button>
+            ) : null}
             <Typography>Nombre de produits : {order.items.length}</Typography>
             <div className="flex flex-col md:flex-col items-center justify-start gap-4 mt-4">
               {order.items.map((item) => (
@@ -140,11 +190,7 @@ function ProductCardList({
             <Button className="bg-[#f8f5f1] text-gray-900 w-[100%]">
               Ajouter un avis
             </Button>
-          ) : (
-            <Button className="bg-[#f8f5f1] outline text-red-900 w-[100%]">
-              Annuler la commande
-            </Button>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

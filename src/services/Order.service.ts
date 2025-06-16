@@ -23,9 +23,10 @@ const OrderService = {
     const response = await axios.get(`${API_URL}/order/`, params);
     return response.data;
   },
-  async updateOrder(id: string, order: Order) {
+  //here i just want to get the status because a part from the status, the api also sends a string but it is useless
+  async updateOrder(id: string, order: Order): Promise<number> {
     const response = await axios.put(`${API_URL}/order/${id}`, order, params);
-    return response.data;
+    return response.status;
   },
   async deleteOrder(id: string) {
     const response = await axios.delete(`${API_URL}/order/${id}`, params);

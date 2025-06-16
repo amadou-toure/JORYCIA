@@ -9,7 +9,7 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { ErrorToast } from "./Toast";
+import { SuccessToast, ErrorToast } from "./Toast";
 
 interface OrderContextType {
   orders: Order[];
@@ -25,7 +25,7 @@ interface OrderContextType {
     PaymentStatus: "pending" | "paid" | "failed",
     status: "processing" | "shipped" | "delivered" | "cancelled"
   ) => CreateOrderInput;
-  updateOrder: (id: string, order: Order) => Promise<Order>;
+  updateOrder: (id: string, order: Order) => Promise<void>;
   refreshOrders: () => void;
   fetchUser_Orders: () => Promise<Order[]>;
   deleteOrder: (id: string) => Promise<void>;
@@ -38,6 +38,10 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [userOrder, setUserOrder] = useState<Order[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [isLoading]);
 
   const fetchOrders = async (): Promise<Order[]> => {
     setIsLoading(true);
@@ -128,12 +132,23 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateOrder = async (id: string, order: Order) => {
-    const response = await OrderService.updateOrder(id, order);
-    const updatedOrder = response.data;
-    setOrders((prev) =>
-      prev.map((o) => (o.id === updatedOrder.id ? updatedOrder : o))
-    );
-    return updatedOrder;
+    setIsLoading(true);
+    try {
+      const responseStatus = await OrderService.updateOrder(id, order);
+      responseStatus == 200
+        ? SuccessToast("Commande mise a jour !")
+        : responseStatus == 404
+        ? ErrorToast("Commande innexistante !")
+        : ErrorToast("une erreur s'est produite: " + responseStatus);
+    } catch (error: any) {
+      console.log("error", error);
+      error.status == 404
+        ? ErrorToast("Commande innexistante !")
+        : ErrorToast("une erreur s'est produite: " + error);
+      ErrorToast("une erreur s'est produite");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const deleteOrder = async (id: string) => {
