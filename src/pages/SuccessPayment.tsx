@@ -42,7 +42,7 @@ const SuccessPayment = () => {
         : setOrderCreated(false);
       console.log(order);
     }
-  }, [checkoutSession]);
+  }, []);
 
   if (isLoading) {
     return (
