@@ -1,9 +1,9 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { paymentService } from "../services/payment.service";
-import { useCart } from "./cart.context";
 import { CartItem } from "../models/Cart.model";
 import { loadStripe } from "@stripe/stripe-js";
 import { CheckoutSessionType } from "../models/Checkout.model";
+import { ErrorToast } from "./Toast";
 interface PaymentContextType {
   isVerifying: boolean;
   error: string | null;
@@ -33,15 +33,15 @@ export const PaymentProvider = ({ children }: { children: ReactNode }) => {
     if (!stripe) throw new Error("Stripe failed to load");
     const result = await stripe.redirectToCheckout({ sessionId });
     if (result.error) {
-      console.error(result.error.message);
+      ErrorToast(String(result.error.message));
     }
   }
   const proceedToPayment = async (cart: CartItem[]) => {
     try {
       const checkoutSession = await paymentService.proceedToPayment(cart);
       redirectToCheckout(checkoutSession);
-    } catch (error) {
-      console.error("Failed to proceed to payment:", error);
+    } catch (error: any) {
+      ErrorToast("Failed to proceed to payment:" + error);
       throw error;
     }
   };

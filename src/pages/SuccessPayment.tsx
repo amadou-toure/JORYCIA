@@ -17,6 +17,7 @@ const SuccessPayment = () => {
   useEffect(() => {
     if (sessionId) {
       getCheckoutSession(sessionId);
+      console.log("getting session id:" + sessionId);
     }
   }, [sessionId]);
 
@@ -42,7 +43,7 @@ const SuccessPayment = () => {
         : setOrderCreated(false);
       console.log(order);
     }
-  }, []);
+  }, [sessionId, checkoutSession, cart, orderCreated]);
 
   if (isLoading) {
     return (

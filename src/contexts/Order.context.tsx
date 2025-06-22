@@ -39,10 +39,6 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
 
-  useEffect(() => {
-    fetchOrders();
-  }, [isLoading]);
-
   const fetchOrders = async (): Promise<Order[]> => {
     setIsLoading(true);
     try {
