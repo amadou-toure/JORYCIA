@@ -10,7 +10,7 @@ const SuccessPayment = () => {
   const { cart } = useCart();
   const { error, checkoutSession, getCheckoutSession } = usePayment();
   const sessionId: string | null = searchParams.get("session_id");
-  const { convertCartToOrder, createOrder, isLoading, orders } = useOrder();
+  const { convertCartToOrder, createOrder, isLoading } = useOrder();
   const [orderCreated, setOrderCreated] = useState(false);
 
   // 1. Fetch session when sessionId is available
