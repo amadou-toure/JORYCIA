@@ -1,13 +1,16 @@
 import { Minus, Plus, X, ArrowLeft, CreditCard } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/cart.context.tsx";
 import { usePayment } from "../contexts/payment.context.tsx";
+import { useUser } from "../contexts/user.context.tsx";
 
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();
   const { proceedToPayment } = usePayment();
   const shipping = 12;
   const total = subtotal + shipping;
+  const { user } = useUser();
+  const navigate = useNavigate();
 
   return (
     <div className="pt-28 pb-20 bg-[#f8f5f1]">
@@ -153,7 +156,7 @@ const Cart = () => {
                 <span className="text-gray-600">Methode de paiement</span>
                 <button
                   onClick={() => {
-                    proceedToPayment(cart);
+                    user ? proceedToPayment(cart) : navigate("/LogIn");
                   }}
                   className="rounded-3xl mt-4 mb-4 w-full bg-gray-900 text-white py-3 px-6 flex items-center justify-center hover:bg-gray-800 transition-colors"
                 >
