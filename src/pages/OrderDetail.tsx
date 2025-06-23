@@ -189,7 +189,7 @@ function ProductCardList({
         <div className="flex flex-col items-center justify-center gap-2 w-full md:w-auto">
           <Button
             className="w-[100%]"
-            onClick={() => navigate(`/product/${order.productId}}`)}
+            onClick={() => navigate(`/product/${order.productId}`)}
           >
             Acheter à nouveau
           </Button>
