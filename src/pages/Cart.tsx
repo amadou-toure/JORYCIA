@@ -7,8 +7,6 @@ import { useUser } from "../contexts/user.context.tsx";
 const Cart = () => {
   const { cart, updateQuantity, removeFromCart, subtotal } = useCart();
   const { proceedToPayment } = usePayment();
-  const shipping = 12;
-  const total = subtotal + shipping;
   const { user } = useUser();
   const navigate = useNavigate();
 
@@ -143,14 +141,6 @@ const Cart = () => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Subtotal</span>
                     <span className="font-medium">${subtotal.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Shipping</span>
-                    <span className="font-medium">${shipping.toFixed(2)}</span>
-                  </div>
-                  <div className="border-t pt-4 flex justify-between">
-                    <span className="font-medium">Total</span>
-                    <span className="font-medium">${total.toFixed(2)}</span>
                   </div>
                 </div>
                 <span className="text-gray-600">Methode de paiement</span>

@@ -7,6 +7,7 @@ import { Order as IOrder, OrderItem } from "../models/Order.model";
 import { useProduct } from "../contexts/Product.context";
 import { Product } from "../models/Product.model";
 import MessageBox from "../components/MessageBox";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderDetail() {
   const { id } = useParams();
@@ -148,6 +149,7 @@ function ProductCardList({
   const { fetchOneProduct } = useProduct();
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOneProduct(order.productId ?? "").then((p) => {
@@ -185,7 +187,12 @@ function ProductCardList({
         </div>
 
         <div className="flex flex-col items-center justify-center gap-2 w-full md:w-auto">
-          <Button className="w-[100%]">Acheter à nouveau</Button>
+          <Button
+            className="w-[100%]"
+            onClick={() => navigate(`/product/${order.productId}}`)}
+          >
+            Acheter à nouveau
+          </Button>
           {status === "delivered" ? (
             <Button className="bg-[#f8f5f1] text-gray-900 w-[100%]">
               Ajouter un avis
