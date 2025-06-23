@@ -15,7 +15,6 @@ import { Order } from "../../models/Order.model";
 import { Sidebar } from "../../components/admin/AdminSideBar";
 import MessageBox from "../../components/MessageBox";
 
-
 export default function OrderManagement() {
   const { orders, isLoading, fetchOrders, refreshOrders, updateOrder } =
     useOrder();
@@ -62,7 +61,7 @@ export default function OrderManagement() {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [orders]);
 
   // Prepare table data with a colored badge for status
   const data =
@@ -101,12 +100,7 @@ export default function OrderManagement() {
           .join(", "),
         total: `CA$ ${o.total.toFixed(2)}`,
         status: (
-          <Menu
-          //open={openMenu}
-          // handler={() => {
-          //   setOpenMenu(!openMenu);
-          // }}
-          >
+          <Menu>
             <MenuHandler>
               <button className={statusClass}>{o.status}</button>
             </MenuHandler>
