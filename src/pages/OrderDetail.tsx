@@ -54,6 +54,7 @@ export default function OrderDetail() {
   useEffect(() => {
     if (id) {
       order ? getCheckoutSession(order.stripeSessionId) : null;
+      console.log("shipping address", checkoutSession);
       console.log("fetching order", id);
       fetchOneOrder(id)
         .then((o) => {
@@ -116,9 +117,9 @@ export default function OrderDetail() {
               }
               variant="ghost"
             />
-            <Typography>
+            {/* <Typography>
               Adresse de livraison : {checkoutSession?.shipping_address}
-            </Typography>
+            </Typography> */}
             {order.status === "processing" ? (
               <Button
                 className="bg-[#f8f5f1] my-3 outline text-red-900 w-[100%]"
