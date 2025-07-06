@@ -41,7 +41,7 @@ const SuccessPayment = () => {
       order != undefined || null
         ? setOrderCreated(true)
         : setOrderCreated(false);
-      console.log(order);
+      console.log("order Sent ! :", order);
     }
   }, [sessionId, checkoutSession, cart, orderCreated]);
 
