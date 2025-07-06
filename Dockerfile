@@ -2,11 +2,10 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json yarn.lock ./
-COPY vite.config.* tsconfig.json ./
-COPY public ./public
-COPY src ./src
-
-RUN yarn && yarn build
+RUN yarn install --frozen-lockfile
+COPY . .
+RUN rm -rf node_modules dist
+RUN yarn install --frozen-lockfile && yarn build
 #etape 2: serve 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
