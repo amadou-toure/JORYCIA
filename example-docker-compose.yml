@@ -26,6 +26,7 @@ services:
       - PORT=${PORT}
       - MONGO_URI=${MONGO_URI}
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./api/Files/Images:/API/Files/Images
     networks:
       - mynetwork
