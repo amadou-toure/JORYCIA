@@ -27,6 +27,7 @@ const SuccessPayment = () => {
       sessionId &&
       checkoutSession &&
       checkoutSession.payment_status === "paid" &&
+      checkoutSession.shipping_address != null &&
       !orderCreated
     ) {
       const neWorder = convertCartToOrder(
@@ -141,7 +142,11 @@ const SuccessPayment = () => {
           shortly.
         </p>
         <div className="space-y-4">
-          {orderCreated ? <p>New Order placed </p> : <p>No Order Created</p>}
+          {orderCreated ? (
+            <p>New Order placed at {checkoutSession.shipping_address} </p>
+          ) : (
+            <p>No Order Created</p>
+          )}
           <Link
             to="/collections"
             className="inline-block bg-gray-900 text-white px-8 py-3 rounded-full hover:bg-gray-800 transition-colors"
