@@ -32,6 +32,8 @@ export default function OrderDetail() {
               const updatedOrder: IOrder = { ...order, status: "cancelled" };
               updateOrder(order.id, updatedOrder);
               setDialog({ ...dialog, isOpen: false });
+
+              id ? fetchOneOrder(id) : null;
             }}
             color="red"
           >
@@ -60,7 +62,7 @@ export default function OrderDetail() {
           console.error("Error fetching order:", err);
         });
     }
-  }, [isLoading]);
+  }, []);
 
   if (isLoading) {
     return (

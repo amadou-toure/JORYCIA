@@ -61,7 +61,7 @@ export default function OrderManagement() {
 
   useEffect(() => {
     fetchOrders();
-  }, [orders]);
+  }, []);
 
   // Prepare table data with a colored badge for status
   const data =
