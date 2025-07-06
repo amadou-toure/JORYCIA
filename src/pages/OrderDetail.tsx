@@ -8,9 +8,11 @@ import { useProduct } from "../contexts/Product.context";
 import { Product } from "../models/Product.model";
 import MessageBox from "../components/MessageBox";
 import { useNavigate } from "react-router-dom";
+import { usePayment } from "../contexts/payment.context";
 
 export default function OrderDetail() {
   const { id } = useParams();
+  const { getCheckoutSession, checkoutSession } = usePayment();
   const { fetchOneOrder, isLoading, updateOrder } = useOrder();
   const [order, setOrder] = useState<IOrder | null>(null);
   const [dialog, setDialog] = useState({
@@ -51,6 +53,7 @@ export default function OrderDetail() {
 
   useEffect(() => {
     if (id) {
+      order ? getCheckoutSession(order.stripeSessionId) : null;
       console.log("fetching order", id);
       fetchOneOrder(id)
         .then((o) => {
@@ -114,7 +117,7 @@ export default function OrderDetail() {
               variant="ghost"
             />
             <Typography>
-              Adresse de livraison : {order.shippingAddress}
+              Adresse de livraison : {checkoutSession?.shipping_address}
             </Typography>
             {order.status === "processing" ? (
               <Button
