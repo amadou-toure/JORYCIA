@@ -19,9 +19,9 @@ export interface Order {
 }
 
 export interface StripeAddress {
-  city?: string;
-  country?: string;
-  line1?: string;
+  city: string;
+  country: string;
+  line1: string;
   line2?: string;
   postal_code: string;
   state: string;
