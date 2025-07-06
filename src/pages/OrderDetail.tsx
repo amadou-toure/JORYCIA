@@ -64,7 +64,7 @@ export default function OrderDetail() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 pt-[25%]">
+      <div className="flex flex-col items-center justify-centetr pt-[25%]">
         <Spinner className="h-16 w-16 text-gray-900/50" />;
       </div>
     );
