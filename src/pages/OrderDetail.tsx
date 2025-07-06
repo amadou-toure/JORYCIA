@@ -113,6 +113,9 @@ export default function OrderDetail() {
               }
               variant="ghost"
             />
+            <Typography>
+              Adresse de livraison : {order.shippingAddress}
+            </Typography>
             {order.status === "processing" ? (
               <Button
                 className="bg-[#f8f5f1] my-3 outline text-red-900 w-[100%]"
