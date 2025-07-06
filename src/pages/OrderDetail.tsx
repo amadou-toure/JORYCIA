@@ -117,14 +117,9 @@ export default function OrderDetail() {
               variant="ghost"
             />
             <Typography>
-              Adresse de livraison :{" "}
-              {
-                (order.shippingAddress.line1,
-                order.shippingAddress.city,
-                order.shippingAddress.postal_code,
-                order.shippingAddress.state)
-              }
+              Adresse de livraison : {order.shippingAddress.line1}
             </Typography>
+            <Typography>{order.shippingAddress.city}</Typography>
             {order.status === "processing" ? (
               <Button
                 className="bg-[#f8f5f1] my-3 outline text-red-900 w-[100%]"
