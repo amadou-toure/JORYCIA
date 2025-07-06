@@ -6,7 +6,7 @@ COPY vite.config.* tsconfig.json ./
 COPY public ./public
 COPY src ./src
 
-RUN yarn install --frozen-lockfile && yarn build
+RUN yarn && yarn build
 #etape 2: serve 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
