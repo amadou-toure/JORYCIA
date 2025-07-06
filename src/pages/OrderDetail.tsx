@@ -117,7 +117,13 @@ export default function OrderDetail() {
               variant="ghost"
             />
             <Typography>
-              Adresse de livraison : {order.shippingAddress}
+              Adresse de livraison :{" "}
+              {
+                (order.shippingAddress.city,
+                order.shippingAddress.line1,
+                order.shippingAddress.postal_code,
+                order.shippingAddress.state)
+              }
             </Typography>
             {order.status === "processing" ? (
               <Button
