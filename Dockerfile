@@ -1,5 +1,5 @@
 #etape 1: build the image
-FROM node:20-alpine as builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package.json yarn.lock ./
 COPY vite.config.* tsconfig.json ./
