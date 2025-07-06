@@ -18,9 +18,7 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_HOST}} >> ~/.ssh/known_hosts
-      - name: Deploy update.sh to VPS
+
+      - name: Deploy to VPS
         run: |
-          scp -P ${{secrets.VPS_SSH_PORT}} ./scripts/update_jorycia.sh ${{secrets.VPS_USER}}@${{secrets.VPS_HOST}}:/scripts/update_jorycia.sh
-      - name: Run update script on VPS
-        run: |
-          ssh -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_USER}}@${{secrets.VPS_HOST}} "bash /scripts/update_jorycia.sh"
+          ssh -p ${{secrets.VPS_SSH_PORT}} ${{secrets.VPS_USER}}@192.250.238.176 "/scripts/update_jorycia.sh"
