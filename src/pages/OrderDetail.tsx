@@ -118,7 +118,7 @@ export default function OrderDetail() {
             />
             <Typography>
               Adresse de livraison : {order.shippingAddress.line1},
-              {order.shippingAddress.city},{order.shippingAddress.postal_code},{" "}
+              {order.shippingAddress.city},{order.shippingAddress.postal_code},
               {order.shippingAddress.state}
             </Typography>
 
