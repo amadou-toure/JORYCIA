@@ -28,6 +28,7 @@ import Orders from "./pages/Orders.tsx";
 import OrderDetail from "./pages/OrderDetail";
 import { PaymentProvider } from "./contexts/payment.context.tsx";
 import { Toaster } from "react-hot-toast";
+import OrderManagementDetail from "./pages/admin/OrderManagementDetail.tsx";
 import MessageBox from "./components/MessageBox.tsx";
 function AppRoutes() {
   const location = useLocation();
@@ -68,6 +69,14 @@ function AppRoutes() {
           element={
             <RequireAdmin>
               <OrderManagement />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin/orders/:id"
+          element={
+            <RequireAdmin>
+              <OrderManagementDetail />
             </RequireAdmin>
           }
         />

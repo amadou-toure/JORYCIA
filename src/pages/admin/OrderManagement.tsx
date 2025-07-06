@@ -14,6 +14,7 @@ import { useUser } from "../../contexts/user.context";
 import { Order } from "../../models/Order.model";
 import { Sidebar } from "../../components/admin/AdminSideBar";
 import MessageBox from "../../components/MessageBox";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderManagement() {
   const { orders, isLoading, fetchOrders, refreshOrders, updateOrder } =
@@ -139,6 +140,11 @@ export default function OrderManagement() {
   const columns = ["id", "user", "total", "status", "createdAt"];
 
   const [filteredData, setFilteredData] = useState(data);
+  const navigate = useNavigate();
+  const handleSelectedOrder = (id: string) => {
+    navigate(`/admin/orders/${id}`);
+    console.log("is navigating to: " + id);
+  };
 
   return isLoading ? (
     <div className="bg-[#f8f5f1] flex justify-center items-center min-h-screen">
@@ -255,7 +261,12 @@ export default function OrderManagement() {
           }}
         />
 
-        <Table name="Orders" data={filteredData} columns={columns} />
+        <Table
+          name="Orders"
+          data={filteredData}
+          columns={columns}
+          setSelectedId={handleSelectedOrder}
+        />
         <div className="flex justify-end ">
           <Button onClick={refreshOrders} ripple={true}>
             Refresh
