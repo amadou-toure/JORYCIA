@@ -55,6 +55,7 @@ services:
       - /etc/nginx/sites-available:/etc/nginx/sites-available
       - /etc/nginx/sites-enabled:/etc/nginx/sites-enabled
       - /etc/nginx:/etc/nginx
+      - /var/www/certbot:/var/www/certbot
       - /etc/letsencrypt:/etc/letsencrypt
     command: ["nginx", "-g", "daemon off;"]
     depends_on:
