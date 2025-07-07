@@ -63,9 +63,13 @@ services:
       - api
     networks:
       - mynetwork
+
 volumes:
   mongo-data:
   mailconfig:
 
 networks:
   mynetwork:
+  mailcow-network:
+    external: true
+    name: mailcowdockerized_mailcow-network
